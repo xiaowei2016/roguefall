@@ -88,43 +88,64 @@ SettingsPanel.visible    = false
 - 显示 SettingsPanel，隐藏 MapPanel
 - 左侧面板状态不变
 
-### 1.4 固定尺寸
+### 1.4 固定尺寸（冻结）
+
+> **本布局已冻结，禁止修改。** 所有锚点以 1440×720 设计基准换算，零硬编码。
 
 ```text
 Canvas: 1440×720
 
 BattleWidget:
   w=720, h=180
-  默认 x=360, y=524
+  anchor_left=0.25, anchor_right=0.75
+  anchor_top=0.75, anchor_bottom=1.0（贴底，零边距）
 
-BagPanel:
-  w=720, h=488
-  默认 x=360, y=24
+三栏高度: 530（anchor_top=0.0, anchor_bottom=0.736111）
+三栏间 gap_x=8, gap_y=0
+四边 margin=0，左右贴边
 
-WarehousePanel / HeroPanel:
-  w=336, h=488
-  默认 x=16, y=24
+LeftDockHost:
+  w=352
+  anchor_left=0.0, anchor_right=0.244444
 
-MapPanel / SettingsPanel:
-  w=336, h=488
-  默认 x=1088, y=24
+CenterDockHost:
+  w=720
+  anchor_left=0.25, anchor_right=0.75
 
-gap_x=8, gap_y=12, margin=16
+RightDockHost:
+  w=352
+  anchor_left=0.755556, anchor_right=1.0
 ```
 
-默认三栏总宽：336 + 8 + 720 + 8 + 336 = 1408，左右各留 16px。
+### 1.5 禁止硬编码规则（V2.1 新增）
 
-### 1.5 翻转与让位规则
+所有 UI 布局必须使用锚点比例（anchor）而非硬编码像素（offset），确保在任意分辨率/DPI 下自动适配。
 
-DockLayoutController 统一根据 BattleWidget 位置计算：
+**禁止：**
+- MainRoot 或任何容器节点使用 `offset_right` / `offset_bottom` 写死像素尺寸
+- 使用 `rect_position` / `rect_size` 写死坐标和尺寸
+- 在脚本中用 `Vector2(1440, 720)` 等固定像素值设置节点尺寸
+- 依赖 `get_viewport().size` 在 _ready 中一次性计算后写死
+
+**只允许：**
+- anchor 比例定义位置和尺寸（如 `anchor_right = 0.233333` 表示 23.3333% 宽度）
+- 面板间 gap 用 anchor 间隙表达（如两栏锚点之间留 8/1440 的比例间隙）
+- 四边 margin=0，面板从锚点边界直接定位
+
+**比例基准：**
+- 所有锚点值以 `1440×720` 为设计基准画布换算
+- 例如：352px 面板 = 352/1440 ≈ 0.244444；720px 面板 = 720/1440 = 0.5
+- 8px gap = 8/1440 ≈ 0.005556
+
+### 1.6 翻转与让位规则
 
 - 面板默认在 BattleWidget 上方
 - 上方空间不足时 → 自动翻转到 BattleWidget 下方
 - 左侧空间不足时 → 中心 BagPanel 和右侧面板自动让位
 - 右侧空间不足时 → 中心 BagPanel 和左侧面板自动让位
-- 左右两侧面板都打开时 → 优先使用默认三栏布局：left=16, center=360, right=1088
+- 左右两侧面板都打开时 → 优先使用默认三栏布局：left=0, center=360, right=1088（冻结布局）
 
-### 1.6 职责边界
+### 1.7 职责边界
 
 允许：
 - BattleWidget 发出 open_bag 请求
@@ -141,7 +162,7 @@ DockLayoutController 统一根据 BattleWidget 位置计算：
 - 使用全屏 PageHost 替换 BattleWidget
 - 使用左侧全局 TabBar 切换整页
 
-### 1.7 脚本职责
+### 1.8 脚本职责
 
 | 脚本 | 职责 |
 |---|---|
@@ -155,7 +176,7 @@ DockLayoutController 统一根据 BattleWidget 位置计算：
 | MapPanel | 地图选择显示 |
 | SettingsPanel | 设置项显示 |
 
-### 1.8 交互验收标准
+### 1.9 交互验收标准
 
 F5 验收顺序：
 

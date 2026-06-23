@@ -1,74 +1,79 @@
-[gd_scene load_steps=2 format=3 uid=""]
+[gd_scene format=3 uid="uid://o3avwt23wc0a"]
 
-[ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
+[ext_resource type="Script" uid="uid://behmpiaggys7k" path="res://scripts/main.gd" id="1_main"]
 
-[node name="MainRoot" type="Control"]
+[node name="MainRoot" type="Control" unique_id=1480110373]
 layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 1440.0
-offset_bottom = 720.0
 script = ExtResource("1_main")
 
-[node name="WindowShell" type="Control" parent="."]
-layout_mode = 0
+[node name="WindowShell" type="Control" parent="." unique_id=276432225]
+anchors_preset = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="TransparentCanvas" type="ColorRect" parent="."]
+[node name="TransparentCanvas" type="ColorRect" parent="." unique_id=1980365431]
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color(0, 0, 0, 0)
 mouse_filter = 2
+color = Color(0, 0, 0, 0)
 
-[node name="WindowDragLayer" type="Control" parent="."]
-layout_mode = 0
+[node name="WindowDragLayer" type="Control" parent="." unique_id=1371186568]
+anchors_preset = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="InputRegionManager" type="Control" parent="."]
-layout_mode = 0
+[node name="InputRegionManager" type="Control" parent="." unique_id=641778826]
+anchors_preset = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="DockLayer" type="Control" parent="."]
-layout_mode = 0
+[node name="DockLayer" type="Control" parent="." unique_id=208473673]
+anchors_preset = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="LeftDockHost" type="Control" parent="DockLayer"]
-layout_mode = 0
-anchor_right = 0.2
+[node name="LeftDockHost" type="Control" parent="DockLayer" unique_id=1388571226]
+anchors_preset = 0
+anchor_right = 0.244444
+anchor_top = 0.0
+anchor_bottom = 0.736111
+
+[node name="CenterDockHost" type="Control" parent="DockLayer" unique_id=1662898146]
+anchors_preset = 0
+anchor_left = 0.25
+anchor_right = 0.75
+anchor_top = 0.0
+anchor_bottom = 0.736111
+
+[node name="RightDockHost" type="Control" parent="DockLayer" unique_id=296655247]
+anchors_preset = 0
+anchor_left = 0.755556
+anchor_right = 1.0
+anchor_top = 0.0
+anchor_bottom = 0.736111
+
+[node name="BattleWidget" type="Control" parent="." unique_id=1874158682]
+anchors_preset = 0
+anchor_left = 0.25
+anchor_top = 0.75
+anchor_right = 0.75
 anchor_bottom = 1.0
 
-[node name="CenterDockHost" type="Control" parent="DockLayer"]
+[node name="BootLabel" type="Label" parent="BattleWidget" unique_id=1669386735]
 layout_mode = 0
-anchor_left = 0.2
-anchor_right = 0.8
-anchor_bottom = 1.0
-
-[node name="RightDockHost" type="Control" parent="DockLayer"]
-layout_mode = 0
-anchor_left = 0.8
+anchors_preset = 15
+anchor_left = 0.0
+anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-
-[node name="BattleWidget" type="Control" parent="."]
-layout_mode = 0
-anchor_right = 1.0
-anchor_bottom = 1.0
-
-[node name="BootLabel" type="Label" parent="BattleWidget"]
-layout_mode = 0
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -200.0
-offset_top = -30.0
-offset_right = 200.0
-offset_bottom = 30.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
 text = "冒险者挂机 Boot OK"
 horizontal_alignment = 1
 vertical_alignment = 1
