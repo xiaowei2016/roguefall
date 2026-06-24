@@ -1,111 +1,180 @@
-# ============================================================
-# main.gd - 冒险者挂机 主入口脚本
-# ============================================================
-# 功能：应用启动入口，挂载到场景根节点 MainRoot
-# 所属场景：res://scenes/main.tscn
-# 节点树：MainRoot(Control) → WindowShell / DockLayer / BattleWidget ...
-# 对应文档：docs/ai_project_knowledge/03_冒险者挂机_UI架构与Dock面板决策_V2.md
-# ============================================================
-
-## 继承 Control：作为整个 UI 树的根容器。
-## MainRoot 已在 main.tscn 中设为全屏锚点（anchor 0,0 → 1,1），
-## 尺寸由 project.godot 中 1440×720 决定，子节点用锚点比例自适应。
 extends Control
 
+# 五模式枚举
+enum Mode { BATTLE_ONLY, CENTER_BATTLE, LEFT_CENTER_BATTLE, CENTER_RIGHT_BATTLE, FULL }
 
-# --------------------------------------------------
-# _ready() - 场景就绪回调
-# --------------------------------------------------
-# 【触发时机】场景树构建完毕、所有子节点 _ready 全部执行完成后调用。
-# 【当前功能】打印启动确认信息，验证项目骨架可正常运行。
-# 【后续扩展】在此初始化核心子系统：
-#   - WindowShell：透明窗口属性
-#   - InputRegionManager：鼠标穿透区域计算
-#   - DockLayoutController：面板打开/关闭/位置计算
-#   - BattleWidget：常驻挂机条可见
+var _current_mode := Mode.BATTLE_ONLY
+var _full_size := Vector2i(1440, 720)
+var _compact_size := Vector2i(1080, 180)
+
 func _ready() -> void:
+	# 根节点 mouse_filter=IGNORE 让整个窗口背景穿透
+	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	
+	# 设置原生窗口属性
+	var win := get_window()
+	win.borderless = true
+	win.always_on_top = true
+	win.unresizable = true
+	win.transparent = true
+	win.size = _compact_size
+	win.position = Vector2i(100, 100)
+	# mouse_passthrough 必须 false，否则 polygon 被忽略
+	win.mouse_passthrough = false
+	# 初始 BATTLE_ONLY 模式 polygon
+	_set_passthrough_battle_only()
+	
+	# 信号连接
+	$PanelRoot/BattleBar/Button.pressed.connect(_on_bag_button_pressed)
+	$PanelRoot/CenterPanel/Button.pressed.connect(_on_left_button_pressed)
+	$PanelRoot/CenterPanel/Button2.pressed.connect(_on_right_button_pressed)
+	$PanelRoot/BattleBar/DragHandle.gui_input.connect(_on_drag_handle_input)
+	
 	print("冒险者挂机 Boot OK")
-	# rect 诊断：打印四个关键节点矩形
-	_print_dock_rects()
-	# 输入区域收集诊断（委托给 InputRegionManager 节点）
-	$InputRegionManager.collect_and_print()
-	# 动态穿透探针：根据 CenterDockHost.visible 自适应
-	$InputRegionManager.apply_current_visible_passthrough()
-	# 背包按钮：点击切换 CenterDockHost 可见性
-	$BattleWidget/BagButton.pressed.connect(_on_bag_button_pressed)
-	# 左栏/右栏按钮（在 CenterDebugPanel 内）
-	$DockLayer/CenterDockHost/CenterDebugPanel/LeftButton.pressed.connect(_on_left_button_pressed)
-	$DockLayer/CenterDockHost/CenterDebugPanel/RightButton.pressed.connect(_on_right_button_pressed)
 
-func _print_dock_rects() -> void:
-	var nodes = {
-		"MainRoot": self,
-		"WindowShell": $WindowShell,
-		"TransparentCanvas": $TransparentCanvas,
-		"WindowDragLayer": $WindowDragLayer,
-		"InputRegionManager": $InputRegionManager,
-		"DockLayer": $DockLayer,
-		"LeftDockHost": $DockLayer/LeftDockHost,
-		"CenterDockHost": $DockLayer/CenterDockHost,
-		"RightDockHost": $DockLayer/RightDockHost,
-		"BattleWidget": $BattleWidget,
-		"BootLabel": $BattleWidget/BootLabel,
-	}
-	for name in nodes:
-		var node = nodes[name]
-		var r = node.get_rect()
-		var mf = node.mouse_filter
-		var mf_str = "STOP" if mf == 0 else ("PASS" if mf == 1 else "IGNORE")
-		print("FILTER %s: mf=%d(%s) rect=(%.0f,%.0f,%.0f,%.0f)" % [
-			name, mf, mf_str, r.position.x, r.position.y, r.size.x, r.size.y
-		])
+# --- 拖动 ---
+func _on_drag_handle_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			get_window().start_drag()
 
+# --- 模式切换 ---
+func _apply_mode(mode: Mode) -> void:
+	_current_mode = mode
+	var win := get_window()
+	var panel_root := $PanelRoot
+	var left := panel_root.get_node("LeftPanel")
+	var center := panel_root.get_node("CenterPanel")
+	var right := panel_root.get_node("RightPanel")
+	var battle := panel_root.get_node("BattleBar")
+	
+	match mode:
+		Mode.BATTLE_ONLY:
+			win.size = _compact_size
+			left.visible = false
+			center.visible = false
+			right.visible = false
+			battle.position = Vector2(0, 0)
+			_set_passthrough_battle_only()
+		Mode.CENTER_BATTLE:
+			win.size = _full_size
+			left.visible = false
+			center.visible = true
+			right.visible = false
+			center.position = Vector2(360, 0)
+			battle.position = Vector2(360, 540)
+			_set_passthrough_center_battle()
+		Mode.LEFT_CENTER_BATTLE:
+			win.size = _full_size
+			left.visible = true
+			center.visible = true
+			right.visible = false
+			left.position = Vector2(0, 0)
+			center.position = Vector2(352, 0)
+			battle.position = Vector2(360, 540)
+			_set_passthrough_left_center_battle()
+		Mode.CENTER_RIGHT_BATTLE:
+			win.size = _full_size
+			left.visible = false
+			center.visible = true
+			right.visible = true
+			center.position = Vector2(360, 0)
+			right.position = Vector2(1088, 0)
+			battle.position = Vector2(360, 540)
+			_set_passthrough_center_right_battle()
+		Mode.FULL:
+			win.size = _full_size
+			left.visible = true
+			center.visible = true
+			right.visible = true
+			left.position = Vector2(0, 0)
+			center.position = Vector2(360, 0)
+			right.position = Vector2(1088, 0)
+			battle.position = Vector2(360, 540)
+			_set_passthrough_full()
 
-# --------------------------------------------------
-# _process(delta) - 每帧主循环
-# --------------------------------------------------
-# 【参数】_delta：距上一帧的间隔时间（秒），用于帧率无关的平滑计算。
-# 【当前】空占位，不做任何操作（Godot 要求 _process 不存在的节点
-#   默认不会进入 process 队列；显式写出 allow_empty 便于后续扩展）。
-# 【后续扩展】挂机主循环逻辑：
-#   - 自动战斗计时
-#   - 定时掉落判定
-#   - 经验/金币自动增长
-#   - UI 实时刷新（血条/经验条/金币显示）
-# --------------------------------------------------
-# _on_bag_button_pressed() - 背包按钮点击回调
-# --------------------------------------------------
-# 切换 CenterDockHost 可见性，用于后续验证三栏打开与多区域穿透。
+# --- Polygon 设置（严格只使用 Window.mouse_passthrough_polygon）---
+func _set_passthrough_battle_only() -> void:
+	var poly := PackedVector2Array()
+	# BattleBar 在 compact 窗口 (1080x180) 铺满
+	poly.append(Vector2(0, 0))
+	poly.append(Vector2(1080, 0))
+	poly.append(Vector2(1080, 180))
+	poly.append(Vector2(0, 180))
+	get_window().mouse_passthrough_polygon = poly
+
+func _set_passthrough_center_battle() -> void:
+	var poly := PackedVector2Array()
+	poly.append(Vector2(0, 0))
+	poly.append(Vector2(1440, 0))
+	poly.append(Vector2(1440, 540))
+	poly.append(Vector2(1080, 540))
+	poly.append(Vector2(1080, 720))
+	poly.append(Vector2(360, 720))
+	poly.append(Vector2(360, 540))
+	poly.append(Vector2(0, 540))
+	get_window().mouse_passthrough_polygon = poly
+
+func _set_passthrough_left_center_battle() -> void:
+	var poly := PackedVector2Array()
+	poly.append(Vector2(0, 0))
+	poly.append(Vector2(1440, 0))
+	poly.append(Vector2(1440, 540))
+	poly.append(Vector2(1080, 540))
+	poly.append(Vector2(1080, 720))
+	poly.append(Vector2(360, 720))
+	poly.append(Vector2(360, 540))
+	poly.append(Vector2(0, 540))
+	get_window().mouse_passthrough_polygon = poly
+
+func _set_passthrough_center_right_battle() -> void:
+	var poly := PackedVector2Array()
+	poly.append(Vector2(0, 0))
+	poly.append(Vector2(1440, 0))
+	poly.append(Vector2(1440, 540))
+	poly.append(Vector2(1080, 540))
+	poly.append(Vector2(1080, 720))
+	poly.append(Vector2(360, 720))
+	poly.append(Vector2(360, 540))
+	poly.append(Vector2(0, 540))
+	get_window().mouse_passthrough_polygon = poly
+
+func _set_passthrough_full() -> void:
+	var poly := PackedVector2Array()
+	poly.append(Vector2(0, 0))
+	poly.append(Vector2(1440, 0))
+	poly.append(Vector2(1440, 720))
+	poly.append(Vector2(0, 720))
+	get_window().mouse_passthrough_polygon = poly
+
+# --- 按钮回调 ---
 func _on_bag_button_pressed() -> void:
-	var center = $DockLayer/CenterDockHost
-	center.visible = not center.visible
-	print("BagButton pressed, CenterDockHost visible = %s" % center.visible)
-	# 刷新 passthrough 区域
-	$InputRegionManager.apply_current_visible_passthrough()
+	if _current_mode == Mode.BATTLE_ONLY:
+		_apply_mode(Mode.CENTER_BATTLE)
+	else:
+		_apply_mode(Mode.BATTLE_ONLY)
+	print("BagButton pressed, mode=%d" % _current_mode)
 
-
-# --------------------------------------------------
-# _on_left_button_pressed() - 左栏按钮点击回调
-# --------------------------------------------------
 func _on_left_button_pressed() -> void:
-	var left = $DockLayer/LeftDockHost
-	left.visible = not left.visible
-	print("LeftButton pressed, LeftDockHost visible = %s" % left.visible)
-	$InputRegionManager.apply_current_visible_passthrough()
+	match _current_mode:
+		Mode.CENTER_BATTLE:
+			_apply_mode(Mode.LEFT_CENTER_BATTLE)
+		Mode.CENTER_RIGHT_BATTLE:
+			_apply_mode(Mode.FULL)
+		Mode.LEFT_CENTER_BATTLE:
+			_apply_mode(Mode.CENTER_BATTLE)
+		Mode.FULL:
+			_apply_mode(Mode.CENTER_RIGHT_BATTLE)
+	print("LeftButton pressed, mode=%d" % _current_mode)
 
-
-# --------------------------------------------------
-# _on_right_button_pressed() - 右栏按钮点击回调
-# --------------------------------------------------
 func _on_right_button_pressed() -> void:
-	var right = $DockLayer/RightDockHost
-	right.visible = not right.visible
-	print("RightButton pressed, RightDockHost visible = %s" % right.visible)
-	$InputRegionManager.apply_current_visible_passthrough()
-
-
-# --------------------------------------------------
-# _process(delta) - 每帧主循环
-# --------------------------------------------------
-func _process(_delta: float) -> void:
-	pass
+	match _current_mode:
+		Mode.CENTER_BATTLE:
+			_apply_mode(Mode.CENTER_RIGHT_BATTLE)
+		Mode.LEFT_CENTER_BATTLE:
+			_apply_mode(Mode.FULL)
+		Mode.CENTER_RIGHT_BATTLE:
+			_apply_mode(Mode.CENTER_BATTLE)
+		Mode.FULL:
+			_apply_mode(Mode.LEFT_CENTER_BATTLE)
+	print("RightButton pressed, mode=%d" % _current_mode)
