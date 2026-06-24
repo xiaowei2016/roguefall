@@ -1,25 +1,13 @@
 extends Control
 
-# 布局常量
-const _LEFT_W := 352
-const _LEFT_H := 530
-const _CENTER_W := 720
-const _CENTER_H := 530
-const _RIGHT_W := 352
-const _RIGHT_H := 530
+# === 统一布局常量 ===
 const _BATTLE_W := 720
 const _BATTLE_H := 180
-const _GAP_H := 8
-const _GAP_V := 10
-const _FULL_W := 1440  # _LEFT_W + _RIGHT_W + _CENTER_W + 2*_GAP_H
-const _FULL_H := 720  # _LEFT_H + _BATTLE_H + _GAP_V
-const _COMPACT_W := 1080
-const _COMPACT_H := 180
-
-const _CENTER_X := _LEFT_W + _GAP_H
-const _RIGHT_X := _CENTER_X + _CENTER_W + _GAP_H
-const _BATTLE_X := _LEFT_W + _GAP_H
-const _BATTLE_Y := _LEFT_H + _GAP_V
+const _PANEL_W := 352
+const _PANEL_H := 540
+const _CENTER_W := 720
+const _CENTER_H := 540
+const _GAP := 8
 
 enum Mode { BATTLE_ONLY, CENTER_BATTLE, LEFT_CENTER_BATTLE, CENTER_RIGHT_BATTLE, FULL }
 
@@ -34,7 +22,7 @@ func _ready() -> void:
 	win.always_on_top = true
 	win.unresizable = true
 	win.transparent = true
-	win.size = Vector2i(_COMPACT_W, _COMPACT_H)
+	win.size = Vector2i(_BATTLE_W, _BATTLE_H)
 	win.position = Vector2i(100, 100)
 	win.mouse_passthrough = false
 	
@@ -45,135 +33,191 @@ func _ready() -> void:
 	
 	# 初始化
 	_apply_passthrough()
+	_log_layout()
 	print("冒险者挂机 Boot OK")
 
 
-# --- 原生 polygon：每个模式生成真实 PackedVector2Array ---
+# === Polygon：从可见 Control 的 Rect2 推导，禁止魔法数字 ===
 func _apply_passthrough() -> void:
-	var poly: PackedVector2Array
+	var panel_root := $PanelRoot
+	var rects: Array[Rect2] = []
 	
-	match _current_mode:
-		Mode.BATTLE_ONLY:
-			# BattleBar (0,0)-(BATTLE_W,BATTLE_H) 在紧凑窗口中
-			poly = PackedVector2Array([
-				Vector2(0, 0),
-				Vector2(_BATTLE_W, 0),
-				Vector2(_BATTLE_W, _BATTLE_H),
-				Vector2(0, _BATTLE_H),
-			])
-		Mode.CENTER_BATTLE:
-			# CenterPanel + BattleBar 720×720 @ (_CENTER_X,0)
-			poly = PackedVector2Array([
-				Vector2(_CENTER_X, 0),
-				Vector2(_CENTER_X + _CENTER_W, 0),
-				Vector2(_CENTER_X + _CENTER_W, _FULL_H),
-				Vector2(_CENTER_X, _FULL_H),
-			])
-		Mode.LEFT_CENTER_BATTLE:
-			# 左栏+中栏+底部中间的 L/T 形
-			var center_right := _LEFT_W + _CENTER_W   # 1072
-			var battle_right := _BATTLE_X + _BATTLE_W  # 1080
-			poly = PackedVector2Array([
-				Vector2(0, 0),
-				Vector2(center_right, 0),
-				Vector2(center_right, _LEFT_H),
-				Vector2(battle_right, _LEFT_H),
-				Vector2(battle_right, _FULL_H),
-				Vector2(_BATTLE_X, _FULL_H),
-				Vector2(_BATTLE_X, _LEFT_H),
-				Vector2(0, _LEFT_H),
-			])
-		Mode.CENTER_RIGHT_BATTLE:
-			# 中栏+右栏+底部中间的 L/T 形
-			var battle_right := _BATTLE_X + _BATTLE_W  # 1080
-			poly = PackedVector2Array([
-				Vector2(_CENTER_X, 0),
-				Vector2(_FULL_W, 0),
-				Vector2(_FULL_W, _LEFT_H),
-				Vector2(battle_right, _LEFT_H),
-				Vector2(battle_right, _FULL_H),
-				Vector2(_CENTER_X, _FULL_H),
-			])
-		Mode.FULL:
-			# 三栏顶部 + 底部中间战斗条的 T 形
-			# 形状等价: [(0,0),(1440,0),(1440,540),(1080,540),(1080,720),(360,720),(360,540),(0,540)]
-			var battle_right := _BATTLE_X + _BATTLE_W  # 1080
-			poly = PackedVector2Array([
-				Vector2(0, 0),
-				Vector2(_FULL_W, 0),
-				Vector2(_FULL_W, _BATTLE_Y),
-				Vector2(battle_right, _BATTLE_Y),
-				Vector2(battle_right, _FULL_H),
-				Vector2(_BATTLE_X, _FULL_H),
-				Vector2(_BATTLE_X, _BATTLE_Y),
-				Vector2(0, _BATTLE_Y),
-			])
+	for name in ["LeftPanel", "CenterPanel", "RightPanel", "BattleBar"]:
+		var p := panel_root.get_node(name) as Control
+		if p and p.visible:
+			rects.append(Rect2(p.position, p.size))
 	
+	var poly := _rects_to_polygon(rects)
 	get_window().mouse_passthrough_polygon = poly
+
+
+func _rects_to_polygon(rects: Array[Rect2]) -> PackedVector2Array:
+	if rects.is_empty():
+		return PackedVector2Array()
 	
-	# 日志打印 polygon_points
-	var pts: Array[String] = []
-	for v in poly:
-		pts.append("(%d,%d)" % [int(v.x), int(v.y)])
-	print("PASSTHROUGH mode=%d size=%s polygon_points=[%s]" % [
-		_current_mode, get_window().size, ", ".join(pts)
+	# 单矩形
+	if rects.size() == 1:
+		var r := rects[0]
+		return PackedVector2Array([
+			r.position,
+			Vector2(r.end.x, r.position.y),
+			r.end,
+			Vector2(r.position.x, r.end.y),
+		])
+	
+	# 两矩形且对齐（矩形叠加）：如 CenterBattle
+	if rects.size() == 2:
+		var r1 := rects[0]
+		var r2 := rects[1]
+		if is_equal_approx(r1.position.x, r2.position.x) and is_equal_approx(r1.size.x, r2.size.x):
+			var m := r1.merge(r2)
+			return PackedVector2Array([
+				m.position,
+				Vector2(m.end.x, m.position.y),
+				m.end,
+				Vector2(m.position.x, m.end.y),
+			])
+	
+	# 3+ 矩形：从 panel rects 推导 T/L 形轮廓
+	var merged := rects[0]
+	for i in range(1, rects.size()):
+		merged = merged.merge(rects[i])
+	
+	# 战斗条在面板下方居中 → 多边形有底部凹槽
+	var bb := $PanelRoot/BattleBar as Control
+	var bar_left := bb.position.x
+	var bar_right := bb.position.x + bb.size.x
+	var bar_top := bb.position.y
+	
+	var lx := merged.position.x
+	var rx := merged.end.x
+	var ty := merged.position.y
+	var by := merged.end.y
+	
+	return PackedVector2Array([
+		Vector2(lx, ty),             # 左上
+		Vector2(rx, ty),             # 右上
+		Vector2(rx, bar_top),        # 右侧凹槽上沿
+		Vector2(bar_right, bar_top), # 战斗条右上
+		Vector2(bar_right, by),      # 战斗条右下
+		Vector2(bar_left, by),       # 战斗条左下
+		Vector2(bar_left, bar_top),  # 战斗条左上
+		Vector2(lx, bar_top),        # 左侧凹槽上沿
 	])
 
 
-# --- 模式切换 ---
+# === 屏幕边界限制 ===
+func _clamp_to_screen() -> void:
+	var win := get_window()
+	var screen_i := win.current_screen
+	var screen := DisplayServer.screen_get_usable_rect(screen_i)
+	var pos := win.get_position()
+	var sz := win.get_size()
+	
+	var min_x := screen.position.x
+	var max_x := screen.position.x + screen.size.x - sz.x
+	var min_y := screen.position.y
+	var max_y := screen.position.y + screen.size.y - sz.y
+	
+	pos.x = clampi(pos.x, min_x, max_x)
+	pos.y = clampi(pos.y, min_y, max_y)
+	
+	win.position = pos
+
+
+# === 模式切换 ===
 func _apply_mode(mode: Mode) -> void:
 	_current_mode = mode
 	var win := get_window()
-	var panel_root := $PanelRoot
-	var left := panel_root.get_node("LeftPanel")
-	var center := panel_root.get_node("CenterPanel")
-	var right := panel_root.get_node("RightPanel")
-	var battle := panel_root.get_node("BattleBar")
+	var left := $PanelRoot/LeftPanel
+	var center := $PanelRoot/CenterPanel
+	var right := $PanelRoot/RightPanel
+	var battle := $PanelRoot/BattleBar
 	
 	match mode:
 		Mode.BATTLE_ONLY:
-			win.size = Vector2i(_COMPACT_W, _COMPACT_H)
+			win.size = Vector2i(_BATTLE_W, _BATTLE_H)
 			left.visible = false
 			center.visible = false
 			right.visible = false
 			battle.position = Vector2(0, 0)
+		
 		Mode.CENTER_BATTLE:
-			win.size = Vector2i(_FULL_W, _FULL_H)
+			win.size = Vector2i(_CENTER_W, _CENTER_H + _BATTLE_H)
 			left.visible = false
 			center.visible = true
+			center.position = Vector2(0, 0)
 			right.visible = false
-			center.position = Vector2(_CENTER_X, 0)
-			battle.position = Vector2(_BATTLE_X, _BATTLE_Y)
+			battle.position = Vector2(0, _CENTER_H)
+		
 		Mode.LEFT_CENTER_BATTLE:
-			win.size = Vector2i(_FULL_W, _FULL_H)
+			# center.x = PANEL_W + GAP = 360
+			var cx := _PANEL_W + _GAP
+			win.size = Vector2i(cx + _CENTER_W, _CENTER_H + _BATTLE_H)
 			left.visible = true
-			center.visible = true
-			right.visible = false
 			left.position = Vector2(0, 0)
-			center.position = Vector2(_LEFT_W, 0)
-			battle.position = Vector2(_BATTLE_X, _BATTLE_Y)
+			center.visible = true
+			center.position = Vector2(cx, 0)
+			right.visible = false
+			battle.position = Vector2(cx, _CENTER_H)
+		
 		Mode.CENTER_RIGHT_BATTLE:
-			win.size = Vector2i(_FULL_W, _FULL_H)
+			var rw := _CENTER_W + _GAP + _PANEL_W  # 1080
+			win.size = Vector2i(rw, _CENTER_H + _BATTLE_H)
 			left.visible = false
 			center.visible = true
+			center.position = Vector2(0, 0)
 			right.visible = true
-			center.position = Vector2(_CENTER_X, 0)
-			right.position = Vector2(_RIGHT_X, 0)
-			battle.position = Vector2(_BATTLE_X, _BATTLE_Y)
+			right.position = Vector2(_CENTER_W + _GAP, 0)
+			battle.position = Vector2(0, _CENTER_H)
+		
 		Mode.FULL:
-			win.size = Vector2i(_FULL_W, _FULL_H)
+			var cx := _PANEL_W + _GAP  # 360
+			var rx := cx + _CENTER_W + _GAP  # 1088
+			win.size = Vector2i(rx + _PANEL_W, _CENTER_H + _BATTLE_H)
 			left.visible = true
-			center.visible = true
-			right.visible = true
 			left.position = Vector2(0, 0)
-			center.position = Vector2(_CENTER_X, 0)
-			right.position = Vector2(_RIGHT_X, 0)
-			battle.position = Vector2(_BATTLE_X, _BATTLE_Y)
+			center.visible = true
+			center.position = Vector2(cx, 0)
+			right.visible = true
+			right.position = Vector2(rx, 0)
+			battle.position = Vector2(cx, _CENTER_H)
 	
 	_apply_passthrough()
+	_clamp_to_screen()
+	_log_layout()
 
 
-# --- 按钮回调 ---
+# === 布局日志 ===
+func _log_layout() -> void:
+	var win := get_window()
+	var left := $PanelRoot/LeftPanel
+	var center := $PanelRoot/CenterPanel
+	var right := $PanelRoot/RightPanel
+	var battle := $PanelRoot/BattleBar
+	
+	var parts: Array[String] = []
+	parts.append("mode=%d" % _current_mode)
+	parts.append("window_size=(%d,%d)" % [win.size.x, win.size.y])
+	parts.append("BattleBar=(%d,%d,%d,%d)" % [int(battle.position.x), int(battle.position.y), int(battle.size.x), int(battle.size.y)])
+	if center.visible:
+		parts.append("CenterPanel=(%d,%d,%d,%d)" % [int(center.position.x), int(center.position.y), int(center.size.x), int(center.size.y)])
+	if left.visible:
+		parts.append("LeftPanel=(%d,%d,%d,%d)" % [int(left.position.x), int(left.position.y), int(left.size.x), int(left.size.y)])
+	if right.visible:
+		parts.append("RightPanel=(%d,%d,%d,%d)" % [int(right.position.x), int(right.position.y), int(right.size.x), int(right.size.y)])
+	
+	# Polygon
+	var poly := get_window().mouse_passthrough_polygon
+	var pts: Array[String] = []
+	for v in poly:
+		pts.append("(%d,%d)" % [int(v.x), int(v.y)])
+	parts.append("polygon_points=[%s]" % ", ".join(pts))
+	
+	print("LAYOUT %s" % " | ".join(parts))
+
+
+# === 按钮回调 ===
 func _on_bag_button_pressed() -> void:
 	if _current_mode == Mode.BATTLE_ONLY:
 		_apply_mode(Mode.CENTER_BATTLE)
