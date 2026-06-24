@@ -1,10 +1,10 @@
 extends Window
 
-enum Mode { BATTLE_ONLY, CENTER_BATTLE, LEFT_CENTER_BATTLE, CENTER_RIGHT_BATTLE, FULL }
+enum PanelMode { BATTLE_ONLY, CENTER_BATTLE, LEFT_CENTER_BATTLE, CENTER_RIGHT_BATTLE, FULL }
 
 var _current_mode := -1
 var _save_timer: Timer
-var _is_dragging := false
+var _last_battle_pos := Vector2i()
 
 
 func _ready() -> void:
@@ -41,21 +41,21 @@ func _ready() -> void:
 	_save_timer.timeout.connect(_save_anchor)
 	add_child(_save_timer)
 
-	# 监听 BattleWindow 位置变化
-	battle.position_changed.connect(_on_battle_position_changed)
-
 	# 应用初始模式
-	_apply_mode(Mode.BATTLE_ONLY)
+	_apply_mode(PanelMode.BATTLE_ONLY)
 	_load_anchor()
+
+	_last_battle_pos = battle.position
 
 	print("冒险者多窗挂机 Boot OK")
 
 
-func _on_battle_position_changed() -> void:
-	if _is_dragging:
-		return
-	_reposition_windows()
-	_save_timer.start()
+func _process(_delta: float) -> void:
+	var battle := $BattleWindow as Window
+	if battle.position != _last_battle_pos:
+		_last_battle_pos = battle.position
+		_reposition_windows()
+		_save_timer.start()
 
 
 func _reposition_windows() -> void:
@@ -73,7 +73,7 @@ func _reposition_windows() -> void:
 		right.position = center.position + Vector2i(center.size.x, 0)
 
 
-func _apply_mode(mode: Mode) -> void:
+func _apply_mode(mode: PanelMode) -> void:
 	if mode == _current_mode:
 		return
 	_current_mode = mode
@@ -84,27 +84,27 @@ func _apply_mode(mode: Mode) -> void:
 	var right := $RightWindow as Window
 
 	match mode:
-		Mode.BATTLE_ONLY:
+		PanelMode.BATTLE_ONLY:
 			battle.show()
 			center.hide()
 			left.hide()
 			right.hide()
-		Mode.CENTER_BATTLE:
+		PanelMode.CENTER_BATTLE:
 			battle.show()
 			center.show()
 			left.hide()
 			right.hide()
-		Mode.LEFT_CENTER_BATTLE:
+		PanelMode.LEFT_CENTER_BATTLE:
 			battle.show()
 			center.show()
 			left.show()
 			right.hide()
-		Mode.CENTER_RIGHT_BATTLE:
+		PanelMode.CENTER_RIGHT_BATTLE:
 			battle.show()
 			center.show()
 			left.hide()
 			right.show()
-		Mode.FULL:
+		PanelMode.FULL:
 			battle.show()
 			center.show()
 			left.show()
@@ -143,10 +143,10 @@ func _load_anchor() -> bool:
 	var config := ConfigFile.new()
 	if config.load("user://window.cfg") != OK:
 		return false
-	var bx = config.get_value("window", "battle_x", null)
-	var by = config.get_value("window", "battle_y", null)
-	if bx == null or by == null:
+	if not config.has_section_key("window", "battle_x"):
 		return false
+	var bx = config.get_value("window", "battle_x", 0)
+	var by = config.get_value("window", "battle_y", 0)
 	battle.position = Vector2i(int(bx), int(by))
 	_reposition_windows()
 	print("LOAD battle_pos=(%d,%d)" % [battle.position.x, battle.position.y])
@@ -154,23 +154,23 @@ func _load_anchor() -> bool:
 
 
 func _on_bag_button_pressed() -> void:
-	if _current_mode == Mode.BATTLE_ONLY:
-		_apply_mode(Mode.CENTER_BATTLE)
+	if _current_mode == PanelMode.BATTLE_ONLY:
+		_apply_mode(PanelMode.CENTER_BATTLE)
 	else:
-		_apply_mode(Mode.BATTLE_ONLY)
+		_apply_mode(PanelMode.BATTLE_ONLY)
 
 
 func _on_left_button_pressed() -> void:
 	match _current_mode:
-		Mode.CENTER_BATTLE: _apply_mode(Mode.LEFT_CENTER_BATTLE)
-		Mode.CENTER_RIGHT_BATTLE: _apply_mode(Mode.FULL)
-		Mode.LEFT_CENTER_BATTLE: _apply_mode(Mode.CENTER_BATTLE)
-		Mode.FULL: _apply_mode(Mode.CENTER_RIGHT_BATTLE)
+		PanelMode.CENTER_BATTLE: _apply_mode(PanelMode.LEFT_CENTER_BATTLE)
+		PanelMode.CENTER_RIGHT_BATTLE: _apply_mode(PanelMode.FULL)
+		PanelMode.LEFT_CENTER_BATTLE: _apply_mode(PanelMode.CENTER_BATTLE)
+		PanelMode.FULL: _apply_mode(PanelMode.CENTER_RIGHT_BATTLE)
 
 
 func _on_right_button_pressed() -> void:
 	match _current_mode:
-		Mode.CENTER_BATTLE: _apply_mode(Mode.CENTER_RIGHT_BATTLE)
-		Mode.LEFT_CENTER_BATTLE: _apply_mode(Mode.FULL)
-		Mode.CENTER_RIGHT_BATTLE: _apply_mode(Mode.CENTER_BATTLE)
-		Mode.FULL: _apply_mode(Mode.LEFT_CENTER_BATTLE)
+		PanelMode.CENTER_BATTLE: _apply_mode(PanelMode.CENTER_RIGHT_BATTLE)
+		PanelMode.LEFT_CENTER_BATTLE: _apply_mode(PanelMode.FULL)
+		PanelMode.CENTER_RIGHT_BATTLE: _apply_mode(PanelMode.CENTER_BATTLE)
+		PanelMode.FULL: _apply_mode(PanelMode.LEFT_CENTER_BATTLE)
