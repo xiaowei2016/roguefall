@@ -11,7 +11,8 @@ const _GAP := 8
 
 enum Mode { BATTLE_ONLY, CENTER_BATTLE, LEFT_CENTER_BATTLE, CENTER_RIGHT_BATTLE, FULL }
 
-var _current_mode := Mode.BATTLE_ONLY
+var _current_mode := -1
+var _save_timer: Timer
 
 
 func _ready() -> void:
@@ -31,9 +32,17 @@ func _ready() -> void:
 	$PanelRoot/CenterPanel/Button.pressed.connect(_on_left_button_pressed)
 	$PanelRoot/CenterPanel/Button2.pressed.connect(_on_right_button_pressed)
 	
-	# 初始化
-	_apply_passthrough()
-	_log_layout()
+	# 防抖保存 Timer
+	_save_timer = Timer.new()
+	_save_timer.one_shot = true
+	_save_timer.wait_time = 0.3
+	_save_timer.timeout.connect(_save_anchor)
+	add_child(_save_timer)
+	
+	# 先应用 BattleOnly 布局，再加载保存的 BattleBar 锚点
+	_apply_mode(Mode.BATTLE_ONLY)
+	_load_anchor()
+	
 	print("冒险者挂机 Boot OK")
 
 
@@ -125,8 +134,55 @@ func _clamp_to_screen() -> void:
 	win.position = pos
 
 
+# === 窗口通知：移动后防抖保存，关闭时立即保存 ===
+func _notification(what: int) -> void:
+	if what == Window.NOTIFICATION_WM_POSITION_CHANGED:
+		_save_timer.start()
+	elif what == Window.NOTIFICATION_WM_CLOSE_REQUEST:
+		_save_anchor()
+		get_tree().quit()
+
+
+# === 保存 BattleBar 屏幕锚点到 user://window.cfg ===
+func _save_anchor() -> void:
+	var win := get_window()
+	var battle := $PanelRoot/BattleBar
+	var anchor: Vector2i = win.position + Vector2i(battle.position)
+	
+	var config := ConfigFile.new()
+	config.set_value("window", "battle_anchor_x", anchor.x)
+	config.set_value("window", "battle_anchor_y", anchor.y)
+	config.save("user://window.cfg")
+	print("SAVE anchor=(%d,%d)" % [anchor.x, anchor.y])
+
+
+# === 从 user://window.cfg 恢复 BattleBar 屏幕锚点 ===
+func _load_anchor() -> bool:
+	var config := ConfigFile.new()
+	var err := config.load("user://window.cfg")
+	if err != OK:
+		return false
+	
+	var ax = config.get_value("window", "battle_anchor_x", null)
+	var ay = config.get_value("window", "battle_anchor_y", null)
+	if ax == null or ay == null:
+		return false
+	
+	var saved_anchor := Vector2i(int(ax), int(ay))
+	var battle_pos := Vector2i($PanelRoot/BattleBar.position)
+	var win := get_window()
+	win.position = saved_anchor - battle_pos
+	
+	_clamp_to_screen()
+	print("LOAD anchor=(%d,%d) window_pos=(%d,%d)" % [saved_anchor.x, saved_anchor.y, win.position.x, win.position.y])
+	return true
+
+
 # === 模式切换 ===
 func _apply_mode(mode: Mode) -> void:
+	if mode == _current_mode:
+		print("MODE apply once mode=%d" % mode)
+		return
 	_current_mode = mode
 	var win := get_window()
 	var left := $PanelRoot/LeftPanel
@@ -135,7 +191,7 @@ func _apply_mode(mode: Mode) -> void:
 	var battle := $PanelRoot/BattleBar
 	
 	# 记录切换前 BattleBar 在屏幕上的锚点
-	var old_anchor := win.position + battle.position
+	var old_anchor: Vector2i = win.position + Vector2i(battle.position)
 	
 	match mode:
 		Mode.BATTLE_ONLY:
@@ -187,8 +243,8 @@ func _apply_mode(mode: Mode) -> void:
 			battle.position = Vector2(cx, _CENTER_H)
 	
 	# 锚点补偿：确保 BattleBar 在屏幕上位置不跳
-	var new_anchor := win.position + battle.position
-	var delta := old_anchor - new_anchor
+	var new_anchor: Vector2i = win.position + Vector2i(battle.position)
+	var delta: Vector2i = old_anchor - new_anchor
 	if delta != Vector2i.ZERO:
 		win.position += delta
 	
