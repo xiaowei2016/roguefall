@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://o3avwt23wc0a"]
 
 [ext_resource type="Script" uid="uid://db8jxldbu8llm" path="res://scripts/main.gd" id="1_main"]
+[ext_resource type="Script" uid="uid://dcvf0nwgq5fvh" path="res://scripts/input_region_manager.gd" id="2_irm_script"]
 
 [node name="MainRoot" type="Control" unique_id=1480110373]
 layout_mode = 3
@@ -34,6 +35,7 @@ anchors_preset = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
+script = ExtResource("2_irm_script")
 
 [node name="DockLayer" type="Control" parent="." unique_id=208473673]
 anchors_preset = 0

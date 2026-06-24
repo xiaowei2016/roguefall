@@ -27,8 +27,8 @@ func _ready() -> void:
 	print("冒险者挂机 Boot OK")
 	# rect 诊断：打印四个关键节点矩形
 	_print_dock_rects()
-	# 输入区域收集诊断
-	_print_input_region_collection()
+	# 输入区域收集诊断（委托给 InputRegionManager 节点）
+	$InputRegionManager.collect_and_print()
 
 func _print_dock_rects() -> void:
 	var nodes = {
@@ -52,66 +52,6 @@ func _print_dock_rects() -> void:
 		print("FILTER %s: mf=%d(%s) rect=(%.0f,%.0f,%.0f,%.0f)" % [
 			name, mf, mf_str, r.position.x, r.position.y, r.size.x, r.size.y
 		])
-
-
-# --------------------------------------------------
-# _print_input_region_collection() - IRM 诊断
-# --------------------------------------------------
-# 收集真实交互区 rect 并打印，验证全屏容器未被误收。
-# 收集规则：
-#   ✅ 只收集 visible=true 且 mouse_filter != IGNORE 的节点
-#   ❌ 显式排除全屏结构层：MainRoot / WindowShell / TransparentCanvas
-#      / WindowDragLayer / InputRegionManager / DockLayer / BootLabel
-func _print_input_region_collection() -> void:
-	print("--- InputRegionManager rect collection ---")
-
-	var candidate_paths := [
-		"DockLayer/LeftDockHost",
-		"DockLayer/CenterDockHost",
-		"DockLayer/RightDockHost",
-		"BattleWidget",
-	]
-
-	var rects: Array[Rect2] = []
-
-	for path in candidate_paths:
-		var node = get_node_or_null(path) as Control
-		if not node:
-			print("IRM WARN: node not found at %s" % path)
-			continue
-		if not node.visible:
-			print("IRM SKIP %s: not visible" % node.name)
-			continue
-		if node.mouse_filter == Control.MOUSE_FILTER_IGNORE:
-			print("IRM SKIP %s: mouse_filter=IGNORE" % node.name)
-			continue
-
-		var r = node.get_global_rect()
-		rects.append(r)
-
-	print("IRM collected %d interactive rect(s):" % rects.size())
-	for i in rects.size():
-		var r = rects[i]
-		var area = r.size.x * r.size.y
-		print("  [%d] pos=(%.0f,%.0f) size=(%.0f,%.0f) area=%.0f" % [
-			i, r.position.x, r.position.y, r.size.x, r.size.y, area
-		])
-
-	# 安全检查：是否存在全屏误收
-	for i in rects.size():
-		var r = rects[i]
-		if r.size.x >= 1440 and r.size.y >= 720:
-			push_error("IRM FATAL: rect[%d] is fullscreen (%.0f×%.0f)! Should be excluded." % [
-				i, r.size.x, r.size.y
-			])
-		if r.size.x <= 1 or r.size.y <= 1:
-			push_warning("IRM WARN: rect[%d] is degenerate (%.0f×%.0f)." % [
-				i, r.size.x, r.size.y
-			])
-
-	if rects.size() == 0:
-		push_warning("IRM WARN: zero interactive rects collected.")
-	print("--- InputRegionManager done ---")
 
 
 # --------------------------------------------------
