@@ -1,10 +1,30 @@
 extends Control
 
+# 布局常量
+const _LEFT_W := 352
+const _LEFT_H := 530
+const _CENTER_W := 720
+const _CENTER_H := 530
+const _RIGHT_W := 352
+const _RIGHT_H := 530
+const _BATTLE_W := 720
+const _BATTLE_H := 180
+const _GAP_H := 8
+const _GAP_V := 10
+const _FULL_W := 1440  # _LEFT_W + _RIGHT_W + _CENTER_W + 2*_GAP_H
+const _FULL_H := 720  # _LEFT_H + _BATTLE_H + _GAP_V
+const _COMPACT_W := 1080
+const _COMPACT_H := 180
+
+const _CENTER_X := _LEFT_W + _GAP_H
+const _RIGHT_X := _CENTER_X + _CENTER_W + _GAP_H
+const _BATTLE_X := _LEFT_W + _GAP_H
+const _BATTLE_Y := _LEFT_H + _GAP_V
+
 enum Mode { BATTLE_ONLY, CENTER_BATTLE, LEFT_CENTER_BATTLE, CENTER_RIGHT_BATTLE, FULL }
 
 var _current_mode := Mode.BATTLE_ONLY
-var _full_size := Vector2i(1440, 720)
-var _compact_size := Vector2i(1080, 180)
+
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -14,65 +34,91 @@ func _ready() -> void:
 	win.always_on_top = true
 	win.unresizable = true
 	win.transparent = true
-	win.size = _compact_size
+	win.size = Vector2i(_COMPACT_W, _COMPACT_H)
 	win.position = Vector2i(100, 100)
 	win.mouse_passthrough = false
-	
-	# 确保 DragHandle 可接收事件，ColorRect 不拦截
-	var dh := $PanelRoot/BattleBar/DragHandle
-	dh.mouse_filter = Control.MOUSE_FILTER_STOP
-	dh.get_node("ColorRect").mouse_filter = Control.MOUSE_FILTER_IGNORE
 	
 	# 信号连接
 	$PanelRoot/BattleBar/Button.pressed.connect(_on_bag_button_pressed)
 	$PanelRoot/CenterPanel/Button.pressed.connect(_on_left_button_pressed)
 	$PanelRoot/CenterPanel/Button2.pressed.connect(_on_right_button_pressed)
-	$PanelRoot/BattleBar/DragHandle.gui_input.connect(_on_drag_handle_input)
 	
-	# 初始 polygon
+	# 初始化
 	_apply_passthrough()
 	print("冒险者挂机 Boot OK")
 
-# --- 拖动（仅用原生 start_drag）---
-func _on_drag_handle_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-			get_window().start_drag()
 
-# --- 统一 polygon 构建：从 visible 面板 Rect2 包围盒推导 ---
+# --- 原生 polygon：每个模式生成真实 PackedVector2Array ---
 func _apply_passthrough() -> void:
-	var panel_root := $PanelRoot
-	var rects: Array[Rect2] = []
+	var poly: PackedVector2Array
 	
-	for panel_name in ["LeftPanel", "CenterPanel", "RightPanel", "BattleBar"]:
-		var panel := panel_root.get_node(panel_name) as Control
-		if panel and panel.visible:
-			rects.append(panel.get_rect())
-	
-	if rects.is_empty():
-		return
-	
-	var merged := rects[0]
-	for i in range(1, rects.size()):
-		merged = merged.merge(rects[i])
-	
-	var poly := PackedVector2Array()
-	poly.append(merged.position)
-	poly.append(Vector2(merged.end.x, merged.position.y))
-	poly.append(merged.end)
-	poly.append(Vector2(merged.position.x, merged.end.y))
+	match _current_mode:
+		Mode.BATTLE_ONLY:
+			# BattleBar (0,0)-(BATTLE_W,BATTLE_H) 在紧凑窗口中
+			poly = PackedVector2Array([
+				Vector2(0, 0),
+				Vector2(_BATTLE_W, 0),
+				Vector2(_BATTLE_W, _BATTLE_H),
+				Vector2(0, _BATTLE_H),
+			])
+		Mode.CENTER_BATTLE:
+			# CenterPanel + BattleBar 720×720 @ (_CENTER_X,0)
+			poly = PackedVector2Array([
+				Vector2(_CENTER_X, 0),
+				Vector2(_CENTER_X + _CENTER_W, 0),
+				Vector2(_CENTER_X + _CENTER_W, _FULL_H),
+				Vector2(_CENTER_X, _FULL_H),
+			])
+		Mode.LEFT_CENTER_BATTLE:
+			# 左栏+中栏+底部中间的 L/T 形
+			var center_right := _LEFT_W + _CENTER_W   # 1072
+			var battle_right := _BATTLE_X + _BATTLE_W  # 1080
+			poly = PackedVector2Array([
+				Vector2(0, 0),
+				Vector2(center_right, 0),
+				Vector2(center_right, _LEFT_H),
+				Vector2(battle_right, _LEFT_H),
+				Vector2(battle_right, _FULL_H),
+				Vector2(_BATTLE_X, _FULL_H),
+				Vector2(_BATTLE_X, _LEFT_H),
+				Vector2(0, _LEFT_H),
+			])
+		Mode.CENTER_RIGHT_BATTLE:
+			# 中栏+右栏+底部中间的 L/T 形
+			var battle_right := _BATTLE_X + _BATTLE_W  # 1080
+			poly = PackedVector2Array([
+				Vector2(_CENTER_X, 0),
+				Vector2(_FULL_W, 0),
+				Vector2(_FULL_W, _LEFT_H),
+				Vector2(battle_right, _LEFT_H),
+				Vector2(battle_right, _FULL_H),
+				Vector2(_CENTER_X, _FULL_H),
+			])
+		Mode.FULL:
+			# 三栏顶部 + 底部中间战斗条的 T 形
+			# 形状等价: [(0,0),(1440,0),(1440,540),(1080,540),(1080,720),(360,720),(360,540),(0,540)]
+			var battle_right := _BATTLE_X + _BATTLE_W  # 1080
+			poly = PackedVector2Array([
+				Vector2(0, 0),
+				Vector2(_FULL_W, 0),
+				Vector2(_FULL_W, _BATTLE_Y),
+				Vector2(battle_right, _BATTLE_Y),
+				Vector2(battle_right, _FULL_H),
+				Vector2(_BATTLE_X, _FULL_H),
+				Vector2(_BATTLE_X, _BATTLE_Y),
+				Vector2(0, _BATTLE_Y),
+			])
 	
 	get_window().mouse_passthrough_polygon = poly
 	
-	# 调试日志
-	var panel_names: Array[String] = []
-	for panel_name in ["LeftPanel", "CenterPanel", "RightPanel", "BattleBar"]:
-		var p := panel_root.get_node(panel_name) as Control
-		if p and p.visible:
-			panel_names.append(panel_name)
-	print("PASSTHROUGH mode=%d size=%s panels=%s poly_rect=%s" % [
-		_current_mode, get_window().size, ", ".join(panel_names), merged
+	# 日志打印 polygon_points
+	var pts: Array[String] = []
+	for v in poly:
+		pts.append("(%d,%d)" % [int(v.x), int(v.y)])
+	print("PASSTHROUGH mode=%d size=%s polygon_points=[%s]" % [
+		_current_mode, get_window().size, ", ".join(pts)
 	])
+
 
 # --- 模式切换 ---
 func _apply_mode(mode: Mode) -> void:
@@ -86,45 +132,46 @@ func _apply_mode(mode: Mode) -> void:
 	
 	match mode:
 		Mode.BATTLE_ONLY:
-			win.size = _compact_size
+			win.size = Vector2i(_COMPACT_W, _COMPACT_H)
 			left.visible = false
 			center.visible = false
 			right.visible = false
 			battle.position = Vector2(0, 0)
 		Mode.CENTER_BATTLE:
-			win.size = _full_size
+			win.size = Vector2i(_FULL_W, _FULL_H)
 			left.visible = false
 			center.visible = true
 			right.visible = false
-			center.position = Vector2(360, 0)
-			battle.position = Vector2(360, 540)
+			center.position = Vector2(_CENTER_X, 0)
+			battle.position = Vector2(_BATTLE_X, _BATTLE_Y)
 		Mode.LEFT_CENTER_BATTLE:
-			win.size = _full_size
+			win.size = Vector2i(_FULL_W, _FULL_H)
 			left.visible = true
 			center.visible = true
 			right.visible = false
 			left.position = Vector2(0, 0)
-			center.position = Vector2(352, 0)
-			battle.position = Vector2(360, 540)
+			center.position = Vector2(_LEFT_W, 0)
+			battle.position = Vector2(_BATTLE_X, _BATTLE_Y)
 		Mode.CENTER_RIGHT_BATTLE:
-			win.size = _full_size
+			win.size = Vector2i(_FULL_W, _FULL_H)
 			left.visible = false
 			center.visible = true
 			right.visible = true
-			center.position = Vector2(360, 0)
-			right.position = Vector2(1088, 0)
-			battle.position = Vector2(360, 540)
+			center.position = Vector2(_CENTER_X, 0)
+			right.position = Vector2(_RIGHT_X, 0)
+			battle.position = Vector2(_BATTLE_X, _BATTLE_Y)
 		Mode.FULL:
-			win.size = _full_size
+			win.size = Vector2i(_FULL_W, _FULL_H)
 			left.visible = true
 			center.visible = true
 			right.visible = true
 			left.position = Vector2(0, 0)
-			center.position = Vector2(360, 0)
-			right.position = Vector2(1088, 0)
-			battle.position = Vector2(360, 540)
+			center.position = Vector2(_CENTER_X, 0)
+			right.position = Vector2(_RIGHT_X, 0)
+			battle.position = Vector2(_BATTLE_X, _BATTLE_Y)
 	
 	_apply_passthrough()
+
 
 # --- 按钮回调 ---
 func _on_bag_button_pressed() -> void:
