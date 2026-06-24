@@ -1,7 +1,7 @@
 # ============================================================
-# input_region_manager.gd - 鼠标穿透区域收集器（诊断版）
+# input_region_manager.gd - 鼠标穿透区域管理器
 # ============================================================
-# 功能：收集真实交互区 rect，诊断打印，不调用 DisplayServer 穿透 API。
+# 功能：收集真实交互区 rect，诊断打印，管理鼠标穿透区域。
 # 所属场景：res://scenes/main.tscn → InputRegionManager 节点
 # 对应文档：docs/ai_project_knowledge/03_冒险者挂机_UI架构与Dock面板决策_V2.md
 # ============================================================
@@ -75,3 +75,34 @@ func collect_and_print() -> void:
 	if rects.size() == 0:
 		push_warning("IRM WARN: zero interactive rects collected.")
 	print("--- InputRegionManager done ---")
+
+
+# --------------------------------------------------
+# apply_single_battle_widget_passthrough()
+# --------------------------------------------------
+# 单矩形穿透探针：仅将 BattleWidget 区域设为鼠标接收区，
+# 其余窗口区域穿透到底层桌面。
+# API 语义：DisplayServer.window_set_mouse_passthrough(polygon)
+#   传入 polygon 为"接受鼠标事件"区域，polygon 外穿透。
+func apply_single_battle_widget_passthrough() -> void:
+	var bw = get_node_or_null("../BattleWidget") as Control
+	if not bw:
+		push_error("IRM PASSTHROUGH: BattleWidget not found")
+		return
+
+	var global_rect: Rect2 = bw.get_global_rect()
+	print("IRM PASSTHROUGH: BattleWidget global_rect = pos(%d,%d) size(%d,%d)" % [
+		int(global_rect.position.x), int(global_rect.position.y),
+		int(global_rect.size.x), int(global_rect.size.y)
+	])
+
+	# 将 Rect2 转为 4 顶点 polygon（左上 → 右上 → 右下 → 左下）
+	var poly := PackedVector2Array()
+	poly.append(Vector2(global_rect.position.x, global_rect.position.y))
+	poly.append(Vector2(global_rect.position.x + global_rect.size.x, global_rect.position.y))
+	poly.append(Vector2(global_rect.position.x + global_rect.size.x, global_rect.position.y + global_rect.size.y))
+	poly.append(Vector2(global_rect.position.x, global_rect.position.y + global_rect.size.y))
+
+	print("IRM PASSTHROUGH: polygon = %s" % poly)
+	DisplayServer.window_set_mouse_passthrough(poly)
+	print("IRM PASSTHROUGH: applied to window 0")

@@ -29,6 +29,8 @@ func _ready() -> void:
 	_print_dock_rects()
 	# 输入区域收集诊断（委托给 InputRegionManager 节点）
 	$InputRegionManager.collect_and_print()
+	# 单矩形穿透探针：仅 BattleWidget 接收鼠标
+	$InputRegionManager.apply_single_battle_widget_passthrough()
 
 func _print_dock_rects() -> void:
 	var nodes = {
