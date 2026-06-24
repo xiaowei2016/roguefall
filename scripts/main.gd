@@ -25,6 +25,23 @@ extends Control
 #   - BattleWidget：常驻挂机条可见
 func _ready() -> void:
 	print("冒险者挂机 Boot OK")
+	# rect 诊断：打印四个关键节点矩形
+	_print_dock_rects()
+
+func _print_dock_rects() -> void:
+	var nodes = {
+		"LeftDockHost": $DockLayer/LeftDockHost,
+		"CenterDockHost": $DockLayer/CenterDockHost,
+		"RightDockHost": $DockLayer/RightDockHost,
+		"BattleWidget": $BattleWidget,
+	}
+	for name in nodes:
+		var node = nodes[name]
+		var r = node.get_rect()
+		print("RECT %s: pos=(%.1f,%.1f) size=(%.1f,%.1f) offset=(%.1f,%.1f,%.1f,%.1f)" % [
+			name, r.position.x, r.position.y, r.size.x, r.size.y,
+			node.offset_left, node.offset_top, node.offset_right, node.offset_bottom
+		])
 
 
 # --------------------------------------------------
