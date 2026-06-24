@@ -129,9 +129,10 @@ func apply_center_battle_passthrough() -> void:
 # --------------------------------------------------
 # apply_current_visible_passthrough()
 # --------------------------------------------------
-# 动态穿透探针：根据 Left/Center/RightDockHost.visible 选择 polygon。
-#   BATTLE_ONLY:       仅 BattleWidget (360,540)-(1080,720)
-#   CENTER_BATTLE:     Center + Battle (360,0)-(1080,720)
+# 动态穿透探针：基于节点当前 get_global_rect() 生成 polygon，
+# 不写死硬编码坐标。拖动 BattleWidget 后 polygon 自动跟随。
+#   BATTLE_ONLY:       仅 BattleWidget
+#   CENTER_BATTLE:     Center + Battle 连续矩形
 #   LEFT_CENTER_BATTLE:  Left+Center+Battle T形
 #   CENTER_RIGHT_BATTLE: Center+Right+Battle T形
 #   FULL_T:             全三栏+Battle T形
@@ -139,56 +140,91 @@ func apply_current_visible_passthrough() -> void:
 	var left = get_node_or_null("../DockLayer/LeftDockHost") as Control
 	var center = get_node_or_null("../DockLayer/CenterDockHost") as Control
 	var right = get_node_or_null("../DockLayer/RightDockHost") as Control
+	var battle = get_node_or_null("../BattleWidget") as Control
 
 	var lv: bool = left != null and left.visible
 	var cv: bool = center != null and center.visible
 	var rv: bool = right != null and right.visible
 
+	# 实际全局矩形
+	var top_rect := Rect2()
+	if lv: top_rect = top_rect.merge(left.get_global_rect())
+	if cv: top_rect = top_rect.merge(center.get_global_rect())
+	if rv: top_rect = top_rect.merge(right.get_global_rect())
+
+	var battle_rect := Rect2()
+	if battle:
+		battle_rect = battle.get_global_rect()
+
 	var poly := PackedVector2Array()
+	var mode_name := "BATTLE_ONLY"
 
-	if lv and cv and rv:
-		# FULL_T: top x=0..1440,y=0..530 + bottom x=360..1080,y=530..720
-		poly.append(Vector2(0, 0))
-		poly.append(Vector2(1440, 0))
-		poly.append(Vector2(1440, 530))
-		poly.append(Vector2(1080, 530))
-		poly.append(Vector2(1080, 720))
-		poly.append(Vector2(360, 720))
-		poly.append(Vector2(360, 530))
-		poly.append(Vector2(0, 530))
-		print("IRM PASSTHROUGH: mode=FULL_T polygon=%s" % poly)
-	elif lv and cv:
-		# LEFT_CENTER_BATTLE: top x=0..1080,y=0..530 + bottom x=360..1080,y=530..720
-		poly.append(Vector2(0, 0))
-		poly.append(Vector2(1080, 0))
-		poly.append(Vector2(1080, 720))
-		poly.append(Vector2(360, 720))
-		poly.append(Vector2(360, 530))
-		poly.append(Vector2(0, 530))
-		print("IRM PASSTHROUGH: mode=LEFT_CENTER_BATTLE polygon=%s" % poly)
-	elif cv and rv:
-		# CENTER_RIGHT_BATTLE: top x=360..1440,y=0..530 + bottom x=360..1080,y=530..720
-		poly.append(Vector2(360, 0))
-		poly.append(Vector2(1440, 0))
-		poly.append(Vector2(1440, 530))
-		poly.append(Vector2(1080, 530))
-		poly.append(Vector2(1080, 720))
-		poly.append(Vector2(360, 720))
-		print("IRM PASSTHROUGH: mode=CENTER_RIGHT_BATTLE polygon=%s" % poly)
-	elif cv:
-		# CENTER_BATTLE: (360,0)→(1080,0)→(1080,720)→(360,720)
-		poly.append(Vector2(360, 0))
-		poly.append(Vector2(1080, 0))
-		poly.append(Vector2(1080, 720))
-		poly.append(Vector2(360, 720))
-		print("IRM PASSTHROUGH: mode=CENTER_BATTLE polygon=%s" % poly)
+	var any_top: bool = lv or cv or rv
+	var has_side: bool = lv or rv  # at least one side dock visible (T-shape needs stem extension)
+
+	if any_top and battle_rect.has_area() and has_side:
+		# T形：top bar + battle stem
+		var tlx := top_rect.position.x
+		var tly := top_rect.position.y
+		var trx := top_rect.end.x
+		var try_ := top_rect.end.y
+		var blx := battle_rect.position.x
+		var bly := battle_rect.position.y
+		var brx := battle_rect.end.x
+		var bry := battle_rect.end.y
+
+		poly.append(Vector2(tlx, tly))
+		poly.append(Vector2(trx, tly))
+
+		if brx < trx:
+			# stem indented from right → step in before descending
+			poly.append(Vector2(trx, try_))
+			poly.append(Vector2(brx, try_))
+		poly.append(Vector2(brx, bry))
+		poly.append(Vector2(blx, bry))
+
+		if blx > tlx:
+			# stem indented from left → step in before ascending
+			poly.append(Vector2(blx, try_))
+			poly.append(Vector2(tlx, try_))
+
+		if lv and cv and rv:
+			mode_name = "FULL_T"
+		elif lv:
+			mode_name = "LEFT_CENTER_BATTLE"
+		else:
+			mode_name = "CENTER_RIGHT_BATTLE"
+
+	elif cv and battle_rect.has_area():
+		# CENTER_BATTLE: Center 已通过布局跟随 Battle，两矩形相邻取最小连续矩形
+		var center_rect := center.get_global_rect()
+		var ur := center_rect.merge(battle_rect)
+		poly.append(ur.position)
+		poly.append(Vector2(ur.end.x, ur.position.y))
+		poly.append(ur.end)
+		poly.append(Vector2(ur.position.x, ur.end.y))
+		mode_name = "CENTER_BATTLE"
+		print("IRM PASSTHROUGH: battle_rect=(%.0f,%.0f,%.0f,%.0f) center_rect=(%.0f,%.0f,%.0f,%.0f)" % [
+			battle_rect.position.x, battle_rect.position.y,
+			battle_rect.size.x, battle_rect.size.y,
+			center_rect.position.x, center_rect.position.y,
+			center_rect.size.x, center_rect.size.y,
+		])
+		print("IRM PASSTHROUGH: center=%s" % (
+			"above" if center_rect.position.y < battle_rect.position.y else "below"
+		))
+
+	elif battle_rect.has_area():
+		# BATTLE_ONLY
+		poly.append(battle_rect.position)
+		poly.append(Vector2(battle_rect.end.x, battle_rect.position.y))
+		poly.append(battle_rect.end)
+		poly.append(Vector2(battle_rect.position.x, battle_rect.end.y))
+		mode_name = "BATTLE_ONLY"
+
 	else:
-		# BATTLE_ONLY: (360,540)→(1080,540)→(1080,720)→(360,720)
-		poly.append(Vector2(360, 540))
-		poly.append(Vector2(1080, 540))
-		poly.append(Vector2(1080, 720))
-		poly.append(Vector2(360, 720))
-		print("IRM PASSTHROUGH: mode=BATTLE_ONLY polygon=%s" % poly)
+		mode_name = "EMPTY"
 
+	print("IRM PASSTHROUGH: mode=%s polygon=%s" % [mode_name, poly])
 	DisplayServer.window_set_mouse_passthrough(poly)
 	print("IRM PASSTHROUGH: applied to window 0")
