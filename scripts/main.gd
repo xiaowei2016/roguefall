@@ -134,6 +134,9 @@ func _apply_mode(mode: Mode) -> void:
 	var right := $PanelRoot/RightPanel
 	var battle := $PanelRoot/BattleBar
 	
+	# 记录切换前 BattleBar 在屏幕上的锚点
+	var old_anchor := win.position + battle.position
+	
 	match mode:
 		Mode.BATTLE_ONLY:
 			win.size = Vector2i(_BATTLE_W, _BATTLE_H)
@@ -183,9 +186,17 @@ func _apply_mode(mode: Mode) -> void:
 			right.position = Vector2(rx, 0)
 			battle.position = Vector2(cx, _CENTER_H)
 	
+	# 锚点补偿：确保 BattleBar 在屏幕上位置不跳
+	var new_anchor := win.position + battle.position
+	var delta := old_anchor - new_anchor
+	if delta != Vector2i.ZERO:
+		win.position += delta
+	
 	_apply_passthrough()
 	_clamp_to_screen()
 	_log_layout()
+	
+	print("ANCHOR old=%s new=%s delta=%s window_pos=%s" % [old_anchor, new_anchor, delta, win.position])
 
 
 # === 布局日志 ===
