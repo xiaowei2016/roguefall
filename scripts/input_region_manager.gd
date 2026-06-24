@@ -106,3 +106,50 @@ func apply_single_battle_widget_passthrough() -> void:
 	print("IRM PASSTHROUGH: polygon = %s" % poly)
 	DisplayServer.window_set_mouse_passthrough(poly)
 	print("IRM PASSTHROUGH: applied to window 0")
+
+
+# --------------------------------------------------
+# apply_center_battle_passthrough()
+# --------------------------------------------------
+# 双矩形穿透探针：CenterDockHost + BattleWidget 连续区域为鼠标接收区，
+# 其余窗口区域穿透到底层桌面。
+# polygon 连续矩形：(360,0)→(1080,0)→(1080,720)→(360,720)
+func apply_center_battle_passthrough() -> void:
+	var poly := PackedVector2Array()
+	poly.append(Vector2(360, 0))
+	poly.append(Vector2(1080, 0))
+	poly.append(Vector2(1080, 720))
+	poly.append(Vector2(360, 720))
+
+	print("IRM CENTER-BATTLE: polygon = %s" % poly)
+	DisplayServer.window_set_mouse_passthrough(poly)
+	print("IRM CENTER-BATTLE: applied to window 0")
+
+
+# --------------------------------------------------
+# apply_current_visible_passthrough()
+# --------------------------------------------------
+# 动态穿透探针：根据 CenterDockHost.visible 选择 polygon。
+#   BATTLE_ONLY: 背包关闭，仅 BattleWidget 接收鼠标
+#   CENTER_BATTLE: 背包打开，CenterDockHost + BattleWidget 接收鼠标
+func apply_current_visible_passthrough() -> void:
+	var center = get_node_or_null("../DockLayer/CenterDockHost") as Control
+	var poly := PackedVector2Array()
+
+	if center and center.visible:
+		# CENTER_BATTLE: (360,0)→(1080,0)→(1080,720)→(360,720)
+		poly.append(Vector2(360, 0))
+		poly.append(Vector2(1080, 0))
+		poly.append(Vector2(1080, 720))
+		poly.append(Vector2(360, 720))
+		print("IRM PASSTHROUGH: mode=CENTER_BATTLE polygon=%s" % poly)
+	else:
+		# BATTLE_ONLY: (360,540)→(1080,540)→(1080,720)→(360,720)
+		poly.append(Vector2(360, 540))
+		poly.append(Vector2(1080, 540))
+		poly.append(Vector2(1080, 720))
+		poly.append(Vector2(360, 720))
+		print("IRM PASSTHROUGH: mode=BATTLE_ONLY polygon=%s" % poly)
+
+	DisplayServer.window_set_mouse_passthrough(poly)
+	print("IRM PASSTHROUGH: applied to window 0")

@@ -29,8 +29,10 @@ func _ready() -> void:
 	_print_dock_rects()
 	# 输入区域收集诊断（委托给 InputRegionManager 节点）
 	$InputRegionManager.collect_and_print()
-	# 单矩形穿透探针：仅 BattleWidget 接收鼠标
-	$InputRegionManager.apply_single_battle_widget_passthrough()
+	# 动态穿透探针：根据 CenterDockHost.visible 自适应
+	$InputRegionManager.apply_current_visible_passthrough()
+	# 背包按钮：点击切换 CenterDockHost 可见性
+	$BattleWidget/BagButton.pressed.connect(_on_bag_button_pressed)
 
 func _print_dock_rects() -> void:
 	var nodes = {
@@ -67,5 +69,20 @@ func _print_dock_rects() -> void:
 #   - 定时掉落判定
 #   - 经验/金币自动增长
 #   - UI 实时刷新（血条/经验条/金币显示）
+# --------------------------------------------------
+# _on_bag_button_pressed() - 背包按钮点击回调
+# --------------------------------------------------
+# 切换 CenterDockHost 可见性，用于后续验证三栏打开与多区域穿透。
+func _on_bag_button_pressed() -> void:
+	var center = $DockLayer/CenterDockHost
+	center.visible = not center.visible
+	print("BagButton pressed, CenterDockHost visible = %s" % center.visible)
+	# 刷新 passthrough 区域
+	$InputRegionManager.apply_current_visible_passthrough()
+
+
+# --------------------------------------------------
+# _process(delta) - 每帧主循环
+# --------------------------------------------------
 func _process(_delta: float) -> void:
 	pass
