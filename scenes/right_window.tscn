@@ -1,0 +1,24 @@
+[gd_scene load_steps=1 format=3]
+
+[node name="RightWindow" type="Window"]
+transparent = true
+borderless = true
+always_on_top = true
+unresizable = true
+visible = false
+size = Vector2i(352, 540)
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 352.0
+offset_bottom = 540.0
+self_modulate = Color(0.1, 0.15, 0.1, 0.85)
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 342.0
+offset_bottom = 40.0
+text = "右栏测试区"
