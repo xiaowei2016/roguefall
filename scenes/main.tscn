@@ -44,6 +44,7 @@ anchor_bottom = 1.0
 mouse_filter = 2
 
 [node name="LeftDockHost" type="Control" parent="DockLayer" unique_id=1388571226]
+visible = false
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
@@ -52,6 +53,24 @@ offset_top = 0.0
 offset_right = 352.0
 offset_bottom = 530.0
 mouse_filter = 0
+
+[node name="LeftDebugPanel" type="ColorRect" parent="DockLayer/LeftDockHost"]
+layout_mode = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 0
+color = Color(0.15, 0.1, 0.1, 0.85)
+
+[node name="DebugLabel" type="Label" parent="DockLayer/LeftDockHost/LeftDebugPanel"]
+layout_mode = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+text = "左栏测试区"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="CenterDockHost" type="Control" parent="DockLayer" unique_id=1662898146]
 visible = false
@@ -84,7 +103,26 @@ text = "背包面板测试区"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="LeftButton" type="Button" parent="DockLayer/CenterDockHost/CenterDebugPanel"]
+layout_mode = 0
+offset_left = 200.0
+offset_top = 440.0
+offset_right = 280.0
+offset_bottom = 480.0
+mouse_filter = 0
+text = "左栏"
+
+[node name="RightButton" type="Button" parent="DockLayer/CenterDockHost/CenterDebugPanel"]
+layout_mode = 0
+offset_left = 440.0
+offset_top = 440.0
+offset_right = 520.0
+offset_bottom = 480.0
+mouse_filter = 0
+text = "右栏"
+
 [node name="RightDockHost" type="Control" parent="DockLayer" unique_id=296655247]
+visible = false
 anchors_preset = 0
 anchor_left = 0.0
 anchor_top = 0.0
@@ -95,6 +133,24 @@ offset_top = 0.0
 offset_right = 1440.0
 offset_bottom = 530.0
 mouse_filter = 0
+
+[node name="RightDebugPanel" type="ColorRect" parent="DockLayer/RightDockHost"]
+layout_mode = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 0
+color = Color(0.1, 0.15, 0.1, 0.85)
+
+[node name="DebugLabel" type="Label" parent="DockLayer/RightDockHost/RightDebugPanel"]
+layout_mode = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+text = "右栏测试区"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="BattleWidget" type="Control" parent="." unique_id=1874158682]
 anchors_preset = 0

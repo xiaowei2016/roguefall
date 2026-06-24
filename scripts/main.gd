@@ -33,6 +33,9 @@ func _ready() -> void:
 	$InputRegionManager.apply_current_visible_passthrough()
 	# 背包按钮：点击切换 CenterDockHost 可见性
 	$BattleWidget/BagButton.pressed.connect(_on_bag_button_pressed)
+	# 左栏/右栏按钮（在 CenterDebugPanel 内）
+	$DockLayer/CenterDockHost/CenterDebugPanel/LeftButton.pressed.connect(_on_left_button_pressed)
+	$DockLayer/CenterDockHost/CenterDebugPanel/RightButton.pressed.connect(_on_right_button_pressed)
 
 func _print_dock_rects() -> void:
 	var nodes = {
@@ -78,6 +81,26 @@ func _on_bag_button_pressed() -> void:
 	center.visible = not center.visible
 	print("BagButton pressed, CenterDockHost visible = %s" % center.visible)
 	# 刷新 passthrough 区域
+	$InputRegionManager.apply_current_visible_passthrough()
+
+
+# --------------------------------------------------
+# _on_left_button_pressed() - 左栏按钮点击回调
+# --------------------------------------------------
+func _on_left_button_pressed() -> void:
+	var left = $DockLayer/LeftDockHost
+	left.visible = not left.visible
+	print("LeftButton pressed, LeftDockHost visible = %s" % left.visible)
+	$InputRegionManager.apply_current_visible_passthrough()
+
+
+# --------------------------------------------------
+# _on_right_button_pressed() - 右栏按钮点击回调
+# --------------------------------------------------
+func _on_right_button_pressed() -> void:
+	var right = $DockLayer/RightDockHost
+	right.visible = not right.visible
+	print("RightButton pressed, RightDockHost visible = %s" % right.visible)
 	$InputRegionManager.apply_current_visible_passthrough()
 
 

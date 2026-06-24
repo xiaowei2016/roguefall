@@ -129,14 +129,53 @@ func apply_center_battle_passthrough() -> void:
 # --------------------------------------------------
 # apply_current_visible_passthrough()
 # --------------------------------------------------
-# 动态穿透探针：根据 CenterDockHost.visible 选择 polygon。
-#   BATTLE_ONLY: 背包关闭，仅 BattleWidget 接收鼠标
-#   CENTER_BATTLE: 背包打开，CenterDockHost + BattleWidget 接收鼠标
+# 动态穿透探针：根据 Left/Center/RightDockHost.visible 选择 polygon。
+#   BATTLE_ONLY:       仅 BattleWidget (360,540)-(1080,720)
+#   CENTER_BATTLE:     Center + Battle (360,0)-(1080,720)
+#   LEFT_CENTER_BATTLE:  Left+Center+Battle T形
+#   CENTER_RIGHT_BATTLE: Center+Right+Battle T形
+#   FULL_T:             全三栏+Battle T形
 func apply_current_visible_passthrough() -> void:
+	var left = get_node_or_null("../DockLayer/LeftDockHost") as Control
 	var center = get_node_or_null("../DockLayer/CenterDockHost") as Control
+	var right = get_node_or_null("../DockLayer/RightDockHost") as Control
+
+	var lv: bool = left != null and left.visible
+	var cv: bool = center != null and center.visible
+	var rv: bool = right != null and right.visible
+
 	var poly := PackedVector2Array()
 
-	if center and center.visible:
+	if lv and cv and rv:
+		# FULL_T: top x=0..1440,y=0..530 + bottom x=360..1080,y=530..720
+		poly.append(Vector2(0, 0))
+		poly.append(Vector2(1440, 0))
+		poly.append(Vector2(1440, 530))
+		poly.append(Vector2(1080, 530))
+		poly.append(Vector2(1080, 720))
+		poly.append(Vector2(360, 720))
+		poly.append(Vector2(360, 530))
+		poly.append(Vector2(0, 530))
+		print("IRM PASSTHROUGH: mode=FULL_T polygon=%s" % poly)
+	elif lv and cv:
+		# LEFT_CENTER_BATTLE: top x=0..1080,y=0..530 + bottom x=360..1080,y=530..720
+		poly.append(Vector2(0, 0))
+		poly.append(Vector2(1080, 0))
+		poly.append(Vector2(1080, 720))
+		poly.append(Vector2(360, 720))
+		poly.append(Vector2(360, 530))
+		poly.append(Vector2(0, 530))
+		print("IRM PASSTHROUGH: mode=LEFT_CENTER_BATTLE polygon=%s" % poly)
+	elif cv and rv:
+		# CENTER_RIGHT_BATTLE: top x=360..1440,y=0..530 + bottom x=360..1080,y=530..720
+		poly.append(Vector2(360, 0))
+		poly.append(Vector2(1440, 0))
+		poly.append(Vector2(1440, 530))
+		poly.append(Vector2(1080, 530))
+		poly.append(Vector2(1080, 720))
+		poly.append(Vector2(360, 720))
+		print("IRM PASSTHROUGH: mode=CENTER_RIGHT_BATTLE polygon=%s" % poly)
+	elif cv:
 		# CENTER_BATTLE: (360,0)→(1080,0)→(1080,720)→(360,720)
 		poly.append(Vector2(360, 0))
 		poly.append(Vector2(1080, 0))
