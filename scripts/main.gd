@@ -30,17 +30,25 @@ func _ready() -> void:
 
 func _print_dock_rects() -> void:
 	var nodes = {
+		"MainRoot": self,
+		"WindowShell": $WindowShell,
+		"TransparentCanvas": $TransparentCanvas,
+		"WindowDragLayer": $WindowDragLayer,
+		"InputRegionManager": $InputRegionManager,
+		"DockLayer": $DockLayer,
 		"LeftDockHost": $DockLayer/LeftDockHost,
 		"CenterDockHost": $DockLayer/CenterDockHost,
 		"RightDockHost": $DockLayer/RightDockHost,
 		"BattleWidget": $BattleWidget,
+		"BootLabel": $BattleWidget/BootLabel,
 	}
 	for name in nodes:
 		var node = nodes[name]
 		var r = node.get_rect()
-		print("RECT %s: pos=(%.1f,%.1f) size=(%.1f,%.1f) offset=(%.1f,%.1f,%.1f,%.1f)" % [
-			name, r.position.x, r.position.y, r.size.x, r.size.y,
-			node.offset_left, node.offset_top, node.offset_right, node.offset_bottom
+		var mf = node.mouse_filter
+		var mf_str = "STOP" if mf == 0 else ("PASS" if mf == 1 else "IGNORE")
+		print("FILTER %s: mf=%d(%s) rect=(%.0f,%.0f,%.0f,%.0f)" % [
+			name, mf, mf_str, r.position.x, r.position.y, r.size.x, r.size.y
 		])
 
 
