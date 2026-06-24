@@ -23,9 +23,15 @@ func _ready() -> void:
 	win.always_on_top = true
 	win.unresizable = true
 	win.transparent = true
-	win.size = Vector2i(_BATTLE_W, _BATTLE_H)
+	win.size = Vector2i(1440, 720)
 	win.position = Vector2i(100, 100)
 	win.mouse_passthrough = false
+	
+	# 固定节点位置（1440×720 透明画布，只需设置一次）
+	$PanelRoot/LeftPanel.position = Vector2(0, 0)
+	$PanelRoot/CenterPanel.position = Vector2(360, 0)
+	$PanelRoot/RightPanel.position = Vector2(1088, 0)
+	$PanelRoot/BattleBar.position = Vector2(360, 540)
 	
 	# 信号连接
 	$PanelRoot/BattleBar/Button.pressed.connect(_on_bag_button_pressed)
@@ -178,81 +184,47 @@ func _load_anchor() -> bool:
 	return true
 
 
-# === 模式切换 ===
+# === 模式切换（固定 1440×720 画布，只切 visible + polygon）===
 func _apply_mode(mode: Mode) -> void:
 	if mode == _current_mode:
 		print("MODE apply once mode=%d" % mode)
 		return
 	_current_mode = mode
-	var win := get_window()
+	
 	var left := $PanelRoot/LeftPanel
 	var center := $PanelRoot/CenterPanel
 	var right := $PanelRoot/RightPanel
 	var battle := $PanelRoot/BattleBar
 	
-	# 记录切换前 BattleBar 在屏幕上的锚点
-	var old_anchor: Vector2i = win.position + Vector2i(battle.position)
-	
 	match mode:
 		Mode.BATTLE_ONLY:
-			win.size = Vector2i(_BATTLE_W, _BATTLE_H)
 			left.visible = false
 			center.visible = false
 			right.visible = false
-			battle.position = Vector2(0, 0)
-		
+			battle.visible = true
 		Mode.CENTER_BATTLE:
-			win.size = Vector2i(_CENTER_W, _CENTER_H + _BATTLE_H)
 			left.visible = false
 			center.visible = true
-			center.position = Vector2(0, 0)
 			right.visible = false
-			battle.position = Vector2(0, _CENTER_H)
-		
+			battle.visible = true
 		Mode.LEFT_CENTER_BATTLE:
-			# center.x = PANEL_W + GAP = 360
-			var cx := _PANEL_W + _GAP
-			win.size = Vector2i(cx + _CENTER_W, _CENTER_H + _BATTLE_H)
 			left.visible = true
-			left.position = Vector2(0, 0)
 			center.visible = true
-			center.position = Vector2(cx, 0)
 			right.visible = false
-			battle.position = Vector2(cx, _CENTER_H)
-		
+			battle.visible = true
 		Mode.CENTER_RIGHT_BATTLE:
-			var rw := _CENTER_W + _GAP + _PANEL_W  # 1080
-			win.size = Vector2i(rw, _CENTER_H + _BATTLE_H)
 			left.visible = false
 			center.visible = true
-			center.position = Vector2(0, 0)
 			right.visible = true
-			right.position = Vector2(_CENTER_W + _GAP, 0)
-			battle.position = Vector2(0, _CENTER_H)
-		
+			battle.visible = true
 		Mode.FULL:
-			var cx := _PANEL_W + _GAP  # 360
-			var rx := cx + _CENTER_W + _GAP  # 1088
-			win.size = Vector2i(rx + _PANEL_W, _CENTER_H + _BATTLE_H)
 			left.visible = true
-			left.position = Vector2(0, 0)
 			center.visible = true
-			center.position = Vector2(cx, 0)
 			right.visible = true
-			right.position = Vector2(rx, 0)
-			battle.position = Vector2(cx, _CENTER_H)
-	
-	# 锚点补偿：确保 BattleBar 在屏幕上位置不跳
-	var new_anchor: Vector2i = win.position + Vector2i(battle.position)
-	var delta: Vector2i = old_anchor - new_anchor
-	if delta != Vector2i.ZERO:
-		win.position += delta
+			battle.visible = true
 	
 	_apply_passthrough()
-	_clamp_to_screen()
 	_log_layout()
-	
-	print("ANCHOR old=%s new=%s delta=%s window_pos=%s" % [old_anchor, new_anchor, delta, win.position])
 
 
 # === 布局日志 ===
@@ -266,13 +238,14 @@ func _log_layout() -> void:
 	var parts: Array[String] = []
 	parts.append("mode=%d" % _current_mode)
 	parts.append("window_size=(%d,%d)" % [win.size.x, win.size.y])
-	parts.append("BattleBar=(%d,%d,%d,%d)" % [int(battle.position.x), int(battle.position.y), int(battle.size.x), int(battle.size.y)])
-	if center.visible:
-		parts.append("CenterPanel=(%d,%d,%d,%d)" % [int(center.position.x), int(center.position.y), int(center.size.x), int(center.size.y)])
-	if left.visible:
-		parts.append("LeftPanel=(%d,%d,%d,%d)" % [int(left.position.x), int(left.position.y), int(left.size.x), int(left.size.y)])
-	if right.visible:
-		parts.append("RightPanel=(%d,%d,%d,%d)" % [int(right.position.x), int(right.position.y), int(right.size.x), int(right.size.y)])
+	
+	# 可见面板
+	var vis_parts: Array[String] = []
+	if battle.visible: vis_parts.append("B")
+	if left.visible: vis_parts.append("L")
+	if center.visible: vis_parts.append("C")
+	if right.visible: vis_parts.append("R")
+	parts.append("visible=%s" % "".join(vis_parts))
 	
 	# Polygon
 	var poly := get_window().mouse_passthrough_polygon
@@ -281,7 +254,7 @@ func _log_layout() -> void:
 		pts.append("(%d,%d)" % [int(v.x), int(v.y)])
 	parts.append("polygon_points=[%s]" % ", ".join(pts))
 	
-	print("LAYOUT %s" % " | ".join(parts))
+	print("MODE %s" % " | ".join(parts))
 
 
 # === 按钮回调 ===
