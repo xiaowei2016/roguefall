@@ -139,11 +139,9 @@ RightDockHost:
 
 ### 1.6 翻转与让位规则
 
-- 面板默认在 BattleWidget 上方
-- 上方空间不足时 → 自动翻转到 BattleWidget 下方
-- 左侧空间不足时 → 中心 BagPanel 和右侧面板自动让位
-- 右侧空间不足时 → 中心 BagPanel 和左侧面板自动让位
-- 左右两侧面板都打开时 → 优先使用默认三栏布局：left=0, center=360, right=1088（冻结布局）
+> **已废弃：本节描述的"面板在上、空间不足翻转、左右让位"旧方案已弃用。** 该方案基于 window-space 反推模型，存在 BattleBar 锚点被面板反写、翻转闪烁等缺陷。
+
+当前正确方案见 [窗口系统冻结规范（0fd34a8）](#窗口系统冻结规范0fd34a8)。
 
 ### 1.7 职责边界
 
@@ -190,6 +188,64 @@ F5 验收顺序：
 8. 拖动 BattleWidget 到顶部 → 面板自动翻转到下方
 9. BattleWidget 始终可见
 10. 透明空白区域由 InputRegionManager 统一穿透
+
+### 1.10 窗口系统冻结规范（0fd34a8）
+
+> 窗口系统已于 2026-06-26 冻结，稳定 commit：origin/master = **0fd34a8**。
+> 此后禁止以任何形式修改窗口核心数学。
+
+**架构总则：**
+
+- BattleBar 是唯一拖拽锚点，所有面板跟随它定位。
+- 布局模型：screen-space + virtual frame。
+- 计算顺序：先在屏幕坐标计算 BattleBar 和面板位置 → 换算成 Godot local position。
+- window origin 使用 virtual frame（基于 BattleBar 锚点与 BATTLE_REST_X=360 反算），不使用 union_rect.position。
+
+**BattleBar 位置约束：**
+
+- 未贴边时 BattleBar local 默认 x=360。
+- 贴左/右边缘时 BattleBar local 允许临时变成 0~720。
+- 离开边缘后自然回到 x=360，**禁止 snap 强制吸回**。
+
+**面板约束：**
+
+- CenterPanel / LeftPanel / RightPanel 只能跟随 BattleBar，**不能反写 BattleBar 锚点**。
+- 隐藏面板不参与布局、不占位、不参与 bounds。
+- mode=0（仅 BattleBar 可见）时，不参与面板翻转。
+
+**翻转规则（仅当有面板可见时生效）：**
+
+- 上下翻转使用 FLIP_HYSTERESIS=48（96px 死区），消除过中线翻转闪烁。
+- window_y 必须 clamp 到屏幕安全范围，禁止出现负数窗口大跳。
+
+**日志约束：**
+
+- 日志节流只影响 print，不影响布局逻辑。
+
+### 1.11 后续禁止修改项
+
+> 以下内容已被冻结，**绝对禁止**再次修改、恢复、或在任何新代码中引用。
+
+| 禁止项 | 说明 |
+|---|---|
+| `_battle_local_x` 变量 | 旧局部坐标存储，已删除。位置由 BattleBar 锚点唯一决定 |
+| `_snap_battlebar_to_center()` | 旧强制吸回函数，已删除。不依赖 snap 归位 |
+| CenterPanel 反写锚点 | 面板永远不能修改 BattleBar 的锚点坐标 |
+| `idle` / `end_drag` 中强制归位 | 旧逻辑，会导致 BattleBar 被吸回 CenterPanel.x |
+| `union_rect.position` 决定窗口位置 | 旧方案，会导致 battle_local.x 恒为 0 |
+| window-space 反推模型 | 旧 `_do_layout` 方式，已被 screen-space 模型替代 |
+| 旧 BattleStrip 直接控制全局穿透 | 旧架构，已被 InputRegionManager 统一管理 |
+| 旧 layout_shell 三栏绑定 | 旧架构，已被 DockLayoutController 替代 |
+
+### 1.12 允许修改范围
+
+以下内容仍可自由修改，不受窗口冻结限制：
+
+- 面板内部内容：背包格子布局、装备槽排列、属性卡片样式
+- 按钮外观：颜色、圆角、图标替换
+- UI 文案：标签文字、提示信息
+- 非核心视觉：背景装饰、边角花纹、高光效果
+- 面板内容控件的 .tscn 结构和 .gd 数据绑定逻辑
 
 ---
 

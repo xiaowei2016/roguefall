@@ -24,7 +24,8 @@ V1.0 包不合格，已废弃。V2 做了以下修正：
 4. 项目路径固定为 `D:\Projects\roguefall`。
 5. Godot 固定为 4.7，Godot 4.7 固定放在 `D:\Projects`。
 6. 旧工程 BattleStrip 直接控制全局窗口/穿透的实现废弃。正式架构改为 WindowShell + 常驻 BattleWidget + DockLayer + DockLayoutController + InputRegionManager。
-7. 新增首轮建档口令：必须先把整套文档放入 `D:\Projects\roguefall\docs\ai_project_knowledge`，后续 AI 先读文档再做实现。
+6.5 窗口核心数学已于 0fd34a8 冻结（screen-space + virtual frame + BattleBar 唯一锚点）。详见 03 §1.10-1.12。
+8. 新增首轮建档口令：必须先把整套文档放入 `D:\Projects\roguefall\docs\ai_project_knowledge`，后续 AI 先读文档再做实现。
 
 ## 使用方式
 

@@ -785,6 +785,24 @@ headless 未通过禁止 commit。
 
 ---
 
+## 16.5 窗口核心数学冻结（0fd34a8）
+
+> 窗口系统已于 2026-06-26 冻结，稳定 commit：origin/master = **0fd34a8**。
+
+BattleBar 是唯一拖拽锚点，screen-space + virtual frame 布局模型已冻结。
+
+禁止在任何口令或实现中恢复以下旧逻辑：
+- `_battle_local_x` 变量
+- `_snap_battlebar_to_center()` 强制吸回
+- CenterPanel 反写 BattleBar 锚点
+- idle / end_drag 强制归位
+- union_rect.position 决定窗口位置
+
+允许修改范围：面板内容、按钮外观、UI 文案、非核心视觉。
+- 禁止修改：窗口数学、BattleBar 锚点、screen-space / virtual frame、flip 阈值（48）、边缘 clamp。
+
+详细冻结规范见：`03_冒险者挂机_UI架构与Dock面板决策_V2.md` §1.10-1.12。
+
 ## 17. 最终提醒
 
 以后不要依赖 GPT 记忆防翻车。
