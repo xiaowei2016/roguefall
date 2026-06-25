@@ -18,6 +18,7 @@ const LOG_THROTTLE := 30
 # BattleBar 横向始终可在窗口内 0 ~ (WIN_W - CW) 滑动
 const BBX_MIN := 0
 const BBX_MAX := WIN_W - CW  # 720
+const BATTLE_REST_X := 360
 
 enum Mode { BATTLE_ONLY, CENTER_BATTLE, LEFT_CENTER_BATTLE, CENTER_RIGHT_BATTLE, FULL }
 
@@ -32,9 +33,6 @@ var _drag_offset_y := 0
 # BattleBar 屏幕坐标锚点，每次布局后从 win + battle_bar 刷新
 var _battle_anchor_screen_x := 0
 var _battle_anchor_screen_y := 0
-
-# BattleBar 在窗口内的当前 x，跨模式保持（拖拽后记忆位置），范围恒为 0~720
-var _battle_local_x: int = 0
 
 # 上下翻转滞后
 var _last_flipped: bool = false
@@ -76,13 +74,12 @@ func _ready() -> void:
 	# 从当前窗口位置和 tscn 默认 battle_bar 位置推导初始值
 	_battle_anchor_screen_x = win.position.x + int(battle_bar.position.x)
 	_battle_anchor_screen_y = win.position.y + int(battle_bar.position.y)
-	_battle_local_x = int(battle_bar.position.x)
 
 	_apply_mode(Mode.BATTLE_ONLY)
 	_loading = false
-	print("[roguefall] INIT OK  mode=%d  win=(%d,%d)  size=(%d,%d)  anchor=(%d,%d)  local_x=%d" % [
+	print("[roguefall] INIT OK  mode=%d  win=(%d,%d)  size=(%d,%d)  anchor=(%d,%d)  rest_x=%d" % [
 		_current_mode, win.position.x, win.position.y, win.size.x, win.size.y,
-		_battle_anchor_screen_x, _battle_anchor_screen_y, _battle_local_x
+		_battle_anchor_screen_x, _battle_anchor_screen_y, BATTLE_REST_X
 	])
 
 
@@ -96,33 +93,9 @@ func _apply_mode(mode: Mode) -> void:
 	center_panel.visible = (mode != Mode.BATTLE_ONLY)
 	right_panel.visible = (mode == Mode.CENTER_RIGHT_BATTLE or mode == Mode.FULL)
 
-	_snap_battlebar_to_center()  # mode 切换时默认对齐中栏
 	_do_layout()
 	_update_passthrough()
 
-
-# mode 变化时 BattleBar 默认对齐 CenterPanel，拖动时不调用
-func _snap_battlebar_to_center() -> void:
-	if not center_panel.visible:
-		return
-
-	var rest_x := clampi(_battle_local_x, BBX_MIN, BBX_MAX)
-	var gl := rest_x
-	var gr := rest_x + CW
-	if left_panel.visible:
-		gl = rest_x - GAP - PW
-	if right_panel.visible:
-		gr = rest_x + CW + GAP + PW
-
-	var shift := 0
-	if gl < 0:
-		shift = -gl
-	elif gr > WIN_W:
-		shift = -(gr - WIN_W)
-
-	var target_cx := clampi(rest_x + shift, BBX_MIN, BBX_MAX)
-	_battle_local_x = target_cx
-	_battle_anchor_screen_x = get_window().position.x + target_cx
 
 
 # ===== 布局 =====
@@ -166,8 +139,8 @@ func _do_layout() -> void:
 	_battle_anchor_screen_y = win.position.y + battle_y
 
 	# ---- 水平：BattleBar 渲染 ----
-	# rest_x = 静止归位目标（_battle_local_x），拖拽中不更新
-	var rest_x := clampi(_battle_local_x, BBX_MIN, BBX_MAX)
+	# rest_x = 静止归位目标（BATTLE_REST_X=360），拖拽中不更新
+	var rest_x := BATTLE_REST_X
 
 	win.position.x = _battle_anchor_screen_x - rest_x
 
@@ -176,7 +149,7 @@ func _do_layout() -> void:
 	if screen_max_x >= screen_min_x:
 		win.position.x = clampi(win.position.x, screen_min_x, screen_max_x)
 
-	# render_bbx = 本帧 BattleBar 渲染位置，不写回 _battle_local_x
+	# render_bbx = 本帧 BattleBar 渲染位置，只读，不写回任何持久状态
 	var render_bbx := clampi(_battle_anchor_screen_x - win.position.x, BBX_MIN, BBX_MAX)
 	battle_bar.position.x = render_bbx
 
@@ -252,12 +225,6 @@ func start_drag() -> void:
 
 func end_drag() -> void:
 	_dragging = false
-
-	# 归位：松手后 BattleBar 回到中栏下方
-	if center_panel.visible:
-		var target: float = center_panel.position.x
-		_battle_local_x = clampi(int(target), BBX_MIN, BBX_MAX)
-		_battle_anchor_screen_x = get_window().position.x + _battle_local_x
 
 	_save_position()
 	_do_layout()
