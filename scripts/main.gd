@@ -153,38 +153,30 @@ func _do_layout() -> void:
 	var left_ssx   := left_sx   + panel_shift
 	var right_ssx  := right_sx  + panel_shift
 
-	# ---- 5. 所有可见元素 union rect → 窗口位置 ----
-	var union_min_x := bb_sx
-	var union_max_x := bb_sx + bb_sw
-	var union_min_y := bb_sy
-	var union_max_y := bb_sy + bb_sh
+	# ---- 5. Window origin = virtual frame（不以 union rect 决定） ----
+	var win_x := bb_sx - BATTLE_REST_X
+	var win_y: int
+	if has_panels and flipped:
+		win_y = bb_sy
+	else:
+		win_y = bb_sy - FLIP_BOT
 
-	if has_panels:
-		var panel_min_x := center_ssx
-		var panel_max_x := center_ssx + CW
-		if left_panel.visible:
-			panel_min_x = mini(panel_min_x, left_ssx)
-			panel_max_x = maxi(panel_max_x, left_ssx + PW)
-		if right_panel.visible:
-			panel_min_x = mini(panel_min_x, right_ssx)
-			panel_max_x = maxi(panel_max_x, right_ssx + PW)
+	var screen_win_min_x := screen.position.x + EDGE_MARGIN
+	var screen_win_max_x := screen.position.x + screen.size.x - WIN_W - EDGE_MARGIN
+	if screen_win_max_x >= screen_win_min_x:
+		win_x = clampi(win_x, screen_win_min_x, screen_win_max_x)
 
-		union_min_x = mini(union_min_x, panel_min_x)
-		union_max_x = maxi(union_max_x, panel_max_x)
-		union_min_y = mini(union_min_y, panel_sy)
-		union_max_y = maxi(union_max_y, panel_sy + PANEL_H)
-
-	win.position = Vector2i(union_min_x, union_min_y)
+	win.position = Vector2i(win_x, win_y)
 
 	# ---- 6. local = screen - window ----
-	battle_bar.position = Vector2i(bb_sx - union_min_x, bb_sy - union_min_y)
+	battle_bar.position = Vector2i(bb_sx - win_x, bb_sy - win_y)
 
 	if has_panels:
-		center_panel.position = Vector2i(center_ssx - union_min_x, panel_sy - union_min_y)
+		center_panel.position = Vector2i(center_ssx - win_x, panel_sy - win_y)
 		if left_panel.visible:
-			left_panel.position = Vector2i(left_ssx - union_min_x, panel_sy - union_min_y)
+			left_panel.position = Vector2i(left_ssx - win_x, panel_sy - win_y)
 		if right_panel.visible:
-			right_panel.position = Vector2i(right_ssx - union_min_x, panel_sy - union_min_y)
+			right_panel.position = Vector2i(right_ssx - win_x, panel_sy - win_y)
 
 	# ---- 7. 日志节流 ----
 	var log_reason := ""
@@ -219,7 +211,7 @@ func _do_layout() -> void:
 			pg_x1 if has_panels else -1, panel_sy if has_panels else -1,
 			pg_x2 if has_panels else -1, (panel_sy + PANEL_H) if has_panels else -1,
 			panel_shift,
-			union_min_x, union_min_y,
+			win_x, win_y,
 			battle_bar.position.x, battle_bar.position.y,
 			center_panel.position.x if center_panel.visible else -1,
 			center_panel.position.y if center_panel.visible else -1,
