@@ -12,7 +12,7 @@ const PANEL_Y_ABOVE := 0     # 面板在战斗条上方
 const PANEL_Y_BELOW := 188   # 面板在战斗条下方（180 + 8）
 const PW := 352    # 左/右面板宽度
 const CW := 720    # 中栏宽度
-const EDGE_HYSTERESIS := 16
+const FLIP_HYSTERESIS := 24
 const LOG_THROTTLE := 30
 
 # BattleBar 横向始终可在窗口内 0 ~ (WIN_W - CW) 滑动
@@ -36,18 +36,13 @@ var _battle_anchor_screen_y := 0
 # BattleBar 在窗口内的当前 x，跨模式保持（拖拽后记忆位置），范围恒为 0~720
 var _battle_local_x: int = 0
 
-# 边界锁定：防止面板组在屏幕边缘抖动
-var _panel_edge_lock_x: int = 0   # -1 左锁，0 无锁，1 右锁
-var _lock_anchor_x: int = 0       # 锁定时刻的 anchor_screen_x
-var _lock_cx: int = 0             # 锁定时刻的面板组 cx
-
 # 上下翻转滞后
 var _last_flipped: bool = false
 
 # 日志节流
 var _last_log_mode: int = -1
 var _last_log_flipped: bool = false
-var _last_log_edge_lock: int = 0
+var _last_log_shift: int = 0
 var _log_frame_count: int = 0
 
 @onready var battle_bar := $PanelRoot/BattleBar
@@ -101,7 +96,6 @@ func _apply_mode(mode: Mode) -> void:
 	center_panel.visible = (mode != Mode.BATTLE_ONLY)
 	right_panel.visible = (mode == Mode.CENTER_RIGHT_BATTLE or mode == Mode.FULL)
 
-	_panel_edge_lock_x = 0  # 模式切换清空锁定，重新布局
 	_do_layout()
 	_update_passthrough()
 
@@ -111,29 +105,36 @@ func _do_layout() -> void:
 	var win := get_window()
 	var screen := DisplayServer.screen_get_usable_rect(win.current_screen)
 
-	# ---- 垂直（上下翻转 + 滞后） ----
-	var space_above := _battle_anchor_screen_y - screen.position.y - EDGE_MARGIN
-	var space_below := screen.position.y + screen.size.y - (_battle_anchor_screen_y + BATTLE_H) - EDGE_MARGIN
+	var has_panels := _current_mode != Mode.BATTLE_ONLY
 
-	var flipped: bool
-	if _dragging:
-		if _last_flipped:
-			flipped = space_above + EDGE_HYSTERESIS < space_below  # 保持翻转，需下侧明显更大才解除
+	# ---- 垂直 ----
+	var flipped: bool = false
+	var battle_y: int = FLIP_BOT
+	var panel_y: int = PANEL_Y_ABOVE
+
+	if has_panels:
+		var space_above := _battle_anchor_screen_y - screen.position.y - EDGE_MARGIN
+		var space_below := screen.position.y + screen.size.y - (_battle_anchor_screen_y + BATTLE_H) - EDGE_MARGIN
+
+		if _dragging:
+			if _last_flipped:
+				flipped = space_above + FLIP_HYSTERESIS < space_below
+			else:
+				flipped = space_below > space_above + FLIP_HYSTERESIS
 		else:
-			flipped = space_below > space_above + EDGE_HYSTERESIS  # 保持不翻转，需下侧明显更大才翻
-	else:
-		flipped = space_above < space_below
-	_last_flipped = flipped
+			flipped = space_above < space_below
+		_last_flipped = flipped
 
-	var battle_y: int
-	var panel_y: int
-	if flipped:
-		battle_y = 0
-		panel_y = PANEL_Y_BELOW
-		win.position.y = _battle_anchor_screen_y
+		if flipped:
+			battle_y = 0
+			panel_y = PANEL_Y_BELOW
+			win.position.y = _battle_anchor_screen_y
+		else:
+			battle_y = FLIP_BOT
+			panel_y = PANEL_Y_ABOVE
+			win.position.y = _battle_anchor_screen_y - FLIP_BOT
 	else:
-		battle_y = FLIP_BOT
-		panel_y = PANEL_Y_ABOVE
+		# mode=0: 无面板，不翻转
 		win.position.y = _battle_anchor_screen_y - FLIP_BOT
 
 	battle_bar.position.y = battle_y
@@ -153,46 +154,29 @@ func _do_layout() -> void:
 	battle_bar.position.x = bbx
 	_battle_local_x = bbx
 
-	# ---- 边界锁定：检查解锁条件 ----
-	if _panel_edge_lock_x != 0:
-		if _panel_edge_lock_x == -1 and _battle_anchor_screen_x > _lock_anchor_x + EDGE_HYSTERESIS:
-			_panel_edge_lock_x = 0
-		elif _panel_edge_lock_x == 1 and _battle_anchor_screen_x < _lock_anchor_x - EDGE_HYSTERESIS:
-			_panel_edge_lock_x = 0
-
-	# ---- 可见面板布局 ----
-	var cx: int
-	if _panel_edge_lock_x == 0:
-		# 未锁定：面板跟随 BattleBar
-		cx = bbx
-		var panel_left := cx
-		var panel_right := cx + CW
+	# ---- 可见面板：stateless clamp（无锁边状态） ----
+	var shift: int = 0
+	if has_panels:
+		var gl := bbx
+		var gr := bbx + CW
 		if left_panel.visible:
-			panel_left = cx - GAP - PW
+			gl = bbx - GAP - PW
 		if right_panel.visible:
-			panel_right = cx + CW + GAP + PW
+			gr = bbx + CW + GAP + PW
 
-		if panel_left < 0:
-			cx += -panel_left
-			_panel_edge_lock_x = -1
-			_lock_anchor_x = _battle_anchor_screen_x
-			_lock_cx = cx
-		elif panel_right > WIN_W:
-			cx -= panel_right - WIN_W
-			_panel_edge_lock_x = 1
-			_lock_anchor_x = _battle_anchor_screen_x
-			_lock_cx = cx
-	else:
-		# 已锁定：面板组保持原位，BattleBar 独立滑动
-		cx = _lock_cx
+		if gl < 0:
+			shift = -gl
+		elif gr > WIN_W:
+			shift = -(gr - WIN_W)
 
-	# 最终落位：只设置可见栏
-	if left_panel.visible:
-		left_panel.position = Vector2i(cx - GAP - PW, panel_y)
-	if center_panel.visible:
-		center_panel.position = Vector2i(cx, panel_y)
-	if right_panel.visible:
-		right_panel.position = Vector2i(cx + CW + GAP, panel_y)
+		var cx := bbx + shift
+
+		if left_panel.visible:
+			left_panel.position = Vector2i(cx - GAP - PW, panel_y)
+		if center_panel.visible:
+			center_panel.position = Vector2i(cx, panel_y)
+		if right_panel.visible:
+			right_panel.position = Vector2i(cx + CW + GAP, panel_y)
 
 	# ---- 日志节流 ----
 	var log_reason := ""
@@ -202,9 +186,9 @@ func _do_layout() -> void:
 	elif _last_log_flipped != flipped:
 		log_reason = "flip"
 		_last_log_flipped = flipped
-	elif _last_log_edge_lock != _panel_edge_lock_x:
-		log_reason = "edge_lock"
-		_last_log_edge_lock = _panel_edge_lock_x
+	elif _last_log_shift != shift:
+		log_reason = "shift"
+		_last_log_shift = shift
 	elif not _dragging:
 		log_reason = "idle"
 	elif _log_frame_count % LOG_THROTTLE == 0:
@@ -212,11 +196,11 @@ func _do_layout() -> void:
 	_log_frame_count += 1
 
 	if log_reason != "":
-		var lx_out := cx - GAP - PW if left_panel.visible else -999
-		var cx_out := cx if center_panel.visible else -999
-		var rx_out := cx + CW + GAP if right_panel.visible else -999
-		print("[roguefall] --- layout ---  reason=%s  mode=%d  lock=%d  win=(%d,%d)  bb_win=(%d,%d)  flipped=%s  panel_y=%d" % [
-			log_reason, _current_mode, _panel_edge_lock_x, win.position.x, win.position.y,
+		var lx_out := bbx + shift - GAP - PW if left_panel.visible else -999
+		var cx_out := bbx + shift if center_panel.visible else -999
+		var rx_out := bbx + shift + CW + GAP if right_panel.visible else -999
+		print("[roguefall] --- layout ---  reason=%s  mode=%d  shift=%d  win=(%d,%d)  bb_win=(%d,%d)  flipped=%s  panel_y=%d" % [
+			log_reason, _current_mode, shift, win.position.x, win.position.y,
 			bbx, battle_y, flipped, panel_y
 		])
 		print("  L(%d,%d) %s  C(%d,%d) %s  R(%d,%d) %s  anchor_screen=(%d,%d)" % [
