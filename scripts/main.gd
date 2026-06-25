@@ -13,6 +13,15 @@ const PANEL_Y_BELOW := 188   # 面板在战斗条下方（180 + 8）
 const PW := 352    # 左/右面板宽度
 const CW := 720    # 中栏宽度
 
+# 三栏固定 x 坐标，与 BattleBar 解耦
+const LX := 0
+const CX := 360    # PW + GAP
+const RX := 1088   # PW + GAP + CW + GAP
+
+# BattleBar 横向始终可在窗口内 0 ~ (WIN_W - CW) 滑动
+const BBX_MIN := 0
+const BBX_MAX := WIN_W - CW  # 720
+
 enum Mode { BATTLE_ONLY, CENTER_BATTLE, LEFT_CENTER_BATTLE, CENTER_RIGHT_BATTLE, FULL }
 
 var _loading := true
@@ -27,7 +36,7 @@ var _drag_offset_y := 0
 var _battle_anchor_screen_x := 0
 var _battle_anchor_screen_y := 0
 
-# BattleBar 在窗口内的当前 x，跨模式保持（拖拽后记忆位置）
+# BattleBar 在窗口内的当前 x，跨模式保持（拖拽后记忆位置），范围恒为 0~720
 var _battle_local_x: int = 0
 
 @onready var battle_bar := $PanelRoot/BattleBar
@@ -85,21 +94,6 @@ func _apply_mode(mode: Mode) -> void:
 	_update_passthrough()
 
 
-# ===== BattleBar local_x 合法范围（当前模式） =====
-func _get_bbx_range() -> Array:
-	var min_bbx: int = 0
-	var max_bbx: int = WIN_W - int(battle_bar.size.x)  # 720
-	match _current_mode:
-		Mode.LEFT_CENTER_BATTLE:
-			min_bbx = PW + GAP  # 360
-		Mode.CENTER_RIGHT_BATTLE:
-			max_bbx = WIN_W - CW - GAP - PW  # 360
-		Mode.FULL:
-			min_bbx = PW + GAP      # 360
-			max_bbx = WIN_W - CW - GAP - PW  # 360
-	return [min_bbx, max_bbx]
-
-
 # ===== 布局 =====
 func _do_layout() -> void:
 	var win := get_window()
@@ -124,13 +118,9 @@ func _do_layout() -> void:
 	battle_bar.position.y = battle_y
 	_battle_anchor_screen_y = win.position.y + battle_y
 
-	# ---- 水平：优先保持 _battle_local_x，只在必要时 clamp ----
-	var range := _get_bbx_range()
-	var min_bbx := range[0] as int
-	var max_bbx := range[1] as int
-
-	# 当前模式 clamp _battle_local_x
-	_battle_local_x = clampi(_battle_local_x, min_bbx, max_bbx)
+	# ---- 水平：BattleBar 与三栏解耦 ----
+	# BattleBar 范围恒为 0~720，模式切换不重置
+	_battle_local_x = clampi(_battle_local_x, BBX_MIN, BBX_MAX)
 
 	# 窗口定位使得 BattleBar 在窗口内位置 = _battle_local_x
 	win.position.x = _battle_anchor_screen_x - _battle_local_x
@@ -141,31 +131,26 @@ func _do_layout() -> void:
 	if screen_max_x >= screen_min_x:
 		win.position.x = clampi(win.position.x, screen_min_x, screen_max_x)
 
-	# 窗口 clamp 后反算 BattleBar 实际落点，并再钳位到模式范围
-	var bbx := clampi(_battle_anchor_screen_x - win.position.x, min_bbx, max_bbx)
+	# 窗口 clamp 后反算 BattleBar 实际落点
+	var bbx := clampi(_battle_anchor_screen_x - win.position.x, BBX_MIN, BBX_MAX)
 	battle_bar.position.x = bbx
-
-	# 持久化本次落点，供下次布局保持
 	_battle_local_x = bbx
 
-	# Center / Left / Right 全部从 battle_bar.x 推导
-	var cx := bbx
-	var lx := cx - PW - GAP
-	var rx := cx + CW + GAP
-
-	left_panel.position = Vector2i(lx, panel_y)
-	center_panel.position = Vector2i(cx, panel_y)
-	right_panel.position = Vector2i(rx, panel_y)
+	# 三栏固定位置，不从 battle_bar.x 推导
+	left_panel.position.x = LX
+	center_panel.position.x = CX
+	right_panel.position.x = RX
+	left_panel.position.y = panel_y
+	center_panel.position.y = panel_y
+	right_panel.position.y = panel_y
 
 	print("[roguefall] --- layout ---")
 	print("  mode=%d  win=(%d,%d)  bb_win=(%d,%d)  bb_screen_y=%d  flipped=%s  panel_y=%d" % [
 		_current_mode, win.position.x, win.position.y,
 		bbx, battle_y, _battle_anchor_screen_y, flipped, panel_y
 	])
-	print("  L(%d,%d)  C(%d,%d)  R(%d,%d)  bbx_range=[%d,%d]" % [
-		lx, panel_y, cx, panel_y, rx, panel_y, min_bbx, max_bbx
-	])
-	print("  anchor_screen_x=%d  battle_local_x=%d" % [
+	print("  L(%d,%d)  C(%d,%d)  R(%d,%d)  anchor_screen_x=%d  battle_local_x=%d" % [
+		LX, panel_y, CX, panel_y, RX, panel_y,
 		_battle_anchor_screen_x, _battle_local_x
 	])
 
