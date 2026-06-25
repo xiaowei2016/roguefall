@@ -106,13 +106,13 @@ func _snap_battlebar_to_center() -> void:
 	if not center_panel.visible:
 		return
 
-	var bbx := _battle_local_x
-	var gl := bbx
-	var gr := bbx + CW
+	var rest_x := clampi(_battle_local_x, BBX_MIN, BBX_MAX)
+	var gl := rest_x
+	var gr := rest_x + CW
 	if left_panel.visible:
-		gl = bbx - GAP - PW
+		gl = rest_x - GAP - PW
 	if right_panel.visible:
-		gr = bbx + CW + GAP + PW
+		gr = rest_x + CW + GAP + PW
 
 	var shift := 0
 	if gl < 0:
@@ -120,9 +120,9 @@ func _snap_battlebar_to_center() -> void:
 	elif gr > WIN_W:
 		shift = -(gr - WIN_W)
 
-	var target_cx := bbx + shift
-	_battle_local_x = clampi(target_cx, BBX_MIN, BBX_MAX)
-	_battle_anchor_screen_x = get_window().position.x + _battle_local_x
+	var target_cx := clampi(rest_x + shift, BBX_MIN, BBX_MAX)
+	_battle_local_x = target_cx
+	_battle_anchor_screen_x = get_window().position.x + target_cx
 
 
 # ===== 布局 =====
@@ -165,36 +165,37 @@ func _do_layout() -> void:
 	battle_bar.position.y = battle_y
 	_battle_anchor_screen_y = win.position.y + battle_y
 
-	# ---- 水平：BattleBar 滑动 ----
-	_battle_local_x = clampi(_battle_local_x, BBX_MIN, BBX_MAX)
+	# ---- 水平：BattleBar 渲染 ----
+	# rest_x = 静止归位目标（_battle_local_x），拖拽中不更新
+	var rest_x := clampi(_battle_local_x, BBX_MIN, BBX_MAX)
 
-	win.position.x = _battle_anchor_screen_x - _battle_local_x
+	win.position.x = _battle_anchor_screen_x - rest_x
 
 	var screen_min_x := screen.position.x + EDGE_MARGIN
 	var screen_max_x := screen.position.x + screen.size.x - WIN_W - EDGE_MARGIN
 	if screen_max_x >= screen_min_x:
 		win.position.x = clampi(win.position.x, screen_min_x, screen_max_x)
 
-	var bbx := clampi(_battle_anchor_screen_x - win.position.x, BBX_MIN, BBX_MAX)
-	battle_bar.position.x = bbx
-	_battle_local_x = bbx
+	# render_bbx = 本帧 BattleBar 渲染位置，不写回 _battle_local_x
+	var render_bbx := clampi(_battle_anchor_screen_x - win.position.x, BBX_MIN, BBX_MAX)
+	battle_bar.position.x = render_bbx
 
-	# ---- 可见面板：stateless clamp（无锁边状态） ----
+	# ---- 可见面板：stateless clamp —— 以 rest_x 为基准，不依赖 render_bbx ----
 	var shift: int = 0
 	if has_panels:
-		var gl := bbx
-		var gr := bbx + CW
+		var gl := rest_x
+		var gr := rest_x + CW
 		if left_panel.visible:
-			gl = bbx - GAP - PW
+			gl = rest_x - GAP - PW
 		if right_panel.visible:
-			gr = bbx + CW + GAP + PW
+			gr = rest_x + CW + GAP + PW
 
 		if gl < 0:
 			shift = -gl
 		elif gr > WIN_W:
 			shift = -(gr - WIN_W)
 
-		var cx := bbx + shift
+		var cx := rest_x + shift
 
 		if left_panel.visible:
 			left_panel.position = Vector2i(cx - GAP - PW, panel_y)
@@ -221,12 +222,12 @@ func _do_layout() -> void:
 	_log_frame_count += 1
 
 	if log_reason != "":
-		var lx_out := bbx + shift - GAP - PW if left_panel.visible else -999
-		var cx_out := bbx + shift if center_panel.visible else -999
-		var rx_out := bbx + shift + CW + GAP if right_panel.visible else -999
+		var lx_out := rest_x + shift - GAP - PW if left_panel.visible else -999
+		var cx_out := rest_x + shift if center_panel.visible else -999
+		var rx_out := rest_x + shift + CW + GAP if right_panel.visible else -999
 		print("[roguefall] --- layout ---  reason=%s  mode=%d  shift=%d  win=(%d,%d)  bb_win=(%d,%d)  flipped=%s  panel_y=%d" % [
 			log_reason, _current_mode, shift, win.position.x, win.position.y,
-			bbx, battle_y, flipped, panel_y
+			render_bbx, battle_y, flipped, panel_y
 		])
 		print("  L(%d,%d) %s  C(%d,%d) %s  R(%d,%d) %s  anchor_screen=(%d,%d)" % [
 			lx_out, panel_y, "vis" if left_panel.visible else "hid",
@@ -251,6 +252,13 @@ func start_drag() -> void:
 
 func end_drag() -> void:
 	_dragging = false
+
+	# 归位：松手后 BattleBar 回到中栏下方
+	if center_panel.visible:
+		var target: float = center_panel.position.x
+		_battle_local_x = clampi(int(target), BBX_MIN, BBX_MAX)
+		_battle_anchor_screen_x = get_window().position.x + _battle_local_x
+
 	_save_position()
 	_do_layout()
 	_update_passthrough()
