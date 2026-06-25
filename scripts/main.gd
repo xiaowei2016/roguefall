@@ -18,13 +18,17 @@ enum Mode { BATTLE_ONLY, CENTER_BATTLE, LEFT_CENTER_BATTLE, CENTER_RIGHT_BATTLE,
 var _loading := true
 var _current_mode := -1
 var _dragging := false
-var _drag_start_mouse := Vector2i()
-var _drag_start_anchor_x := 0
-var _drag_start_anchor_y := 0
 
-# BattleBar 屏幕坐标锚点，所有布局从此推导
+# 拖拽：鼠标屏幕坐标与锚点之间的固定偏移
+var _drag_offset_x := 0
+var _drag_offset_y := 0
+
+# BattleBar 屏幕坐标锚点，每次布局后从 win + battle_bar 刷新
 var _battle_anchor_screen_x := 0
 var _battle_anchor_screen_y := 0
+
+# BattleBar 在窗口内的当前 x，跨模式保持（拖拽后记忆位置）
+var _battle_local_x: int = 0
 
 @onready var battle_bar := $PanelRoot/BattleBar
 @onready var left_panel := $PanelRoot/LeftPanel
@@ -54,15 +58,16 @@ func _ready() -> void:
 	if not _load_position():
 		_center_on_screen()
 
-	# 从当前窗口位置和 tscn 默认 battle_bar 位置推导初始锚点
+	# 从当前窗口位置和 tscn 默认 battle_bar 位置推导初始值
 	_battle_anchor_screen_x = win.position.x + int(battle_bar.position.x)
 	_battle_anchor_screen_y = win.position.y + int(battle_bar.position.y)
+	_battle_local_x = int(battle_bar.position.x)
 
 	_apply_mode(Mode.BATTLE_ONLY)
 	_loading = false
-	print("[roguefall] INIT OK  mode=%d  win=(%d,%d)  size=(%d,%d)  anchor=(%d,%d)" % [
+	print("[roguefall] INIT OK  mode=%d  win=(%d,%d)  size=(%d,%d)  anchor=(%d,%d)  local_x=%d" % [
 		_current_mode, win.position.x, win.position.y, win.size.x, win.size.y,
-		_battle_anchor_screen_x, _battle_anchor_screen_y
+		_battle_anchor_screen_x, _battle_anchor_screen_y, _battle_local_x
 	])
 
 
@@ -82,16 +87,16 @@ func _apply_mode(mode: Mode) -> void:
 
 # ===== BattleBar local_x 合法范围（当前模式） =====
 func _get_bbx_range() -> Array:
-	var min_bbx := 0
-	var max_bbx := WIN_W - battle_bar.size.x  # 720
+	var min_bbx: int = 0
+	var max_bbx: int = WIN_W - int(battle_bar.size.x)  # 720
 	match _current_mode:
 		Mode.LEFT_CENTER_BATTLE:
-			min_bbx = PW + GAP  # 360：左栏左边缘不超窗口左界
+			min_bbx = PW + GAP  # 360
 		Mode.CENTER_RIGHT_BATTLE:
-			max_bbx = WIN_W - CW - GAP - PW  # 360：右栏右边缘不超窗口右界
+			max_bbx = WIN_W - CW - GAP - PW  # 360
 		Mode.FULL:
 			min_bbx = PW + GAP      # 360
-			max_bbx = WIN_W - CW - GAP - PW  # 360 → 锁死
+			max_bbx = WIN_W - CW - GAP - PW  # 360
 	return [min_bbx, max_bbx]
 
 
@@ -117,17 +122,18 @@ func _do_layout() -> void:
 		win.position.y = _battle_anchor_screen_y - FLIP_BOT
 
 	battle_bar.position.y = battle_y
-	# 更新垂直锚点以匹配 pos 变化
 	_battle_anchor_screen_y = win.position.y + battle_y
 
-	# ---- 水平（新：从锚点反算） ----
+	# ---- 水平：优先保持 _battle_local_x，只在必要时 clamp ----
 	var range := _get_bbx_range()
 	var min_bbx := range[0] as int
 	var max_bbx := range[1] as int
 
-	# 将窗口定位到 BattleBar 锚点在合法范围中间
-	var ideal_bbx := (min_bbx + max_bbx) / 2
-	win.position.x = _battle_anchor_screen_x - ideal_bbx
+	# 当前模式 clamp _battle_local_x
+	_battle_local_x = clampi(_battle_local_x, min_bbx, max_bbx)
+
+	# 窗口定位使得 BattleBar 在窗口内位置 = _battle_local_x
+	win.position.x = _battle_anchor_screen_x - _battle_local_x
 
 	# 窗口不越屏幕
 	var screen_min_x := screen.position.x + EDGE_MARGIN
@@ -135,9 +141,12 @@ func _do_layout() -> void:
 	if screen_max_x >= screen_min_x:
 		win.position.x = clampi(win.position.x, screen_min_x, screen_max_x)
 
-	# 反算 battle_bar.x，并钳位到当前模式合法范围
+	# 窗口 clamp 后反算 BattleBar 实际落点，并再钳位到模式范围
 	var bbx := clampi(_battle_anchor_screen_x - win.position.x, min_bbx, max_bbx)
 	battle_bar.position.x = bbx
+
+	# 持久化本次落点，供下次布局保持
+	_battle_local_x = bbx
 
 	# Center / Left / Right 全部从 battle_bar.x 推导
 	var cx := bbx
@@ -153,9 +162,11 @@ func _do_layout() -> void:
 		_current_mode, win.position.x, win.position.y,
 		bbx, battle_y, _battle_anchor_screen_y, flipped, panel_y
 	])
-	print("  L(%d,%d)  C(%d,%d)  R(%d,%d)  bbx_range=[%d,%d]  anchor_screen_x=%d" % [
-		lx, panel_y, cx, panel_y, rx, panel_y,
-		min_bbx, max_bbx, _battle_anchor_screen_x
+	print("  L(%d,%d)  C(%d,%d)  R(%d,%d)  bbx_range=[%d,%d]" % [
+		lx, panel_y, cx, panel_y, rx, panel_y, min_bbx, max_bbx
+	])
+	print("  anchor_screen_x=%d  battle_local_x=%d" % [
+		_battle_anchor_screen_x, _battle_local_x
 	])
 
 
@@ -164,12 +175,12 @@ func _update_passthrough() -> void:
 	pass  # 穿透暂时废除，等 BattleBar / 三栏布局稳定后再接入
 
 
-# ===== 拖拽 =====
+# ===== 拖拽：屏幕坐标 + 每帧 _do_layout =====
 func start_drag() -> void:
 	_dragging = true
-	_drag_start_mouse = Vector2i(DisplayServer.mouse_get_position())
-	_drag_start_anchor_x = _battle_anchor_screen_x
-	_drag_start_anchor_y = _battle_anchor_screen_y
+	var mouse_screen := Vector2i(DisplayServer.mouse_get_position())
+	_drag_offset_x = _battle_anchor_screen_x - mouse_screen.x
+	_drag_offset_y = _battle_anchor_screen_y - mouse_screen.y
 
 
 func end_drag() -> void:
@@ -182,22 +193,24 @@ func end_drag() -> void:
 func _process(_delta: float) -> void:
 	if not _dragging:
 		return
-	var delta := Vector2i(DisplayServer.mouse_get_position()) - _drag_start_mouse
 
+	var mouse_screen := Vector2i(DisplayServer.mouse_get_position())
 	var win := get_window()
 	var screen := DisplayServer.screen_get_usable_rect(win.current_screen)
 
-	# 从锚点 + 鼠标偏移计算新锚点，只 clamp BattleBar 自身屏幕矩形
-	var ax := _drag_start_anchor_x + delta.x
-	var ay := _drag_start_anchor_y + delta.y
-	ax = clampi(ax, screen.position.x + EDGE_MARGIN, screen.position.x + screen.size.x - battle_bar.size.x - EDGE_MARGIN)
+	# 锚点 = 鼠标屏幕坐标 + 固定偏移
+	var ax := mouse_screen.x + _drag_offset_x
+	var ay := mouse_screen.y + _drag_offset_y
+
+	# 只 clamp BattleBar 自身屏幕矩形
+	ax = clampi(ax, screen.position.x + EDGE_MARGIN, screen.position.x + screen.size.x - int(battle_bar.size.x) - EDGE_MARGIN)
 	ay = clampi(ay, screen.position.y + EDGE_MARGIN, screen.position.y + screen.size.y - BATTLE_H - EDGE_MARGIN)
 
 	_battle_anchor_screen_x = ax
 	_battle_anchor_screen_y = ay
 
-	# 移动窗口使 BattleBar 保持在锚点位置
-	win.position = Vector2i(ax - int(battle_bar.position.x), ay - int(battle_bar.position.y))
+	# 每帧调用 _do_layout 保持落点一致，不直接设 win.position
+	_do_layout()
 
 
 # ===== 持久化 =====
