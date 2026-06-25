@@ -9,7 +9,7 @@ const WIN_H := 718     # 530 + 8 + 180，翻转就是上下对调
 const FLIP_BOT := 538   # 战斗条默认窗口内 y，仅 _ready 初始锚点推导用
 const PW := 352    # 左/右面板宽度
 const CW := 720    # 中栏宽度
-const FLIP_HYSTERESIS := 24
+const FLIP_HYSTERESIS := 48
 const LOG_THROTTLE := 30
 
 const BATTLE_REST_X := 360
@@ -165,6 +165,11 @@ func _do_layout() -> void:
 	var screen_win_max_x := screen.position.x + screen.size.x - WIN_W - EDGE_MARGIN
 	if screen_win_max_x >= screen_win_min_x:
 		win_x = clampi(win_x, screen_win_min_x, screen_win_max_x)
+
+	var screen_win_min_y := screen.position.y + EDGE_MARGIN
+	var screen_win_max_y := screen.position.y + screen.size.y - WIN_H - EDGE_MARGIN
+	if screen_win_max_y >= screen_win_min_y:
+		win_y = clampi(win_y, screen_win_min_y, screen_win_max_y)
 
 	win.position = Vector2i(win_x, win_y)
 
