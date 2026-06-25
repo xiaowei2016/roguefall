@@ -96,8 +96,33 @@ func _apply_mode(mode: Mode) -> void:
 	center_panel.visible = (mode != Mode.BATTLE_ONLY)
 	right_panel.visible = (mode == Mode.CENTER_RIGHT_BATTLE or mode == Mode.FULL)
 
+	_snap_battlebar_to_center()  # mode 切换时默认对齐中栏
 	_do_layout()
 	_update_passthrough()
+
+
+# mode 变化时 BattleBar 默认对齐 CenterPanel，拖动时不调用
+func _snap_battlebar_to_center() -> void:
+	if not center_panel.visible:
+		return
+
+	var bbx := _battle_local_x
+	var gl := bbx
+	var gr := bbx + CW
+	if left_panel.visible:
+		gl = bbx - GAP - PW
+	if right_panel.visible:
+		gr = bbx + CW + GAP + PW
+
+	var shift := 0
+	if gl < 0:
+		shift = -gl
+	elif gr > WIN_W:
+		shift = -(gr - WIN_W)
+
+	var target_cx := bbx + shift
+	_battle_local_x = clampi(target_cx, BBX_MIN, BBX_MAX)
+	_battle_anchor_screen_x = get_window().position.x + _battle_local_x
 
 
 # ===== 布局 =====
