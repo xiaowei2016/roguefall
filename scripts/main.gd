@@ -6,18 +6,12 @@ const BATTLE_H := 180
 const PANEL_H := 530
 const WIN_W := 1440
 const WIN_H := 718     # 530 + 8 + 180，翻转就是上下对调
-const FLIP_TOP := 0     # 战斗条在上的窗口 y 偏移（战斗条占顶部 180px）
-const FLIP_BOT := 538   # 战斗条在下的窗口 y 偏移（面板区 530px + 间距 8px）
-const PANEL_Y_ABOVE := 0     # 面板在战斗条上方
-const PANEL_Y_BELOW := 188   # 面板在战斗条下方（180 + 8）
+const FLIP_BOT := 538   # 战斗条默认窗口内 y，仅 _ready 初始锚点推导用
 const PW := 352    # 左/右面板宽度
 const CW := 720    # 中栏宽度
 const FLIP_HYSTERESIS := 24
 const LOG_THROTTLE := 30
 
-# BattleBar 横向始终可在窗口内 0 ~ (WIN_W - CW) 滑动
-const BBX_MIN := 0
-const BBX_MAX := WIN_W - CW  # 720
 const BATTLE_REST_X := 360
 
 enum Mode { BATTLE_ONLY, CENTER_BATTLE, LEFT_CENTER_BATTLE, CENTER_RIGHT_BATTLE, FULL }
@@ -30,7 +24,7 @@ var _dragging := false
 var _drag_offset_x := 0
 var _drag_offset_y := 0
 
-# BattleBar 屏幕坐标锚点，每次布局后从 win + battle_bar 刷新
+# BattleBar 屏幕坐标锚点，唯一拖拽真源
 var _battle_anchor_screen_x := 0
 var _battle_anchor_screen_y := 0
 
@@ -98,21 +92,28 @@ func _apply_mode(mode: Mode) -> void:
 
 
 
-# ===== 布局 =====
+# ===== 布局（screen-space stateless） =====
 func _do_layout() -> void:
 	var win := get_window()
 	var screen := DisplayServer.screen_get_usable_rect(win.current_screen)
 
+	var screen_min_x := screen.position.x + EDGE_MARGIN
+	var screen_max_x := screen.position.x + screen.size.x - EDGE_MARGIN
 	var has_panels := _current_mode != Mode.BATTLE_ONLY
 
-	# ---- 垂直 ----
+	# ---- 1. BattleBar screen rect（锚点是 BattleBar 左上角） ----
+	var bb_sx := _battle_anchor_screen_x
+	var bb_sy := _battle_anchor_screen_y
+	var bb_sw := CW   # 720
+	var bb_sh := BATTLE_H
+
+	# ---- 2. 面板 screen y（翻转逻辑） ----
 	var flipped: bool = false
-	var battle_y: int = FLIP_BOT
-	var panel_y: int = PANEL_Y_ABOVE
+	var panel_sy: int = 0
 
 	if has_panels:
-		var space_above := _battle_anchor_screen_y - screen.position.y - EDGE_MARGIN
-		var space_below := screen.position.y + screen.size.y - (_battle_anchor_screen_y + BATTLE_H) - EDGE_MARGIN
+		var space_above := bb_sy - screen.position.y - EDGE_MARGIN
+		var space_below := screen.position.y + screen.size.y - (bb_sy + bb_sh) - EDGE_MARGIN
 
 		if _dragging:
 			if _last_flipped:
@@ -124,60 +125,68 @@ func _do_layout() -> void:
 		_last_flipped = flipped
 
 		if flipped:
-			battle_y = 0
-			panel_y = PANEL_Y_BELOW
-			win.position.y = _battle_anchor_screen_y
+			panel_sy = bb_sy + bb_sh + GAP   # 面板在 BattleBar 下方
 		else:
-			battle_y = FLIP_BOT
-			panel_y = PANEL_Y_ABOVE
-			win.position.y = _battle_anchor_screen_y - FLIP_BOT
-	else:
-		# mode=0: 无面板，不翻转
-		win.position.y = _battle_anchor_screen_y - FLIP_BOT
+			panel_sy = bb_sy - PANEL_H - GAP # 面板在 BattleBar 上方
 
-	battle_bar.position.y = battle_y
-	_battle_anchor_screen_y = win.position.y + battle_y
+	# ---- 3. 面板 screen x（以 BattleBar screen x 对齐 CenterPanel） ----
+	var center_sx := bb_sx
+	var left_sx   := center_sx - GAP - PW
+	var right_sx  := center_sx + CW + GAP
 
-	# ---- 水平：BattleBar 渲染 ----
-	# rest_x = 静止归位目标（BATTLE_REST_X=360），拖拽中不更新
-	var rest_x := BATTLE_REST_X
-
-	win.position.x = _battle_anchor_screen_x - rest_x
-
-	var screen_min_x := screen.position.x + EDGE_MARGIN
-	var screen_max_x := screen.position.x + screen.size.x - WIN_W - EDGE_MARGIN
-	if screen_max_x >= screen_min_x:
-		win.position.x = clampi(win.position.x, screen_min_x, screen_max_x)
-
-	# render_bbx = 本帧 BattleBar 渲染位置，只读，不写回任何持久状态
-	var render_bbx := clampi(_battle_anchor_screen_x - win.position.x, BBX_MIN, BBX_MAX)
-	battle_bar.position.x = render_bbx
-
-	# ---- 可见面板：stateless clamp —— 以 rest_x 为基准，不依赖 render_bbx ----
-	var shift: int = 0
+	# ---- 4. 面板组 clamp 到屏幕内（只移面板组，不动 BattleBar） ----
+	var panel_shift: int = 0
 	if has_panels:
-		var gl := rest_x
-		var gr := rest_x + CW
+		var pg_min := center_sx
+		var pg_max := center_sx + CW
 		if left_panel.visible:
-			gl = rest_x - GAP - PW
+			pg_min = mini(pg_min, left_sx)
 		if right_panel.visible:
-			gr = rest_x + CW + GAP + PW
+			pg_max = maxi(pg_max, right_sx + PW)
 
-		if gl < 0:
-			shift = -gl
-		elif gr > WIN_W:
-			shift = -(gr - WIN_W)
+		if pg_min < screen_min_x:
+			panel_shift = screen_min_x - pg_min
+		elif pg_max > screen_max_x:
+			panel_shift = screen_max_x - pg_max
 
-		var cx := rest_x + shift
+	var center_ssx := center_sx + panel_shift
+	var left_ssx   := left_sx   + panel_shift
+	var right_ssx  := right_sx  + panel_shift
 
+	# ---- 5. 所有可见元素 union rect → 窗口位置 ----
+	var union_min_x := bb_sx
+	var union_max_x := bb_sx + bb_sw
+	var union_min_y := bb_sy
+	var union_max_y := bb_sy + bb_sh
+
+	if has_panels:
+		var panel_min_x := center_ssx
+		var panel_max_x := center_ssx + CW
 		if left_panel.visible:
-			left_panel.position = Vector2i(cx - GAP - PW, panel_y)
-		if center_panel.visible:
-			center_panel.position = Vector2i(cx, panel_y)
+			panel_min_x = mini(panel_min_x, left_ssx)
+			panel_max_x = maxi(panel_max_x, left_ssx + PW)
 		if right_panel.visible:
-			right_panel.position = Vector2i(cx + CW + GAP, panel_y)
+			panel_min_x = mini(panel_min_x, right_ssx)
+			panel_max_x = maxi(panel_max_x, right_ssx + PW)
 
-	# ---- 日志节流 ----
+		union_min_x = mini(union_min_x, panel_min_x)
+		union_max_x = maxi(union_max_x, panel_max_x)
+		union_min_y = mini(union_min_y, panel_sy)
+		union_max_y = maxi(union_max_y, panel_sy + PANEL_H)
+
+	win.position = Vector2i(union_min_x, union_min_y)
+
+	# ---- 6. local = screen - window ----
+	battle_bar.position = Vector2i(bb_sx - union_min_x, bb_sy - union_min_y)
+
+	if has_panels:
+		center_panel.position = Vector2i(center_ssx - union_min_x, panel_sy - union_min_y)
+		if left_panel.visible:
+			left_panel.position = Vector2i(left_ssx - union_min_x, panel_sy - union_min_y)
+		if right_panel.visible:
+			right_panel.position = Vector2i(right_ssx - union_min_x, panel_sy - union_min_y)
+
+	# ---- 7. 日志节流 ----
 	var log_reason := ""
 	if _last_log_mode != _current_mode:
 		log_reason = "mode"
@@ -185,9 +194,9 @@ func _do_layout() -> void:
 	elif _last_log_flipped != flipped:
 		log_reason = "flip"
 		_last_log_flipped = flipped
-	elif _last_log_shift != shift:
+	elif _last_log_shift != panel_shift:
 		log_reason = "shift"
-		_last_log_shift = shift
+		_last_log_shift = panel_shift
 	elif not _dragging:
 		log_reason = "idle"
 	elif _log_frame_count % LOG_THROTTLE == 0:
@@ -195,18 +204,26 @@ func _do_layout() -> void:
 	_log_frame_count += 1
 
 	if log_reason != "":
-		var lx_out := rest_x + shift - GAP - PW if left_panel.visible else -999
-		var cx_out := rest_x + shift if center_panel.visible else -999
-		var rx_out := rest_x + shift + CW + GAP if right_panel.visible else -999
-		print("[roguefall] --- layout ---  reason=%s  mode=%d  shift=%d  win=(%d,%d)  bb_win=(%d,%d)  flipped=%s  panel_y=%d" % [
-			log_reason, _current_mode, shift, win.position.x, win.position.y,
-			render_bbx, battle_y, flipped, panel_y
-		])
-		print("  L(%d,%d) %s  C(%d,%d) %s  R(%d,%d) %s  anchor_screen=(%d,%d)" % [
-			lx_out, panel_y, "vis" if left_panel.visible else "hid",
-			cx_out, panel_y, "vis" if center_panel.visible else "hid",
-			rx_out, panel_y, "vis" if right_panel.visible else "hid",
-			_battle_anchor_screen_x, _battle_anchor_screen_y
+		var pg_x1 := center_ssx
+		var pg_x2 := center_ssx + CW
+		if left_panel.visible:
+			pg_x1 = mini(pg_x1, left_ssx)
+			pg_x2 = maxi(pg_x2, left_ssx + PW)
+		if right_panel.visible:
+			pg_x1 = mini(pg_x1, right_ssx)
+			pg_x2 = maxi(pg_x2, right_ssx + PW)
+
+		print("[roguefall] --- layout ---  reason=%s  mode=%d  battle_screen=(%d,%d,%d,%d)  pg_screen=(%d,%d,%d,%d)  shift=%d  window=(%d,%d)  battle_local=(%d,%d)  center_local=(%d,%d)  flipped=%s" % [
+			log_reason, _current_mode,
+			bb_sx, bb_sy, bb_sw, bb_sh,
+			pg_x1 if has_panels else -1, panel_sy if has_panels else -1,
+			pg_x2 if has_panels else -1, (panel_sy + PANEL_H) if has_panels else -1,
+			panel_shift,
+			union_min_x, union_min_y,
+			battle_bar.position.x, battle_bar.position.y,
+			center_panel.position.x if center_panel.visible else -1,
+			center_panel.position.y if center_panel.visible else -1,
+			flipped
 		])
 
 
