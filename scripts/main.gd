@@ -97,23 +97,26 @@ func _do_layout() -> void:
 
 	battle_bar.position.y = battle_y
 
-	# 水平布局：三栏组合体中心对齐战斗条中心
-	# 组合体 = 所有可见面板 + 间距，cx 是中栏左边缘
-	var left_span := PW + GAP if left_panel.visible else 0
-	var right_span := PW + GAP if right_panel.visible else 0
-	var bb_center := battle_x + CW / 2
+	# 水平布局：CenterPanel 始终对齐 BattleBar
+	var cx := battle_x
+	var lx := cx - PW - GAP
+	var rx := cx + CW + GAP
 
-	var cx := bb_center - CW / 2 + (left_span - right_span) / 2
-	var lx := cx - left_span
-	var rx := cx + CW + (GAP if right_panel.visible else 0)
+	# 可见面板溢出窗口时，挪窗口归位（不改变面板间相对关系）
+	if left_panel.visible and lx < 0:
+		win.position.x -= lx
+	if right_panel.visible and rx + PW > WIN_W:
+		win.position.x -= (rx + PW - WIN_W)
 
-	# 若组合体超出窗口边界，整体居中（放弃对齐战斗条）
-	var group_left := lx if left_panel.visible else cx
-	var group_right := cx + CW + right_span
-	if group_left < 0 or group_right > WIN_W:
-		cx = (WIN_W - CW) / 2 + (left_span - right_span) / 2
-		lx = cx - left_span
-		rx = cx + CW + (GAP if right_panel.visible else 0)
+	# 窗口不越屏幕（usable_rect 过小时跳过 clamp）
+	var min_x := screen.position.x + EDGE_MARGIN
+	var max_x := screen.position.x + screen.size.x - WIN_W - EDGE_MARGIN
+	var min_y := screen.position.y + EDGE_MARGIN
+	var max_y := screen.position.y + screen.size.y - WIN_H - EDGE_MARGIN
+	if max_x >= min_x:
+		win.position.x = clampi(win.position.x, min_x, max_x)
+	if max_y >= min_y:
+		win.position.y = clampi(win.position.y, min_y, max_y)
 
 	left_panel.position = Vector2i(lx, panel_y)
 	center_panel.position = Vector2i(cx, panel_y)
@@ -157,11 +160,15 @@ func _process(_delta: float) -> void:
 	var win := get_window()
 	var screen := DisplayServer.screen_get_usable_rect(win.current_screen)
 
-	# Clamp 窗口到屏幕 usable_rect，确保翻转/回落后整窗可见
-	pos.x = clampi(pos.x, screen.position.x + EDGE_MARGIN, screen.position.x + screen.size.x - WIN_W - EDGE_MARGIN)
-	pos.y = clampi(pos.y, screen.position.y + EDGE_MARGIN, screen.position.y + screen.size.y - WIN_H - EDGE_MARGIN)
+	# Clamp BattleBar 屏幕矩形，窗口可局部出屏
+	var bb_x := int(battle_bar.position.x)
+	var bb_y := int(battle_bar.position.y)
+	var bsx := pos.x + bb_x
+	var bsy := pos.y + bb_y
+	bsx = clampi(bsx, screen.position.x + EDGE_MARGIN, screen.position.x + screen.size.x - battle_bar.size.x - EDGE_MARGIN)
+	bsy = clampi(bsy, screen.position.y + EDGE_MARGIN, screen.position.y + screen.size.y - BATTLE_H - EDGE_MARGIN)
 
-	win.position = pos
+	win.position = Vector2i(bsx - bb_x, bsy - bb_y)
 
 
 # ===== 持久化 =====
