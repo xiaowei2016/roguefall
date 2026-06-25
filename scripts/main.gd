@@ -13,11 +13,6 @@ const PANEL_Y_BELOW := 188   # 面板在战斗条下方（180 + 8）
 const PW := 352    # 左/右面板宽度
 const CW := 720    # 中栏宽度
 
-# 三栏固定 x 坐标，与 BattleBar 解耦
-const LX := 0
-const CX := 360    # PW + GAP
-const RX := 1088   # PW + GAP + CW + GAP
-
 # BattleBar 横向始终可在窗口内 0 ~ (WIN_W - CW) 滑动
 const BBX_MIN := 0
 const BBX_MAX := WIN_W - CW  # 720
@@ -118,39 +113,61 @@ func _do_layout() -> void:
 	battle_bar.position.y = battle_y
 	_battle_anchor_screen_y = win.position.y + battle_y
 
-	# ---- 水平：BattleBar 与三栏解耦 ----
-	# BattleBar 范围恒为 0~720，模式切换不重置
+	# ---- 水平：BattleBar 滑动 ----
 	_battle_local_x = clampi(_battle_local_x, BBX_MIN, BBX_MAX)
 
-	# 窗口定位使得 BattleBar 在窗口内位置 = _battle_local_x
 	win.position.x = _battle_anchor_screen_x - _battle_local_x
 
-	# 窗口不越屏幕
 	var screen_min_x := screen.position.x + EDGE_MARGIN
 	var screen_max_x := screen.position.x + screen.size.x - WIN_W - EDGE_MARGIN
 	if screen_max_x >= screen_min_x:
 		win.position.x = clampi(win.position.x, screen_min_x, screen_max_x)
 
-	# 窗口 clamp 后反算 BattleBar 实际落点
 	var bbx := clampi(_battle_anchor_screen_x - win.position.x, BBX_MIN, BBX_MAX)
 	battle_bar.position.x = bbx
 	_battle_local_x = bbx
 
-	# 三栏固定位置，不从 battle_bar.x 推导
-	left_panel.position.x = LX
-	center_panel.position.x = CX
-	right_panel.position.x = RX
-	left_panel.position.y = panel_y
-	center_panel.position.y = panel_y
-	right_panel.position.y = panel_y
+	# ---- 可见面板布局：只有 visible=true 的栏参与，隐藏栏不占位 ----
+	# 中栏默认对齐 BattleBar
+	var cx := bbx
+
+	# 计算当前可见组的左右边界
+	var panel_left := cx
+	var panel_right := cx + CW
+
+	if left_panel.visible:
+		panel_left = cx - GAP - PW
+	if right_panel.visible:
+		panel_right = cx + CW + GAP + PW
+
+	# 可见组超出窗口时整体平移，没有隐藏栏预留空间
+	if panel_left < 0:
+		cx += -panel_left
+	elif panel_right > WIN_W:
+		cx -= panel_right - WIN_W
+
+	# 最终落位：只设置可见栏
+	if left_panel.visible:
+		left_panel.position = Vector2i(cx - GAP - PW, panel_y)
+	if center_panel.visible:
+		center_panel.position = Vector2i(cx, panel_y)
+	if right_panel.visible:
+		right_panel.position = Vector2i(cx + CW + GAP, panel_y)
+
+	# 日志
+	var lx_out := cx - GAP - PW if left_panel.visible else -999
+	var cx_out := cx if center_panel.visible else -999
+	var rx_out := cx + CW + GAP if right_panel.visible else -999
 
 	print("[roguefall] --- layout ---")
 	print("  mode=%d  win=(%d,%d)  bb_win=(%d,%d)  bb_screen_y=%d  flipped=%s  panel_y=%d" % [
 		_current_mode, win.position.x, win.position.y,
 		bbx, battle_y, _battle_anchor_screen_y, flipped, panel_y
 	])
-	print("  L(%d,%d)  C(%d,%d)  R(%d,%d)  anchor_screen_x=%d  battle_local_x=%d" % [
-		LX, panel_y, CX, panel_y, RX, panel_y,
+	print("  L(%d,%d) %s  C(%d,%d) %s  R(%d,%d) %s  anchor_screen_x=%d  battle_local_x=%d" % [
+		lx_out, panel_y, "vis" if left_panel.visible else "hid",
+		cx_out, panel_y, "vis" if center_panel.visible else "hid",
+		rx_out, panel_y, "vis" if right_panel.visible else "hid",
 		_battle_anchor_screen_x, _battle_local_x
 	])
 
