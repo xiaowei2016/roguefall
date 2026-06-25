@@ -194,9 +194,9 @@ func _do_layout() -> void:
 		log_reason = "flip"
 		_last_log_flipped = flipped
 	elif _last_log_shift != panel_shift:
-		var shift_to_zero := _last_log_shift != 0 and panel_shift == 0
-		var shift_from_zero := _last_log_shift == 0 and panel_shift != 0
-		var shift_boundary := abs(panel_shift) in [360]
+		var shift_to_zero: bool = _last_log_shift != 0 and panel_shift == 0
+		var shift_from_zero: bool = _last_log_shift == 0 and panel_shift != 0
+		var shift_boundary: bool = abs(int(panel_shift)) == 360
 		if shift_to_zero or shift_from_zero or shift_boundary or _shift_log_frame >= SHIFT_LOG_INTERVAL:
 			log_reason = "shift"
 		_last_log_shift = panel_shift
