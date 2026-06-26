@@ -30,3 +30,7 @@ renderer/rendering_method="gl_compatibility"
 viewport/transparent_background=true
 environment/default_clear_color=Color(0, 0, 0, 0)
 
+[autoload]
+
+GameData="*res://scripts/game_data.gd"
+

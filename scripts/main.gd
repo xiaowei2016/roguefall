@@ -75,6 +75,7 @@ func _ready() -> void:
 
 	_apply_mode(Mode.BATTLE_ONLY)
 	_loading = false
+	_refresh_battle_bar()
 	print("[roguefall] INIT OK  mode=%d  win=(%d,%d)  size=(%d,%d)  anchor=(%d,%d)  rest_x=%d" % [
 		_current_mode, win.position.x, win.position.y, win.size.x, win.size.y,
 		_battle_anchor_screen_x, _battle_anchor_screen_y, BATTLE_REST_X
@@ -325,3 +326,10 @@ func _on_right() -> void:
 		Mode.LEFT_CENTER_BATTLE: _apply_mode(Mode.FULL)
 		Mode.CENTER_RIGHT_BATTLE: _apply_mode(Mode.CENTER_BATTLE)
 		Mode.FULL: _apply_mode(Mode.LEFT_CENTER_BATTLE)
+
+
+func _refresh_battle_bar() -> void:
+	$PanelRoot/BattleBar/Panel/LvLabel.text = "Lv " + str(GameData.level)
+	$PanelRoot/BattleBar/Panel/HpLabel.text = "HP: " + str(GameData.hp) + "/" + str(GameData.max_hp)
+	$PanelRoot/BattleBar/Panel/ExpLabel.text = "EXP: " + str(GameData.exp) + "/" + str(GameData.next_exp)
+	$PanelRoot/BattleBar/Panel/GoldLabel.text = "Gold: " + str(GameData.gold)
