@@ -23,7 +23,7 @@ func _physics_process(delta: float) -> void:
 	if is_attacking:
 		return
 
-	var enemies := get_tree().get_nodes_in_group("enemies")
+	var enemies := _get_enemy_nodes()
 
 	if enemies.is_empty():
 		_patrol(delta)
@@ -75,7 +75,17 @@ func _on_animation_finished() -> void:
 		is_attacking = false
 
 
+func _get_enemy_nodes() -> Array[Node2D]:
+	var result: Array[Node2D] = []
+	for node in get_tree().get_nodes_in_group("enemies"):
+		if node is Node2D:
+			result.append(node as Node2D)
+	return result
+
+
 func _find_nearest(enemies: Array[Node2D]) -> Node2D:
+	if enemies.is_empty():
+		return null
 	var nearest: Node2D = enemies[0]
 	var min_dist_sq: float = global_position.distance_squared_to(nearest.global_position)
 	for i in range(1, enemies.size()):
