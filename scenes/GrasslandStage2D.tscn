@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://djmbujknc0ypd" path="res://assets/grassland/ChatGPT Image 2026年6月26日 16_13_43 (6).png" id="6_grass"]
 [ext_resource type="Texture2D" uid="uid://c5g0wwydtqr3" path="res://assets/grassland/ChatGPT Image 2026年6月26日 16_13_44 (7).png" id="7_ground"]
 [ext_resource type="PackedScene" path="res://scenes/characters/PlayerActor.tscn" id="8_player_actor"]
+[ext_resource type="PackedScene" path="res://scenes/characters/DummyEnemy.tscn" id="9_dummy_enemy"]
 
 [node name="GrasslandStage2D" type="Control" unique_id=1494099990]
 layout_mode = 3
@@ -114,5 +115,8 @@ default_color = Color(1, 0, 0, 1)
 
 [node name="PlayerActor" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/ActorLayer" instance=ExtResource("8_player_actor")]
 position = Vector2(180, 135)
+
+[node name="DummyEnemy" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/ActorLayer" instance=ExtResource("9_dummy_enemy")]
+position = Vector2(520, 135)
 
 [node name="EffectLayer" type="Node2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=1491436542]
