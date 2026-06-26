@@ -20,101 +20,86 @@ limit_bottom = 180
 
 [node name="FarParallax" type="Parallax2D" parent="."]
 scroll_scale = Vector2(0.2, 1)
-repeat_size = Vector2(576, 0)
+repeat_size = Vector2(720, 0)
 repeat_times = 2
 follow_viewport = true
-autoscroll = Vector2(-6, 0)
+autoscroll = Vector2(0, 0)
 
 [node name="FarSprite_Sky" type="Sprite2D" parent="FarParallax"]
 texture = ExtResource("1_sky")
-position = Vector2(0, 0)
-scale = Vector2(0.1125, 0.1125)
+position = Vector2(0, -40)
+scale = Vector2(0.33149, 0.33149)
 centered = false
 z_index = 0
-texture_repeat = 2
-region_enabled = true
-region_rect = Rect2(0, 0, 3600, 1600)
 
 [node name="FarSprite_Cloud" type="Sprite2D" parent="FarParallax"]
 texture = ExtResource("2_cloud")
-position = Vector2(0, 0)
-scale = Vector2(0.1125, 0.1125)
+position = Vector2(0, -40)
+scale = Vector2(0.33149, 0.33149)
 centered = false
 z_index = 1
-texture_repeat = 2
-region_enabled = true
-region_rect = Rect2(0, 0, 3600, 1600)
 
 [node name="MidParallax" type="Parallax2D" parent="."]
 scroll_scale = Vector2(0.45, 1)
-repeat_size = Vector2(576, 0)
+repeat_size = Vector2(720, 0)
 repeat_times = 2
 follow_viewport = true
-autoscroll = Vector2(-14, 0)
+autoscroll = Vector2(0, 0)
 
 [node name="MidSprite_Hill" type="Sprite2D" parent="MidParallax"]
 texture = ExtResource("3_hill")
-position = Vector2(0, 0)
-scale = Vector2(0.1125, 0.1125)
+position = Vector2(0, -40)
+scale = Vector2(0.33149, 0.33149)
 centered = false
 z_index = 0
-texture_repeat = 2
-region_enabled = true
-region_rect = Rect2(0, 0, 3600, 1600)
 
 [node name="MidSprite_Village" type="Sprite2D" parent="MidParallax"]
 texture = ExtResource("4_village")
-position = Vector2(0, 0)
-scale = Vector2(0.1125, 0.1125)
+position = Vector2(0, -40)
+scale = Vector2(0.33149, 0.33149)
 centered = false
 z_index = 1
-texture_repeat = 2
-region_enabled = true
-region_rect = Rect2(0, 0, 3600, 1600)
 
 [node name="NearParallax" type="Parallax2D" parent="."]
 scroll_scale = Vector2(0.75, 1)
-repeat_size = Vector2(576, 0)
+repeat_size = Vector2(720, 0)
 repeat_times = 2
 follow_viewport = true
-autoscroll = Vector2(-26, 0)
+autoscroll = Vector2(0, 0)
 
 [node name="NearSprite_Tree" type="Sprite2D" parent="NearParallax"]
 texture = ExtResource("5_tree")
-position = Vector2(0, 0)
-scale = Vector2(0.1125, 0.1125)
+position = Vector2(0, -40)
+scale = Vector2(0.33149, 0.33149)
 centered = false
 z_index = 0
-texture_repeat = 2
-region_enabled = true
-region_rect = Rect2(0, 0, 3600, 1600)
 
 [node name="GroundParallax" type="Parallax2D" parent="."]
 scroll_scale = Vector2(1, 1)
-repeat_size = Vector2(576, 0)
+repeat_size = Vector2(720, 0)
 repeat_times = 2
 follow_viewport = true
-autoscroll = Vector2(-40, 0)
+autoscroll = Vector2(0, 0)
 
 [node name="GroundSprite_Earth" type="Sprite2D" parent="GroundParallax"]
 texture = ExtResource("7_ground")
-position = Vector2(0, 0)
-scale = Vector2(0.1125, 0.1125)
+position = Vector2(0, -40)
+scale = Vector2(0.33149, 0.33149)
 centered = false
 z_index = 0
-texture_repeat = 2
-region_enabled = true
-region_rect = Rect2(0, 0, 3600, 1600)
 
 [node name="GroundSprite_Grass" type="Sprite2D" parent="GroundParallax"]
 texture = ExtResource("6_grass")
-position = Vector2(0, 0)
-scale = Vector2(0.1125, 0.1125)
+position = Vector2(0, -40)
+scale = Vector2(0.33149, 0.33149)
 centered = false
 z_index = 1
-texture_repeat = 2
-region_enabled = true
-region_rect = Rect2(0, 0, 3600, 1600)
+
+[node name="StageVisibleGuide" type="ReferenceRect" parent="."]
+editor_only = true
+position = Vector2(0, 0)
+size = Vector2(720, 180)
+z_index = 100
 
 [node name="ActorLayer" type="Node2D" parent="."]
 
