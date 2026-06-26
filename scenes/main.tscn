@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
 [ext_resource type="Script" path="res://scripts/native_drag_zone.gd" id="2_dragzone"]
 [ext_resource type="Script" path="res://scripts/DesktopPixelPassthrough.cs" id="3_pixel"]
 [ext_resource type="PackedScene" path="res://scenes/GrasslandStage2D.tscn" id="5_grassland_stage"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1"]
 
 [node name="MainRoot" type="Control"]
 layout_mode = 3
@@ -406,6 +408,7 @@ offset_top = 0.0
 offset_right = 0.0
 offset_bottom = 0.0
 mouse_filter = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_1")
 script = ExtResource("2_dragzone")
 
 [node name="LvLabel" type="Label" parent="PanelRoot/BattleBar/Panel"]
