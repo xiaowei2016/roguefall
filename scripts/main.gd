@@ -15,10 +15,11 @@ const SHIFT_LOG_INTERVAL := 15
 
 const BATTLE_REST_X := 360
 
-enum Mode { BATTLE_ONLY, CENTER_BATTLE, LEFT_CENTER_BATTLE, CENTER_RIGHT_BATTLE, FULL }
+# ---- 左右栏内容状态 ----
+enum LeftContent { NONE, WAREHOUSE, PET, CODEX, MAP }
+enum RightContent { NONE, SETTINGS, REROLL, DETAIL }
 
 var _loading := true
-var _current_mode := -1
 var _dragging := false
 
 # 拖拽：鼠标屏幕坐标与锚点之间的固定偏移
@@ -32,8 +33,12 @@ var _battle_anchor_screen_y := 0
 # 上下翻转滞后
 var _last_flipped: bool = false
 
+# 面板显示状态
+var _center_open := false
+var _left_content := LeftContent.NONE
+var _right_content := RightContent.NONE
+
 # 日志节流
-var _last_log_mode: int = -1
 var _last_log_flipped: bool = false
 var _last_log_shift: int = 0
 var _log_frame_count: int = 0
@@ -43,6 +48,16 @@ var _shift_log_frame: int = 0
 @onready var left_panel := $PanelRoot/LeftPanel
 @onready var center_panel := $PanelRoot/CenterPanel
 @onready var right_panel := $PanelRoot/RightPanel
+
+# ---- 内容容器 ----
+@onready var warehouse_content := $PanelRoot/LeftPanel/WarehouseContent
+@onready var pet_content := $PanelRoot/LeftPanel/PetContent
+@onready var codex_content := $PanelRoot/LeftPanel/CodexContent
+@onready var map_content := $PanelRoot/LeftPanel/MapContent
+
+@onready var settings_content := $PanelRoot/RightPanel/SettingsContent
+@onready var reroll_content := $PanelRoot/RightPanel/RerollContent
+@onready var detail_content := $PanelRoot/RightPanel/DetailContent
 
 
 func _ready() -> void:
@@ -60,9 +75,19 @@ func _ready() -> void:
 
 	$PanelRoot.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 
+	# BattleBar 背包按钮
 	$PanelRoot/BattleBar/Button.pressed.connect(_on_bag)
-	$PanelRoot/CenterPanel/Button.pressed.connect(_on_left)
-	$PanelRoot/CenterPanel/Button2.pressed.connect(_on_right)
+
+	# CenterPanel 左栏按钮
+	$PanelRoot/CenterPanel/LeftButtons/WarehouseBtn.pressed.connect(func(): _on_left_button(LeftContent.WAREHOUSE))
+	$PanelRoot/CenterPanel/LeftButtons/PetBtn.pressed.connect(func(): _on_left_button(LeftContent.PET))
+	$PanelRoot/CenterPanel/LeftButtons/CodexBtn.pressed.connect(func(): _on_left_button(LeftContent.CODEX))
+	$PanelRoot/CenterPanel/LeftButtons/MapBtn.pressed.connect(func(): _on_left_button(LeftContent.MAP))
+
+	# CenterPanel 右栏按钮
+	$PanelRoot/CenterPanel/RightButtons/SettingsBtn.pressed.connect(func(): _on_right_button(RightContent.SETTINGS))
+	$PanelRoot/CenterPanel/RightButtons/RerollBtn.pressed.connect(func(): _on_right_button(RightContent.REROLL))
+	$PanelRoot/CenterPanel/RightButtons/DetailBtn.pressed.connect(func(): _on_right_button(RightContent.DETAIL))
 
 	battle_bar.position.y = FLIP_BOT
 
@@ -73,28 +98,36 @@ func _ready() -> void:
 	_battle_anchor_screen_x = win.position.x + int(battle_bar.position.x)
 	_battle_anchor_screen_y = win.position.y + int(battle_bar.position.y)
 
-	_apply_mode(Mode.BATTLE_ONLY)
+	_apply_state()
 	_loading = false
 	_refresh_battle_bar()
-	print("[roguefall] INIT OK  mode=%d  win=(%d,%d)  size=(%d,%d)  anchor=(%d,%d)  rest_x=%d" % [
-		_current_mode, win.position.x, win.position.y, win.size.x, win.size.y,
+	print("[roguefall] INIT OK  center_open=%s  left=%d  right=%d  win=(%d,%d)  size=(%d,%d)  anchor=(%d,%d)  rest_x=%d" % [
+		_center_open, _left_content, _right_content,
+		win.position.x, win.position.y, win.size.x, win.size.y,
 		_battle_anchor_screen_x, _battle_anchor_screen_y, BATTLE_REST_X
 	])
 
 
-# ===== 模式 =====
-func _apply_mode(mode: Mode) -> void:
-	if mode == _current_mode:
-		return
-	_current_mode = mode
+# ===== 状态机 =====
+func _apply_state() -> void:
+	# 面板可见性
+	center_panel.visible = _center_open
+	left_panel.visible = _center_open and _left_content != LeftContent.NONE
+	right_panel.visible = _center_open and _right_content != RightContent.NONE
 
-	left_panel.visible = (mode == Mode.LEFT_CENTER_BATTLE or mode == Mode.FULL)
-	center_panel.visible = (mode != Mode.BATTLE_ONLY)
-	right_panel.visible = (mode == Mode.CENTER_RIGHT_BATTLE or mode == Mode.FULL)
+	# 左栏内容切换
+	warehouse_content.visible = _left_content == LeftContent.WAREHOUSE
+	pet_content.visible = _left_content == LeftContent.PET
+	codex_content.visible = _left_content == LeftContent.CODEX
+	map_content.visible = _left_content == LeftContent.MAP
+
+	# 右栏内容切换
+	settings_content.visible = _right_content == RightContent.SETTINGS
+	reroll_content.visible = _right_content == RightContent.REROLL
+	detail_content.visible = _right_content == RightContent.DETAIL
 
 	_do_layout()
 	_update_passthrough()
-
 
 
 # ===== 布局（screen-space stateless） =====
@@ -104,7 +137,7 @@ func _do_layout() -> void:
 
 	var screen_min_x := screen.position.x + EDGE_MARGIN
 	var screen_max_x := screen.position.x + screen.size.x - EDGE_MARGIN
-	var has_panels := _current_mode != Mode.BATTLE_ONLY
+	var has_panels := _center_open
 
 	# ---- 1. BattleBar screen rect（锚点是 BattleBar 左上角） ----
 	var bb_sx := _battle_anchor_screen_x
@@ -190,10 +223,7 @@ func _do_layout() -> void:
 
 	# ---- 7. 日志节流 ----
 	var log_reason := ""
-	if _last_log_mode != _current_mode:
-		log_reason = "mode"
-		_last_log_mode = _current_mode
-	elif _last_log_flipped != flipped:
+	if _last_log_flipped != flipped:
 		log_reason = "flip"
 		_last_log_flipped = flipped
 	elif _last_log_shift != panel_shift:
@@ -222,8 +252,8 @@ func _do_layout() -> void:
 			pg_x1 = mini(pg_x1, right_ssx)
 			pg_x2 = maxi(pg_x2, right_ssx + PW)
 
-		print("[roguefall] --- layout ---  reason=%s  mode=%d  battle_screen=(%d,%d,%d,%d)  pg_screen=(%d,%d,%d,%d)  shift=%d  window=(%d,%d)  battle_local=(%d,%d)  center_local=(%d,%d)  flipped=%s" % [
-			log_reason, _current_mode,
+		print("[roguefall] --- layout ---  reason=%s  center_open=%s  left=%d  right=%d  battle_screen=(%d,%d,%d,%d)  pg_screen=(%d,%d,%d,%d)  shift=%d  window=(%d,%d)  battle_local=(%d,%d)  center_local=(%d,%d)  flipped=%s" % [
+			log_reason, _center_open, _left_content, _right_content,
 			bb_sx, bb_sy, bb_sw, bb_sh,
 			pg_x1 if has_panels else -1, panel_sy if has_panels else -1,
 			pg_x2 if has_panels else -1, (panel_sy + PANEL_H) if has_panels else -1,
@@ -311,21 +341,30 @@ func _center_on_screen() -> void:
 
 # ===== 按钮 =====
 func _on_bag() -> void:
-	_apply_mode(Mode.CENTER_BATTLE if _current_mode == Mode.BATTLE_ONLY else Mode.BATTLE_ONLY)
+	_center_open = not _center_open
+	if not _center_open:
+		# 关闭 CenterPanel 时同时关闭左右栏
+		_left_content = LeftContent.NONE
+		_right_content = RightContent.NONE
+	_apply_state()
 
-func _on_left() -> void:
-	match _current_mode:
-		Mode.CENTER_BATTLE: _apply_mode(Mode.LEFT_CENTER_BATTLE)
-		Mode.CENTER_RIGHT_BATTLE: _apply_mode(Mode.FULL)
-		Mode.LEFT_CENTER_BATTLE: _apply_mode(Mode.CENTER_BATTLE)
-		Mode.FULL: _apply_mode(Mode.CENTER_RIGHT_BATTLE)
+func _on_left_button(content: LeftContent) -> void:
+	if not _center_open:
+		return
+	if _left_content == content:
+		_left_content = LeftContent.NONE
+	else:
+		_left_content = content
+	_apply_state()
 
-func _on_right() -> void:
-	match _current_mode:
-		Mode.CENTER_BATTLE: _apply_mode(Mode.CENTER_RIGHT_BATTLE)
-		Mode.LEFT_CENTER_BATTLE: _apply_mode(Mode.FULL)
-		Mode.CENTER_RIGHT_BATTLE: _apply_mode(Mode.CENTER_BATTLE)
-		Mode.FULL: _apply_mode(Mode.LEFT_CENTER_BATTLE)
+func _on_right_button(content: RightContent) -> void:
+	if not _center_open:
+		return
+	if _right_content == content:
+		_right_content = RightContent.NONE
+	else:
+		_right_content = content
+	_apply_state()
 
 
 func _refresh_battle_bar() -> void:
