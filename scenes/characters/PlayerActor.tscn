@@ -1,0 +1,60 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/characters/player/hero_idle_strip.png" id="1_hero_strip"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_frame0"]
+atlas = ExtResource("1_hero_strip")
+region = Rect2(0, 0, 768, 768)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_frame1"]
+atlas = ExtResource("1_hero_strip")
+region = Rect2(768, 0, 768, 768)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_frame2"]
+atlas = ExtResource("1_hero_strip")
+region = Rect2(1536, 0, 768, 768)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_frame3"]
+atlas = ExtResource("1_hero_strip")
+region = Rect2(2304, 0, 768, 768)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_frame4"]
+atlas = ExtResource("1_hero_strip")
+region = Rect2(3072, 0, 768, 768)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_frame5"]
+atlas = ExtResource("1_hero_strip")
+region = Rect2(3840, 0, 768, 768)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_idle"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_frame0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_frame1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_frame2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_frame3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_frame4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_frame5")
+}],
+"loop": true,
+"name": "idle",
+"speed": 8.0
+}]
+
+[node name="PlayerActor" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_idle")
+animation = &"idle"
+offset = Vector2(0, -319)

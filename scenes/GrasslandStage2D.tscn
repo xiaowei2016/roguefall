@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dr5ka6eovndrf" path="res://assets/grassland/ChatGPT Image 2026年6月26日 16_13_43 (5).png" id="5_tree"]
 [ext_resource type="Texture2D" uid="uid://djmbujknc0ypd" path="res://assets/grassland/ChatGPT Image 2026年6月26日 16_13_43 (6).png" id="6_grass"]
 [ext_resource type="Texture2D" uid="uid://c5g0wwydtqr3" path="res://assets/grassland/ChatGPT Image 2026年6月26日 16_13_44 (7).png" id="7_ground"]
+[ext_resource type="PackedScene" path="res://scenes/characters/PlayerActor.tscn" id="8_player_actor"]
 
 [node name="GrasslandStage2D" type="Control" unique_id=1494099990]
 layout_mode = 3
@@ -110,5 +111,8 @@ width = 2.0
 default_color = Color(1, 0, 0, 1)
 
 [node name="ActorLayer" type="Node2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=1950641600]
+
+[node name="PlayerActor" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/ActorLayer" instance=ExtResource("8_player_actor")]
+position = Vector2(180, 135)
 
 [node name="EffectLayer" type="Node2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=1491436542]
