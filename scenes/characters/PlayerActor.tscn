@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://d8playeractor0000000000000"]
+[gd_scene format=3 uid="uid://duuncixg8oqf4"]
 
 [ext_resource type="Texture2D" uid="uid://b3fqavtkkffw0" path="res://assets/characters/player/hero_idle_strip.png" id="1_hero_strip"]
 
@@ -52,42 +52,19 @@ animations = [{
 "speed": 8.0
 }]
 
-[sub_resource type="Animation" id="Animation_idle_preview"]
-resource_name = "idle_preview"
-length = 0.75
-loop_mode = 1
-step = 0.125
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("VisualRoot/AnimatedSprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_lib"]
-_data = {
-"idle_preview": SubResource("Animation_idle_preview")
-}
-
 [node name="PlayerActor" type="Node2D"]
 
 [node name="VisualRoot" type="Node2D" parent="."]
-scale = Vector2(0.25, 0.25)
+scale = Vector2(0.18, 0.18)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="VisualRoot"]
 sprite_frames = SubResource("SpriteFrames_idle")
 animation = &"idle"
-playing = false
 offset = Vector2(0, -319)
 texture_filter = 0
 
 [node name="FootMarker" type="Node2D" parent="."]
+visible = false
 
 [node name="HLine" type="Line2D" parent="FootMarker"]
 points = PackedVector2Array(-10, 0, 10, 0)
@@ -98,9 +75,3 @@ default_color = Color(1, 0, 0, 1)
 points = PackedVector2Array(0, -10, 0, 10)
 width = 1.0
 default_color = Color(1, 0, 0, 1)
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-autoplay = "idle_preview"
-libraries = {
-"": SubResource("AnimationLibrary_lib")
-}
