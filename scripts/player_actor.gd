@@ -4,7 +4,7 @@ extends Node2D
 ## States: idle / run / attack
 
 @onready var animated_sprite: AnimatedSprite2D = $VisualRoot/AnimatedSprite2D
-@onready var battle_baseline: Node2D = $"../BattleBaseline"
+@onready var battle_baseline: Node2D = $"../../BattleBaseline"
 
 const MOVE_SPEED: float = 80.0
 const ATTACK_RANGE: float = 60.0
@@ -16,6 +16,8 @@ var is_attacking: bool = false
 
 
 func _ready() -> void:
+	if battle_baseline == null:
+		push_error("PlayerActor: BattleBaseline not found. Expected ../../BattleBaseline")
 	animated_sprite.animation_finished.connect(_on_animation_finished)
 
 
