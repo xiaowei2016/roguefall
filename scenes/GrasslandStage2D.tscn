@@ -115,6 +115,7 @@ z_index = 1
 editor_only = true
 position = Vector2(0, 0)
 size = Vector2(720, 180)
+mouse_filter = 2
 z_index = 100
 
 [node name="ActorLayer" type="Node2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot"]
