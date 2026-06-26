@@ -276,7 +276,7 @@ Label / Button / Panel / ProgressBar 等 Control 节点
 
 - 正式 UI
 - 正式角色外观
-- 正式装备外观
+- 正式幻化外观
 - 正式怪物
 - 正式场景
 - 正式动画
@@ -713,7 +713,7 @@ D:\Projects\roguefall
 
 Godot 可视化强制要求：
 凡是玩家能看见的内容，必须在 Godot 中以 .tscn / Sprite2D / AnimatedSprite2D / TextureRect / Control / AnimationPlayer 等真实可视化方式创建和配置。
-禁止用纯脚本动态生成正式 UI、正式角色外观、正式装备外观、正式怪物、正式场景、正式动画。
+禁止用纯脚本动态生成正式 UI、正式角色外观、正式幻化外观、正式怪物、正式场景、正式动画。
 脚本只允许做数据绑定、刷新、事件、拖动、布局计算、动画播放控制。
 
 Godot headless 即时验证要求：
