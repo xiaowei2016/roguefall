@@ -1,6 +1,7 @@
-[gd_scene format=3 uid="uid://duuncixg8oqf4"]
+[gd_scene format=3 uid="uid://bdybdd0qfhybk"]
 
 [ext_resource type="Texture2D" uid="uid://b3fqavtkkffw0" path="res://assets/characters/player/hero_idle_strip.png" id="1_hero_strip"]
+[ext_resource type="Texture2D" uid="uid://c3grbwullggy1" path="res://assets/characters/player/hero_run_strip.png" id="2_run_strip"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_frame0"]
 atlas = ExtResource("1_hero_strip")
@@ -26,6 +27,30 @@ region = Rect2(3072, 0, 768, 768)
 atlas = ExtResource("1_hero_strip")
 region = Rect2(3840, 0, 768, 768)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_run0"]
+atlas = ExtResource("2_run_strip")
+region = Rect2(0, 0, 768, 768)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_run1"]
+atlas = ExtResource("2_run_strip")
+region = Rect2(768, 0, 768, 768)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_run2"]
+atlas = ExtResource("2_run_strip")
+region = Rect2(1536, 0, 768, 768)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_run3"]
+atlas = ExtResource("2_run_strip")
+region = Rect2(2304, 0, 768, 768)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_run4"]
+atlas = ExtResource("2_run_strip")
+region = Rect2(3072, 0, 768, 768)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_run5"]
+atlas = ExtResource("2_run_strip")
+region = Rect2(3840, 0, 768, 768)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_idle"]
 animations = [{
 "frames": [{
@@ -47,31 +72,54 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_frame5")
 }],
-"loop": true,
-"name": "idle",
+"loop": 1,
+"name": &"idle",
 "speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_run0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_run1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_run2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_run3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_run4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_run5")
+}],
+"loop": 1,
+"name": &"run",
+"speed": 10.0
 }]
 
-[node name="PlayerActor" type="Node2D"]
+[node name="PlayerActor" type="Node2D" unique_id=1326682768]
 
-[node name="VisualRoot" type="Node2D" parent="."]
-scale = Vector2(0.18, 0.18)
+[node name="VisualRoot" type="Node2D" parent="." unique_id=1391786807]
+scale = Vector2(0.13, 0.13)
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="VisualRoot"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="VisualRoot" unique_id=1005033991]
 sprite_frames = SubResource("SpriteFrames_idle")
 animation = &"idle"
+autoplay = "idle"
 offset = Vector2(0, -319)
-texture_filter = 0
 
-[node name="FootMarker" type="Node2D" parent="."]
+[node name="FootMarker" type="Node2D" parent="." unique_id=1881716851]
 visible = false
 
-[node name="HLine" type="Line2D" parent="FootMarker"]
+[node name="HLine" type="Line2D" parent="FootMarker" unique_id=371531875]
 points = PackedVector2Array(-10, 0, 10, 0)
 width = 1.0
 default_color = Color(1, 0, 0, 1)
 
-[node name="VLine" type="Line2D" parent="FootMarker"]
+[node name="VLine" type="Line2D" parent="FootMarker" unique_id=1501652481]
 points = PackedVector2Array(0, -10, 0, 10)
 width = 1.0
 default_color = Color(1, 0, 0, 1)
