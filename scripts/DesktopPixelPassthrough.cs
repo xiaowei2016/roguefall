@@ -29,6 +29,9 @@ public partial class DesktopPixelPassthrough : Node
     private const uint LogThrottleFrames = 60;
     private float _lastAlpha = -1f;
 
+    // Debug switch: false disables per-frame alpha/pos logs and no-change SWITCH logs
+    private const bool DEBUG_PIXEL_PASSTHROUGH = false;
+
     public override void _Ready()
     {
         _hWnd = (IntPtr)DisplayServer.WindowGetNativeHandle(
@@ -93,9 +96,9 @@ public partial class DesktopPixelPassthrough : Node
         {
             ApplyPassthroughState(shouldPassthrough, pixel.A, mouseLocal);
         }
-        else if (mouseMoved && _frameCount % LogThrottleFrames == 0)
+        else if (DEBUG_PIXEL_PASSTHROUGH && mouseMoved && _frameCount % LogThrottleFrames == 0)
         {
-            // Idle periodic log
+            // Idle periodic log (only when DEBUG_PIXEL_PASSTHROUGH=true)
             GD.Print($"[PixelPassthrough] alpha={pixel.A:F3} pos=({mouseLocal.X},{mouseLocal.Y}) passthrough={shouldPassthrough}");
         }
 
@@ -120,14 +123,23 @@ public partial class DesktopPixelPassthrough : Node
         // Always keep WS_EX_LAYERED
         newStyle = (IntPtr)(ToUIntPtr(newStyle) | ToUIntPtr(WS_EX_LAYERED));
 
-        SetWindowLongPtr(_hWnd, GWL_EXSTYLE, newStyle);
+        bool exstyleChanged = (ToUIntPtr(style) != ToUIntPtr(newStyle));
+
+        if (exstyleChanged)
+        {
+            SetWindowLongPtr(_hWnd, GWL_EXSTYLE, newStyle);
+        }
 
         _isPassthrough = enable;
         _lastState = enable ? 0 : 1;
 
-        var oldHex = ToUIntPtr(style);
-        var newHex = ToUIntPtr(newStyle);
-        GD.Print($"[PixelPassthrough] SWITCH  passthrough={enable}  alpha={alpha:F3}  pos=({pos.X},{pos.Y})  exstyle: 0x{oldHex:X} → 0x{newHex:X}");
+        // Only log SWITCH on real exstyle change
+        if (exstyleChanged)
+        {
+            var oldHex = ToUIntPtr(style);
+            var newHex = ToUIntPtr(newStyle);
+            GD.Print($"[PixelPassthrough] SWITCH  passthrough={enable}  alpha={alpha:F3}  pos=({pos.X},{pos.Y})  exstyle: 0x{oldHex:X} → 0x{newHex:X}");
+        }
     }
 
     private static UIntPtr ToUIntPtr(IntPtr p) => (UIntPtr)(ulong)p.ToInt64();
