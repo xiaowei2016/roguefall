@@ -75,11 +75,11 @@ func _on_animation_finished() -> void:
 		is_attacking = false
 
 
-func _find_nearest(enemies: Array) -> Node2D:
-	var nearest: Node2D = enemies[0] as Node2D
+func _find_nearest(enemies: Array[Node2D]) -> Node2D:
+	var nearest: Node2D = enemies[0]
 	var min_dist_sq: float = global_position.distance_squared_to(nearest.global_position)
 	for i in range(1, enemies.size()):
-		var e: Node2D = enemies[i] as Node2D
+		var e: Node2D = enemies[i]
 		var d_sq: float = global_position.distance_squared_to(e.global_position)
 		if d_sq < min_dist_sq:
 			min_dist_sq = d_sq
