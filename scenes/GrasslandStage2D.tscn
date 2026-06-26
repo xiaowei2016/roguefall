@@ -1,9 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://battle_grassland_parallax_native"]
+[gd_scene format=3 uid="uid://bk7g3g0kc7g7e"]
 
-[ext_resource type="CompressedTexture2D" uid="uid://cqcldlahke1vh" path="res://assets/grassland/ChatGPT Image 2026年6月26日 16_13_41 (1).png" id="1_sky"]
-[ext_resource type="CompressedTexture2D" uid="uid://id8ko1s7px43" path="res://assets/grassland/ChatGPT Image 2026年6月26日 16_13_43 (3).png" id="3_hill"]
-[ext_resource type="CompressedTexture2D" uid="uid://dr5ka6eovndrf" path="res://assets/grassland/ChatGPT Image 2026年6月26日 16_13_43 (5).png" id="5_tree"]
-[ext_resource type="CompressedTexture2D" uid="uid://c5g0wwydtqr3" path="res://assets/grassland/ChatGPT Image 2026年6月26日 16_13_44 (7).png" id="7_ground"]
+[ext_resource type="Texture2D" uid="uid://cqcldlahke1vh" path="res://assets/grassland/ChatGPT Image 2026年6月26日 16_13_41 (1).png" id="1_sky"]
+[ext_resource type="Texture2D" uid="uid://boe74657bw7xj" path="res://assets/grassland/ChatGPT Image 2026年6月26日 16_13_42 (2).png" id="2_cloud"]
+[ext_resource type="Texture2D" uid="uid://id8ko1s7px43" path="res://assets/grassland/ChatGPT Image 2026年6月26日 16_13_43 (3).png" id="3_hill"]
+[ext_resource type="Texture2D" uid="uid://c275fulu4cgsv" path="res://assets/grassland/ChatGPT Image 2026年6月26日 16_13_43 (4).png" id="4_village"]
+[ext_resource type="Texture2D" uid="uid://dr5ka6eovndrf" path="res://assets/grassland/ChatGPT Image 2026年6月26日 16_13_43 (5).png" id="5_tree"]
+[ext_resource type="Texture2D" uid="uid://djmbujknc0ypd" path="res://assets/grassland/ChatGPT Image 2026年6月26日 16_13_43 (6).png" id="6_grass"]
+[ext_resource type="Texture2D" uid="uid://c5g0wwydtqr3" path="res://assets/grassland/ChatGPT Image 2026年6月26日 16_13_44 (7).png" id="7_ground"]
 
 [node name="GrasslandStage2D" type="Control"]
 layout_mode = 3
@@ -16,8 +19,8 @@ mouse_filter = 2
 layout_mode = 0
 offset_right = 720.0
 offset_bottom = 180.0
-stretch = true
 mouse_filter = 2
+stretch = true
 
 [node name="GrasslandViewport" type="SubViewport" parent="GrasslandViewportContainer"]
 transparent_bg = true
@@ -28,65 +31,105 @@ render_target_update_mode = 4
 [node name="WorldRoot" type="Node2D" parent="GrasslandViewportContainer/GrasslandViewport"]
 
 [node name="StageCamera2D" type="Camera2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot"]
-enabled = true
 position = Vector2(360, 90)
 limit_left = 0
-limit_right = 3600
 limit_top = 0
+limit_right = 3600
 limit_bottom = 180
 
-[node name="FarParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot"]
-scroll_scale = Vector2(0.2, 1)
-repeat_size = Vector2(720, 0)
+[node name="SkyParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot"]
+scroll_scale = Vector2(0.15, 1)
+repeat_times = 1
 follow_viewport = true
-autoscroll = Vector2(0, 0)
+z_index = 0
 
-[node name="FarSprite_Sky" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/FarParallax"]
+[node name="SkySprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/SkyParallax"]
+position = Vector2(0, -111)
+scale = Vector2(0.331492, 0.331492)
 texture = ExtResource("1_sky")
-position = Vector2(0, -40)
-scale = Vector2(0.33149, 0.33149)
 centered = false
-z_index = 0
+region_enabled = false
 
-[node name="MidParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot"]
+[node name="CloudParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot"]
+scroll_scale = Vector2(0.3, 1)
+repeat_times = 1
+follow_viewport = true
+z_index = 10
+
+[node name="CloudSprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/CloudParallax"]
+position = Vector2(0, -80)
+scale = Vector2(0.331492, 0.331492)
+texture = ExtResource("2_cloud")
+centered = false
+region_enabled = false
+
+[node name="HillParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot"]
 scroll_scale = Vector2(0.45, 1)
-repeat_size = Vector2(720, 0)
+repeat_times = 1
 follow_viewport = true
-autoscroll = Vector2(0, 0)
+z_index = 20
 
-[node name="MidSprite_Hill" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/MidParallax"]
+[node name="HillSprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/HillParallax"]
+position = Vector2(0, -4)
+scale = Vector2(0.331492, 0.331492)
 texture = ExtResource("3_hill")
-position = Vector2(0, -40)
-scale = Vector2(0.33149, 0.33149)
 centered = false
-z_index = 0
+region_enabled = false
 
-[node name="NearParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot"]
-scroll_scale = Vector2(0.75, 1)
-repeat_size = Vector2(720, 0)
+[node name="VillageParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot"]
+scroll_scale = Vector2(0.6, 1)
+repeat_times = 1
 follow_viewport = true
-autoscroll = Vector2(0, 0)
+z_index = 30
 
-[node name="NearSprite_Tree" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/NearParallax"]
-texture = ExtResource("5_tree")
-position = Vector2(0, -40)
-scale = Vector2(0.33149, 0.33149)
+[node name="VillageSprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/VillageParallax"]
+position = Vector2(0, -20)
+scale = Vector2(0.331492, 0.331492)
+texture = ExtResource("4_village")
 centered = false
-z_index = 0
+region_enabled = false
+
+[node name="TreeParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot"]
+scroll_scale = Vector2(0.75, 1)
+repeat_times = 1
+follow_viewport = true
+z_index = 40
+
+[node name="TreeSprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/TreeParallax"]
+position = Vector2(0, -45)
+scale = Vector2(0.331492, 0.331492)
+texture = ExtResource("5_tree")
+centered = false
+region_enabled = false
+
+[node name="GrassParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot"]
+scroll_scale = Vector2(0.85, 1)
+repeat_times = 1
+follow_viewport = true
+z_index = 50
+
+[node name="GrassSprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/GrassParallax"]
+position = Vector2(0, 10)
+scale = Vector2(0.331492, 0.331492)
+texture = ExtResource("6_grass")
+centered = false
+region_enabled = false
 
 [node name="GroundParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot"]
-scroll_scale = Vector2(1, 1)
-repeat_size = Vector2(720, 0)
+scroll_scale = Vector2(1.0, 1)
+repeat_times = 1
 follow_viewport = true
-autoscroll = Vector2(0, 0)
+z_index = 60
 
-[node name="GroundSprite_Earth" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/GroundParallax"]
+[node name="GroundSprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/GroundParallax"]
+position = Vector2(0, 38)
+scale = Vector2(0.331492, 0.331492)
 texture = ExtResource("7_ground")
-position = Vector2(0, -40)
-scale = Vector2(0.33149, 0.33149)
 centered = false
-z_index = 0
+region_enabled = false
 
 [node name="ActorLayer" type="Node2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot"]
+z_index = 100
 
 [node name="EffectLayer" type="Node2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot"]
+z_index = 200
