@@ -1,0 +1,96 @@
+[gd_scene load_steps=11 format=3 uid="uid://battle_grassland_parallax_native"]
+
+[ext_resource type="CompressedTexture2D" uid="uid://cqcldlahke1vh" path="res://assets/grassland/ChatGPT Image 2026年6月26日 16_13_41 (1).png" id="1_sky"]
+[ext_resource type="CompressedTexture2D" uid="uid://boe74657bw7xj" path="res://assets/grassland/ChatGPT Image 2026年6月26日 16_13_42 (2).png" id="2_cloud"]
+[ext_resource type="CompressedTexture2D" uid="uid://id8ko1s7px43" path="res://assets/grassland/ChatGPT Image 2026年6月26日 16_13_43 (3).png" id="3_hill"]
+[ext_resource type="CompressedTexture2D" uid="uid://c275fulu4cgsv" path="res://assets/grassland/ChatGPT Image 2026年6月26日 16_13_43 (4).png" id="4_village"]
+[ext_resource type="CompressedTexture2D" uid="uid://dr5ka6eovndrf" path="res://assets/grassland/ChatGPT Image 2026年6月26日 16_13_43 (5).png" id="5_tree"]
+[ext_resource type="CompressedTexture2D" uid="uid://djmbujknc0ypd" path="res://assets/grassland/ChatGPT Image 2026年6月26日 16_13_43 (6).png" id="6_grass"]
+[ext_resource type="CompressedTexture2D" uid="uid://c5g0wwydtqr3" path="res://assets/grassland/ChatGPT Image 2026年6月26日 16_13_44 (7).png" id="7_ground"]
+
+[node name="GrasslandStage2D" type="Node2D"]
+
+[node name="StageCamera2D" type="Camera2D" parent="."]
+enabled = true
+position = Vector2(360, 90)
+limit_left = 0
+limit_right = 3600
+limit_top = 0
+limit_bottom = 180
+
+[node name="FarParallax" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.2, 1)
+repeat_size = Vector2(576, 0)
+repeat_times = 0
+follow_viewport = true
+
+[node name="FarSprite_Sky" type="Sprite2D" parent="FarParallax"]
+texture = ExtResource("1_sky")
+position = Vector2(0, 0)
+scale = Vector2(0.1125, 0.1125)
+centered = false
+z_index = 0
+
+[node name="FarSprite_Cloud" type="Sprite2D" parent="FarParallax"]
+texture = ExtResource("2_cloud")
+position = Vector2(0, 0)
+scale = Vector2(0.1125, 0.1125)
+centered = false
+z_index = 1
+
+[node name="MidParallax" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.45, 1)
+repeat_size = Vector2(576, 0)
+repeat_times = 0
+follow_viewport = true
+
+[node name="MidSprite_Hill" type="Sprite2D" parent="MidParallax"]
+texture = ExtResource("3_hill")
+position = Vector2(0, 0)
+scale = Vector2(0.1125, 0.1125)
+centered = false
+z_index = 0
+
+[node name="MidSprite_Village" type="Sprite2D" parent="MidParallax"]
+texture = ExtResource("4_village")
+position = Vector2(0, 0)
+scale = Vector2(0.1125, 0.1125)
+centered = false
+z_index = 1
+
+[node name="NearParallax" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.75, 1)
+repeat_size = Vector2(576, 0)
+repeat_times = 0
+follow_viewport = true
+
+[node name="NearSprite_Tree" type="Sprite2D" parent="NearParallax"]
+texture = ExtResource("5_tree")
+position = Vector2(0, 0)
+scale = Vector2(0.1125, 0.1125)
+centered = false
+z_index = 0
+
+[node name="GroundParallax" type="Parallax2D" parent="."]
+scroll_scale = Vector2(1, 1)
+repeat_size = Vector2(576, 0)
+repeat_times = 0
+follow_viewport = true
+
+[node name="GroundSprite_Earth" type="Sprite2D" parent="GroundParallax"]
+texture = ExtResource("7_ground")
+position = Vector2(0, 0)
+scale = Vector2(0.1125, 0.1125)
+centered = false
+z_index = 0
+
+[node name="GroundSprite_Grass" type="Sprite2D" parent="GroundParallax"]
+texture = ExtResource("6_grass")
+position = Vector2(0, 0)
+scale = Vector2(0.1125, 0.1125)
+centered = false
+z_index = 1
+
+[node name="ActorLayer" type="Node2D" parent="."]
+
+[node name="EffectLayer" type="Node2D" parent="."]

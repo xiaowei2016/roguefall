@@ -9,7 +9,6 @@ const WIN_H := 718     # 530 + 8 + 180，翻转就是上下对调
 const FLIP_BOT := 538   # 战斗条默认窗口内 y，仅 _ready 初始锚点推导用
 const PW := 352    # 左/右面板宽度
 const CW := 720    # 中栏宽度
-const WORLD_WIDTH := 3600.0  # 草原世界总宽度
 const FLIP_HYSTERESIS := 48
 const LOG_THROTTLE := 15
 const SHIFT_LOG_INTERVAL := 15
@@ -49,10 +48,6 @@ var _shift_log_frame: int = 0
 @onready var left_panel := $PanelRoot/LeftPanel
 @onready var center_panel := $PanelRoot/CenterPanel
 @onready var right_panel := $PanelRoot/RightPanel
-@onready var grassland_world := $PanelRoot/BattleBar/BattleStageClip/GrasslandWorld
-
-# 草原视差测试：模拟 3600px 世界中的镜头横向位置（0 ~ 3600-720）
-var stage_scroll_x := 0.0
 
 # ---- 内容容器 ----
 @onready var warehouse_content := $PanelRoot/LeftPanel/WarehouseContent
@@ -311,13 +306,6 @@ func _process(_delta: float) -> void:
 
 		# 每帧调用 _do_layout 保持落点一致，不直接设 win.position
 		_do_layout()
-
-	# 草原视差自动滚动测试（60px/s 慢速向右）
-	stage_scroll_x += _delta * 60.0
-	if stage_scroll_x >= WORLD_WIDTH:
-		stage_scroll_x = fmod(stage_scroll_x, WORLD_WIDTH)
-	if grassland_world and grassland_world.has_method("update_scroll"):
-		grassland_world.update_scroll(stage_scroll_x)
 
 
 # ===== 持久化 =====
