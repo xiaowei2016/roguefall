@@ -56,6 +56,8 @@ func _ready() -> void:
 	win.transparent = true
 	win.size = Vector2i(WIN_W, WIN_H)
 
+	get_viewport().transparent_bg = true
+
 	$PanelRoot.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 
 	$PanelRoot/BattleBar/Button.pressed.connect(_on_bag)
