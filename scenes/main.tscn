@@ -383,18 +383,7 @@ offset_right = 1080.0
 offset_bottom = 720.0
 mouse_filter = 2
 
-[node name="BattleStageViewportContainer" type="SubViewportContainer" parent="PanelRoot/BattleBar"]
-layout_mode = 3
-offset_right = 720.0
-offset_bottom = 180.0
-mouse_filter = 2
-
-[node name="BattleStageViewport" type="SubViewport" parent="PanelRoot/BattleBar/BattleStageViewportContainer"]
-size = Vector2i(720, 180)
-transparent_bg = true
-handle_input_locally = false
-
-[node name="GrasslandStage2D" parent="PanelRoot/BattleBar/BattleStageViewportContainer/BattleStageViewport" instance=ExtResource("5_grassland_stage")]
+[node name="GrasslandStage2D" parent="PanelRoot/BattleBar" instance=ExtResource("5_grassland_stage")]
 
 [node name="Panel" type="Panel" parent="PanelRoot/BattleBar"]
 layout_mode = 3
