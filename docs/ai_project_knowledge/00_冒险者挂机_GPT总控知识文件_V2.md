@@ -121,7 +121,7 @@ MainWindow 1440×720 transparent logic canvas
     BattleWidget
 ```
 
-BattleWidget 是常驻挂机条，BagPanel 从 BattleWidget 打开，左右 Dock 面板从 BagPanel 打开。DockLayoutController 统一管理布局与翻转/让位。
+BattleWidget / BattleBar 是常驻挂机条，CenterPanel 从 BattleBar 打开（左半角色属性 + 右半背包），左右栏内容由 CenterPanel 内按钮决定。DockLayoutController 统一管理布局与翻转/让位。
 
 项目知识文档固定目录：
 

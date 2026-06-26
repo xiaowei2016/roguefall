@@ -35,14 +35,14 @@ MainRoot (Control, 1440×720)
     ├── InputRegionManager (Control)
     │   - 统一鼠标穿透区域计算
     ├── DockLayer (Control)
-    │   ├── LeftDockHost (Control)
-    │   │   ├── WarehousePanel
-    │   │   └── HeroPanel
-    │   ├── CenterDockHost (Control)
-    │   │   └── BagPanel
-    │   └── RightDockHost (Control)
-    │       ├── MapPanel
-    │       └── SettingsPanel
+    │   ├── LeftDockHost (Control)          ← 左侧扩展容器，内容由 CenterPanel 按钮决定
+    │   │   └── [动态内容: 仓库/宠物/图鉴/地图]
+    │   ├── CenterDockHost (Control)        ← 核心管理界面
+    │   │   └── CenterPanel
+    │   │       ├── 左半：角色/属性/装备穿戴
+    │   │       └── 右半：背包
+    │   └── RightDockHost (Control)         ← 右侧扩展容器，内容由 CenterPanel 按钮决定
+    │       └── [动态内容: 设置/洗练/详情]
     └── BattleWidget (Control)
         ├── Background
         ├── TitleLabel
@@ -56,37 +56,44 @@ MainRoot (Control, 1440×720)
 
 ```text
 BattleWidget.visible     = true
-BagPanel.visible         = false
-WarehousePanel.visible   = false
-HeroPanel.visible        = false
-MapPanel.visible         = false
-SettingsPanel.visible    = false
+BattleBar.visible        = true
+CenterPanel.visible      = false
+LeftPanel.visible        = false
+RightPanel.visible       = false
 ```
 
-默认只显示 BattleWidget 常驻挂机条。
+默认只显示 BattleWidget / BattleBar 常驻挂机条。左右栏是空容器，无默认内容。
 
-### 1.3 打开/关闭交互逻辑
+### 1.3 打开/关闭交互逻辑（Dock 容器切换 — 已冻结）
 
-点击 BattleWidget.BagButton：
-- BagPanel 隐藏时 → 显示 BagPanel
-- BagPanel 显示时 → 隐藏 BagPanel，同时隐藏所有左右辅助面板
-- BattleWidget 始终保持显示
+> **本交互逻辑已冻结，禁止修改。** 详见 [第四部分：Dock 面板容器切换逻辑冻结规范](#第四部分dock-面板容器切换逻辑冻结规范)。
 
-点击 BagPanel.WarehouseButton：
-- 显示 WarehousePanel，隐藏 HeroPanel
-- 右侧面板状态不变
+**BattleBar 唯一入口：**
 
-点击 BagPanel.HeroButton：
-- 显示 HeroPanel，隐藏 WarehousePanel
-- 右侧面板状态不变
+点击 BattleBar.BagButton：
+- CenterPanel 隐藏时 → 显示 CenterPanel
+- CenterPanel 显示时 → 关闭 CenterPanel，同时关闭 LeftPanel 和 RightPanel（全部归 NONE）
+- BattleBar 始终保持显示
 
-点击 BagPanel.MapButton：
-- 显示 MapPanel，隐藏 SettingsPanel
-- 左侧面板状态不变
+**CenterPanel 是核心管理界面：**
+- 左半：角色/属性/装备穿戴
+- 右半：背包
 
-点击 BagPanel.SettingsButton：
-- 显示 SettingsPanel，隐藏 MapPanel
-- 左侧面板状态不变
+**左栏按钮（在 CenterPanel 内）：仓库 / 宠物 / 图鉴 / 地图**
+
+**右栏按钮（在 CenterPanel 内）：设置 / 洗练 / 详情**
+
+**同侧按钮点击规则：**
+- 同一个按钮再次点击 → 关闭该侧栏（归 NONE）
+- 其他同侧按钮点击 → 只切换内容，不关闭该侧栏
+
+**关闭 CenterPanel 时：**
+- LeftPanel 和 RightPanel 必须同时关闭并归 NONE
+
+**禁止：**
+- 把左右栏写成自带默认内容的固定页面
+- LeftPanel 不是仓库，RightPanel 不是设置
+- 恢复 TabBar / PageHost 全屏页面切换
 
 ### 1.4 固定尺寸（冻结）
 
@@ -154,11 +161,12 @@ RightDockHost:
 禁止：
 - BattleWidget 直接控制全局窗口尺寸
 - BattleWidget 直接调用 DisplayServer.window_set_mouse_passthrough
-- BagPanel / WarehousePanel / MapPanel 自己计算全局窗口布局
+- CenterPanel / LeftPanel / RightPanel 自己计算全局窗口布局
 - 复制旧工程 layout_shell.gd
 - 恢复旧 BattleStrip 直接控制穿透
 - 使用全屏 PageHost 替换 BattleWidget
 - 使用左侧全局 TabBar 切换整页
+- 把左右栏写成自带默认内容的固定页面（LeftPanel 不是仓库，RightPanel 不是设置）
 
 ### 1.8 脚本职责
 
@@ -168,26 +176,27 @@ RightDockHost:
 | DockLayoutController | 面板打开关闭/位置计算/翻转让位 |
 | InputRegionManager | 统一鼠标穿透区域计算 |
 | BattleWidget | 常驻挂机条UI/按钮事件发送 |
-| BagPanel | 背包格子显示/打开辅助面板请求 |
-| WarehousePanel | 仓库格子显示 |
-| HeroPanel | 英雄装备槽显示 |
-| MapPanel | 地图选择显示 |
-| SettingsPanel | 设置项显示 |
+| BattleBar | 挂机条核心控件/背包按钮入口 |
+| CenterPanel | 核心管理界面：左半（角色/属性/装备穿戴）+ 右半（背包）/ 左右栏按钮 |
+| LeftPanel | 左侧扩展容器，内容由 CenterPanel 按钮决定 |
+| RightPanel | 右侧扩展容器，内容由 CenterPanel 按钮决定 |
 
 ### 1.9 交互验收标准
 
 F5 验收顺序：
 
-1. 默认只显示 BattleWidget
-2. 点击背包 → 显示与 BattleWidget 同宽的 BagPanel
-3. 点击仓库 → WarehousePanel 出现在 BagPanel 左侧
-4. 点击地图 → MapPanel 出现在 BagPanel 右侧
-5. 同时显示：WarehousePanel + BagPanel + MapPanel + BattleWidget
-6. 拖动 BattleWidget 到左侧 → 面板不出界并自动让位
-7. 拖动 BattleWidget 到右侧 → 面板不出界并自动让位
-8. 拖动 BattleWidget 到顶部 → 面板自动翻转到下方
-9. BattleWidget 始终可见
-10. 透明空白区域由 InputRegionManager 统一穿透
+1. 默认只显示 BattleWidget / BattleBar
+2. 点击背包 → 显示与 BattleBar 同宽的 CenterPanel（左半角色属性 + 右半背包）
+3. 点击 CenterPanel 左栏按钮（仓库/宠物/图鉴/地图）→ 对应内容在 LeftPanel 显示
+4. 点击 CenterPanel 右栏按钮（设置/洗练/详情）→ 对应内容在 RightPanel 显示
+5. 同侧按钮再次点击 → 关闭该侧栏
+6. 其他同侧按钮点击 → 只切换内容，不关闭该侧栏
+7. 再次点击背包或关闭 CenterPanel → LeftPanel 和 RightPanel 同时关闭归 NONE
+8. 拖动 BattleWidget 到左侧 → 面板不出界并自动让位
+9. 拖动 BattleWidget 到右侧 → 面板不出界并自动让位
+10. 拖动 BattleWidget 到顶部 → 面板自动翻转到下方
+11. BattleWidget / BattleBar 始终可见
+12. 透明空白区域由 InputRegionManager 统一穿透
 
 ### 1.10 窗口系统冻结规范（0fd34a8）
 
@@ -343,3 +352,88 @@ func _ready():
 - WindowShell + DockLayoutController + InputRegionManager 统一管理
 - BattleWidget 只作为常驻子控件，不控制全局
 - 面板只发请求，不自己计算全局布局
+
+---
+
+## 第四部分：Dock 面板容器切换逻辑冻结规范
+
+> 本章节已于 2026-06-26 冻结。冻结原因：Dock 面板容器切换逻辑已通过验证，禁止后续误解或恢复旧架构。
+
+### 4.1 核心结论（12 条固化）
+
+1. 默认只显示 BattleWidget / BattleBar。
+2. BattleBar 只负责通过【背包】打开 CenterPanel。
+3. CenterPanel 固定是核心管理界面：左半（角色/属性/装备穿戴）+ 右半（背包）。
+4. LeftPanel 不是仓库，LeftPanel 只是左侧扩展容器。
+5. RightPanel 不是设置，RightPanel 只是右侧扩展容器。
+6. 左右栏内容必须由 CenterPanel 内按钮明确打开。
+7. 左栏按钮：仓库 / 宠物 / 图鉴 / 地图。
+8. 右栏按钮：设置 / 洗练 / 详情。
+9. 同侧按钮点击规则：同一个按钮再次点击关闭该栏；其他同侧按钮点击时只切换内容，不关闭该栏。
+10. 关闭 CenterPanel 时，LeftPanel 和 RightPanel 必须同时关闭并归 NONE。
+11. 禁止把左右栏写成自带默认内容的固定页面。
+12. 禁止恢复 TabBar / PageHost。
+
+### 4.2 状态机（禁止修改）
+
+```text
+              ┌─────────────────┐
+              │  NONE（默认）    │
+              │  CenterPanel=NONE│
+              │  LeftPanel=NONE  │
+              │  RightPanel=NONE │
+              └───────┬─────────┘
+                      │ BattleBar.背包按钮
+                      ▼
+              ┌─────────────────┐
+              │  CENTER_OPEN     │
+              │  CenterPanel 显示 │
+              │  LeftPanel=NONE  │
+              │  RightPanel=NONE │
+              └───────┬─────────┘
+                      │
+          ┌───────────┼───────────┐
+          │ 左栏按钮   │           │ 右栏按钮
+          ▼           │           ▼
+  ┌──────────────┐   │   ┌──────────────┐
+  │ LEFT_OPEN    │   │   │ RIGHT_OPEN   │
+  │ LeftPanel    │   │   │ RightPanel   │
+  │ 显示对应内容  │   │   │ 显示对应内容  │
+  └──────┬───────┘   │   └──────┬───────┘
+         │           │          │
+         │ 同按钮再次 │          │ 同按钮再次
+         ▼           │          ▼
+    LeftPanel=NONE   │     RightPanel=NONE
+         │           │          │
+         │ 其他同侧   │          │ 其他同侧
+         ▼           │          ▼
+   切换内容（不关栏） │    切换内容（不关栏）
+                      │
+          ┌───────────┘
+          │ BattleBar.背包按钮 或 关闭 CenterPanel
+          ▼
+    CenterPanel + LeftPanel + RightPanel 全部归 NONE
+```
+
+### 4.3 后续禁止修改项（Dock 容器）
+
+| 禁止项 | 说明 |
+|---|---|
+| LeftPanel 默认显示仓库 | LeftPanel 是空容器，内容必须由 CenterPanel 按钮明确打开 |
+| RightPanel 默认显示设置 | RightPanel 是空容器，内容必须由 CenterPanel 按钮明确打开 |
+| 左右栏写成固定页面 | 左右栏不能自带默认内容，禁止在 tscn 中预置子面板 |
+| 恢复 TabBar 切换整页 | 旧全屏 PageHost + TabBar 架构已彻底废弃 |
+| CenterPanel 关闭时保留左右栏 | 关闭 CenterPanel 必须同时关闭左右栏 |
+| 同侧按钮切换时关闭该栏 | 同侧按钮切换只换内容，不关栏；仅同按钮再次点击才关栏 |
+| WarehousePanel 固定绑定 LeftDockHost | 仓库只是左栏按钮的一种内容，不是固定属性 |
+| SettingsPanel 固定绑定 RightDockHost | 设置只是右栏按钮的一种内容，不是固定属性 |
+
+### 4.4 允许修改范围
+
+以下内容仍可自由修改，不受 Dock 冻结限制：
+
+- 左栏按钮的具体内容实现：仓库 UI、宠物展示、图鉴列表、地图选择
+- 右栏按钮的具体内容实现：设置项、洗练界面、详情面板
+- CenterPanel 内部布局细节（左半角色属性排版、右半背包格子排列）
+- 按钮样式、颜色、图标
+- 各内容面板的 .tscn 结构和 .gd 数据绑定逻辑
