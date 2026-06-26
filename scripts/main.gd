@@ -9,6 +9,7 @@ const WIN_H := 718     # 530 + 8 + 180，翻转就是上下对调
 const FLIP_BOT := 538   # 战斗条默认窗口内 y，仅 _ready 初始锚点推导用
 const PW := 352    # 左/右面板宽度
 const CW := 720    # 中栏宽度
+const WORLD_WIDTH := 3600.0  # 草原世界总宽度
 const FLIP_HYSTERESIS := 48
 const LOG_THROTTLE := 15
 const SHIFT_LOG_INTERVAL := 15
@@ -48,6 +49,10 @@ var _shift_log_frame: int = 0
 @onready var left_panel := $PanelRoot/LeftPanel
 @onready var center_panel := $PanelRoot/CenterPanel
 @onready var right_panel := $PanelRoot/RightPanel
+@onready var grassland_world := $PanelRoot/BattleBar/BattleStageClip/GrasslandWorld
+
+# 草原视差测试：模拟 3600px 世界中的镜头横向位置（0 ~ 3600-720）
+var stage_scroll_x := 0.0
 
 # ---- 内容容器 ----
 @onready var warehouse_content := $PanelRoot/LeftPanel/WarehouseContent
@@ -288,26 +293,31 @@ func end_drag() -> void:
 
 
 func _process(_delta: float) -> void:
-	if not _dragging:
-		return
+	if _dragging:
+		var mouse_screen := Vector2i(DisplayServer.mouse_get_position())
+		var win := get_window()
+		var screen := DisplayServer.screen_get_usable_rect(win.current_screen)
 
-	var mouse_screen := Vector2i(DisplayServer.mouse_get_position())
-	var win := get_window()
-	var screen := DisplayServer.screen_get_usable_rect(win.current_screen)
+		# 锚点 = 鼠标屏幕坐标 + 固定偏移
+		var ax := mouse_screen.x + _drag_offset_x
+		var ay := mouse_screen.y + _drag_offset_y
 
-	# 锚点 = 鼠标屏幕坐标 + 固定偏移
-	var ax := mouse_screen.x + _drag_offset_x
-	var ay := mouse_screen.y + _drag_offset_y
+		# 只 clamp BattleBar 自身屏幕矩形
+		ax = clampi(ax, screen.position.x + EDGE_MARGIN, screen.position.x + screen.size.x - int(battle_bar.size.x) - EDGE_MARGIN)
+		ay = clampi(ay, screen.position.y + EDGE_MARGIN, screen.position.y + screen.size.y - BATTLE_H - EDGE_MARGIN)
 
-	# 只 clamp BattleBar 自身屏幕矩形
-	ax = clampi(ax, screen.position.x + EDGE_MARGIN, screen.position.x + screen.size.x - int(battle_bar.size.x) - EDGE_MARGIN)
-	ay = clampi(ay, screen.position.y + EDGE_MARGIN, screen.position.y + screen.size.y - BATTLE_H - EDGE_MARGIN)
+		_battle_anchor_screen_x = ax
+		_battle_anchor_screen_y = ay
 
-	_battle_anchor_screen_x = ax
-	_battle_anchor_screen_y = ay
+		# 每帧调用 _do_layout 保持落点一致，不直接设 win.position
+		_do_layout()
 
-	# 每帧调用 _do_layout 保持落点一致，不直接设 win.position
-	_do_layout()
+	# 草原视差自动滚动测试（60px/s 慢速向右）
+	stage_scroll_x += _delta * 60.0
+	if stage_scroll_x >= WORLD_WIDTH:
+		stage_scroll_x = fmod(stage_scroll_x, WORLD_WIDTH)
+	if grassland_world and grassland_world.has_method("update_scroll"):
+		grassland_world.update_scroll(stage_scroll_x)
 
 
 # ===== 持久化 =====

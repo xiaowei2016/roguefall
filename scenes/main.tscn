@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
 [ext_resource type="Script" path="res://scripts/native_drag_zone.gd" id="2_dragzone"]
 [ext_resource type="Script" path="res://scripts/DesktopPixelPassthrough.cs" id="3_pixel"]
+[ext_resource type="Script" path="res://scripts/grassland_parallax.gd" id="4_grassland"]
 
 [node name="MainRoot" type="Control"]
 layout_mode = 3
@@ -379,6 +380,20 @@ offset_top = 540.0
 offset_right = 1080.0
 offset_bottom = 720.0
 mouse_filter = 2
+
+[node name="BattleStageClip" type="Control" parent="PanelRoot/BattleBar"]
+layout_mode = 3
+offset_right = 720.0
+offset_bottom = 180.0
+clip_contents = true
+mouse_filter = 2
+
+[node name="GrasslandWorld" type="Control" parent="PanelRoot/BattleBar/BattleStageClip"]
+layout_mode = 3
+offset_right = 3600.0
+offset_bottom = 180.0
+mouse_filter = 2
+script = ExtResource("4_grassland")
 
 [node name="Panel" type="Panel" parent="PanelRoot/BattleBar"]
 layout_mode = 3
