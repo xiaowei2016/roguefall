@@ -46,7 +46,7 @@ func _patrol(delta: float) -> void:
 		position.x = PATROL_MIN_X
 		patrol_direction = 1
 
-	animated_sprite.flip_h = patrol_direction < 0
+	animated_sprite.flip_h = patrol_direction > 0
 	_update_animation("run")
 
 
@@ -63,7 +63,7 @@ func _seek(enemy: Node2D, delta: float) -> void:
 	var direction: int = sign(dx)
 	position.x += direction * MOVE_SPEED * delta
 
-	animated_sprite.flip_h = dx < 0
+	animated_sprite.flip_h = dx > 0
 	_update_animation("run")
 
 
