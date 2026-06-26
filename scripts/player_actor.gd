@@ -58,7 +58,7 @@ func _seek(enemy: Node2D, delta: float) -> void:
 		_start_attack()
 		return
 
-	var direction := sign(dx)
+	var direction: int = sign(dx)
 	position.x += direction * MOVE_SPEED * delta
 
 	animated_sprite.flip_h = dx < 0
