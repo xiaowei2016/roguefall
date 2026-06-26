@@ -128,6 +128,15 @@ texture = ExtResource("7_ground")
 centered = false
 region_enabled = false
 
+[node name="BattleBaseline" type="Node2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot"]
+position = Vector2(0, 135)
+z_index = 90
+
+[node name="BaselineLine" type="Line2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/BattleBaseline"]
+points = PackedVector2Array(0, 0, 720, 0)
+width = 2.0
+default_color = Color(1, 0, 0, 1)
+
 [node name="ActorLayer" type="Node2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot"]
 z_index = 100
 
