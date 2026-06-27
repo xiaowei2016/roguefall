@@ -40,94 +40,66 @@ limit_bottom = 180
 
 [node name="SkyParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=431529241]
 scroll_scale = Vector2(0.15, 1)
-repeat_size = Vector2(720, 240)
 
 [node name="SkySprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/SkyParallax" unique_id=1087083892]
-texture_repeat = 1
 position = Vector2(0, -111)
 scale = Vector2(0.331492, 0.331492)
 texture = ExtResource("1_sky")
 centered = false
-region_enabled = true
-region_rect = Rect2(0, 0, 2172, 724)
 
 [node name="CloudParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=457854483]
 scroll_scale = Vector2(0.3, 1)
-repeat_size = Vector2(305.304, 36.133)
 
 [node name="CloudSprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/CloudParallax" unique_id=408636976]
-texture_repeat = 1
 position = Vector2(0, -44)
 scale = Vector2(0.331492, 0.331492)
 texture = ExtResource("2_cloud")
 centered = false
-region_enabled = true
-region_rect = Rect2(0, 0, 921, 109)
 
 [node name="HillParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=885054048]
 scroll_scale = Vector2(0.45, 1)
-repeat_size = Vector2(305.304, 27.182)
 
 [node name="HillSprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/HillParallax" unique_id=618396008]
-texture_repeat = 1
 position = Vector2(0, -15)
 scale = Vector2(0.331492, 0.331492)
 texture = ExtResource("3_hill")
 centered = false
-region_enabled = true
-region_rect = Rect2(0, 0, 921, 82)
 
 [node name="VillageParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=306800399]
 scroll_scale = Vector2(0.6, 1)
-repeat_size = Vector2(305.304, 33.149)
 
 [node name="VillageSprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/VillageParallax" unique_id=466964404]
-texture_repeat = 1
 position = Vector2(0, -20)
 scale = Vector2(0.331492, 0.331492)
 texture = ExtResource("4_village")
 centered = false
-region_enabled = true
-region_rect = Rect2(0, 0, 921, 100)
 
 [node name="TreeParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=1703287456]
 scroll_scale = Vector2(0.75, 1)
-repeat_size = Vector2(305.304, 84.199)
 
 [node name="TreeSprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/TreeParallax" unique_id=1809913243]
-texture_repeat = 1
 position = Vector2(0, -62)
 scale = Vector2(0.331492, 0.331492)
 texture = ExtResource("5_tree")
 centered = false
-region_enabled = true
-region_rect = Rect2(0, 0, 921, 254)
 
 [node name="GroundParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=207362820]
-repeat_size = Vector2(314.633, 24.53)
 
 [node name="GroundSprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/GroundParallax" unique_id=1925209693]
-texture_repeat = 1
 position = Vector2(-11, 23)
 scale = Vector2(0.34162062, 0.331492)
 texture = ExtResource("7_ground")
 centered = false
-region_enabled = true
-region_rect = Rect2(0, 0, 921, 74)
 
 [node name="GrassParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=2083546484]
 scroll_scale = Vector2(0.85, 1)
 scroll_offset = Vector2(0, 10)
-repeat_size = Vector2(305.304, 33.812)
 
 [node name="GrassSprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/GrassParallax" unique_id=1395796407]
-texture_repeat = 1
 position = Vector2(0, 10)
 scale = Vector2(0.331492, 0.331492)
 texture = ExtResource("6_grass")
 centered = false
-region_enabled = true
-region_rect = Rect2(0, 0, 921, 102)
 
 [node name="BattleBaseline" type="Node2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=1664908160]
 visible = false
