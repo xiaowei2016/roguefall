@@ -57,7 +57,7 @@ position = Vector2(0, 0)
 scale = Vector2(0.419371, 0.419371)
 texture = ExtResource("11_sky_tile")
 region_enabled = true
-region_rect = Rect2(0, 0, 3600, 724)
+region_rect = Rect2(0, 0, 3600, 129)
 texture_repeat = 1
 centered = false
 
@@ -85,7 +85,7 @@ position = Vector2(0, 0)
 scale = Vector2(0.419371, 0.419371)
 texture = ExtResource("13_hill_tile")
 region_enabled = true
-region_rect = Rect2(0, 0, 3600, 82)
+region_rect = Rect2(0, 0, 3600, 55)
 texture_repeat = 1
 centered = false
 
@@ -113,7 +113,7 @@ position = Vector2(0, 0)
 scale = Vector2(0.240234, 0.240234)
 texture = ExtResource("15_tree_tile")
 region_enabled = true
-region_rect = Rect2(0, 0, 3600, 254)
+region_rect = Rect2(0, 0, 3600, 135)
 texture_repeat = 1
 centered = false
 
@@ -140,7 +140,7 @@ position = Vector2(0, 0)
 scale = Vector2(0.419371, 0.419371)
 texture = ExtResource("17_grass_tile")
 region_enabled = true
-region_rect = Rect2(0, 0, 3600, 102)
+region_rect = Rect2(0, 0, 3600, 80)
 texture_repeat = 1
 centered = false
 
