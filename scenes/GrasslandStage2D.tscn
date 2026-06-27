@@ -32,13 +32,6 @@ render_target_update_mode = 4
 
 [node name="WorldRoot" type="Node2D" parent="GrasslandViewportContainer/GrasslandViewport" unique_id=68167155]
 
-[node name="StageCamera2D" type="Camera2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=209602788]
-position = Vector2(360, 90)
-limit_left = 0
-limit_top = 0
-limit_right = 3600
-limit_bottom = 180
-
 [node name="SkyParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=431529241]
 scroll_scale = Vector2(0.15, 1)
 repeat_size = Vector2(720, 0)
@@ -81,7 +74,6 @@ centered = false
 
 [node name="TreeParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=1703287456]
 scroll_scale = Vector2(0.75, 1)
-repeat_size = Vector2(381, 0)
 
 [node name="TreeSprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/TreeParallax" unique_id=1809913243]
 position = Vector2(174.00002, 34)
@@ -123,6 +115,13 @@ position = Vector2(0, 5)
 
 [node name="PlayerActor" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/ActorLayer" unique_id=497183763 instance=ExtResource("8_player_actor")]
 position = Vector2(180, 135)
+
+[node name="StageCamera2D" type="Camera2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/ActorLayer/PlayerActor" unique_id=209602788]
+position = Vector2(0, 0)
+limit_left = 0
+limit_top = 0
+limit_right = 3600
+limit_bottom = 180
 
 [node name="DummyEnemy" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/ActorLayer" unique_id=1163137642 instance=ExtResource("9_dummy_enemy")]
 position = Vector2(2000, 135)
