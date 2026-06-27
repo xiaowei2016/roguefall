@@ -50,56 +50,67 @@ texture = ExtResource("1_sky")
 centered = false
 
 [node name="CloudParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=457854483]
+scale = Vector2(2.384526, 2.384526)
 scroll_scale = Vector2(0.3, 1)
+scroll_offset = Vector2(0, 63)
 
 [node name="CloudSprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/CloudParallax" unique_id=408636976]
-position = Vector2(0, -44)
+position = Vector2(0, -26.839718)
 scale = Vector2(0.331492, 0.331492)
 texture = ExtResource("2_cloud")
 centered = false
 
 [node name="HillParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=885054048]
+scale = Vector2(2.384526, 2.384526)
 scroll_scale = Vector2(0.45, 1)
+scroll_offset = Vector2(0, 63)
 
 [node name="HillSprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/HillParallax" unique_id=618396008]
-position = Vector2(0, -15)
-scale = Vector2(0.331492, 0.331492)
+position = Vector2(0.8387412, -7.129299)
+scale = Vector2(0.331492, 0.55234176)
 texture = ExtResource("3_hill")
 centered = false
 
 [node name="VillageParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=306800399]
+scale = Vector2(2.384526, 2.384526)
 scroll_scale = Vector2(0.6, 1)
+scroll_offset = Vector2(0, 63)
 
 [node name="VillageSprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/VillageParallax" unique_id=466964404]
-position = Vector2(0, -20)
+position = Vector2(-3.774335, -1.2581127)
 scale = Vector2(0.331492, 0.331492)
 texture = ExtResource("4_village")
 centered = false
 
 [node name="TreeParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=1703287456]
+scale = Vector2(2.384526, 2.384526)
 scroll_scale = Vector2(0.75, 1)
+scroll_offset = Vector2(0, 63)
 
 [node name="TreeSprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/TreeParallax" unique_id=1809913243]
-position = Vector2(0, -62)
-scale = Vector2(0.331492, 0.331492)
+position = Vector2(60.80873, -15.516711)
+scale = Vector2(0.1898725, 0.18987249)
 texture = ExtResource("5_tree")
 centered = false
 
 [node name="GroundParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=207362820]
+scale = Vector2(2.384526, 2.384526)
+scroll_offset = Vector2(0, 63)
 
 [node name="GroundSprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/GroundParallax" unique_id=1925209693]
-position = Vector2(-11, 23)
-scale = Vector2(0.34162062, 0.331492)
+position = Vector2(-0.41937065, 30.19468)
+scale = Vector2(0.32875738, 0.331492)
 texture = ExtResource("7_ground")
 centered = false
 
 [node name="GrassParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=2083546484]
+scale = Vector2(2.384526, 2.384526)
 scroll_scale = Vector2(0.85, 1)
-scroll_offset = Vector2(0, 10)
+scroll_offset = Vector2(0, 73)
 
 [node name="GrassSprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/GrassParallax" unique_id=1395796407]
-position = Vector2(0, 10)
-scale = Vector2(0.331492, 0.331492)
+position = Vector2(0.41937056, 23.48475)
+scale = Vector2(0.32784668, 0.23155089)
 texture = ExtResource("6_grass")
 centered = false
 
@@ -121,9 +132,9 @@ position = Vector2(180, 135)
 [node name="DummyEnemy" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/ActorLayer" unique_id=1163137642 instance=ExtResource("9_dummy_enemy")]
 position = Vector2(520, 135)
 
-[node name="CanvasGuide" type="Node2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot"]
+[node name="CanvasGuide" type="Node2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=1645765608]
 
-[node name="GuideRect" type="Line2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/CanvasGuide"]
+[node name="GuideRect" type="Line2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/CanvasGuide" unique_id=545032569]
 points = PackedVector2Array(0, 0, 720, 0, 720, 180, 0, 180, 0, 0)
 width = 1.0
 default_color = Color(0, 1, 0, 0.5)
