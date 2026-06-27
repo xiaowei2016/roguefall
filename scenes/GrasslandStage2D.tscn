@@ -53,11 +53,11 @@ visible = false
 scroll_scale = Vector2(0.15, 1)
 
 [node name="SkySprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/SkyParallax" unique_id=1087083892]
-position = Vector2(0, -111)
-scale = Vector2(0.331492, 0.331492)
-texture = ExtResource("1_sky")
+position = Vector2(0, 0)
+scale = Vector2(0.419371, 0.419371)
+texture = ExtResource("11_sky_tile")
 region_enabled = true
-region_rect = Rect2(0, 0, 10860, 724)
+region_rect = Rect2(0, 0, 3600, 724)
 texture_repeat = 1
 centered = false
 
@@ -81,11 +81,11 @@ scroll_scale = Vector2(0.45, 1)
 scroll_offset = Vector2(0, 63)
 
 [node name="HillSprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/HillParallax" unique_id=618396008]
-position = Vector2(0.8387412, -7.129299)
-scale = Vector2(0.331492, 0.55234176)
-texture = ExtResource("3_hill")
+position = Vector2(0, 0)
+scale = Vector2(0.419371, 0.419371)
+texture = ExtResource("13_hill_tile")
 region_enabled = true
-region_rect = Rect2(0, 0, 4554, 82)
+region_rect = Rect2(0, 0, 3600, 82)
 texture_repeat = 1
 centered = false
 
@@ -109,11 +109,11 @@ scroll_scale = Vector2(0.75, 1)
 scroll_offset = Vector2(0, 63)
 
 [node name="TreeSprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/TreeParallax" unique_id=1809913243]
-position = Vector2(60.80873, -15.516711)
-scale = Vector2(0.1898725, 0.18987249)
-texture = ExtResource("5_tree")
+position = Vector2(0, 0)
+scale = Vector2(0.240234, 0.240234)
+texture = ExtResource("15_tree_tile")
 region_enabled = true
-region_rect = Rect2(0, 0, 7952, 254)
+region_rect = Rect2(0, 0, 3600, 254)
 texture_repeat = 1
 centered = false
 
@@ -136,11 +136,11 @@ scroll_scale = Vector2(0.85, 1)
 scroll_offset = Vector2(0, 73)
 
 [node name="GrassSprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/GrassParallax" unique_id=1395796407]
-position = Vector2(0.41937056, 23.48475)
-scale = Vector2(0.32784668, 0.23155089)
-texture = ExtResource("6_grass")
+position = Vector2(0, 0)
+scale = Vector2(0.419371, 0.419371)
+texture = ExtResource("17_grass_tile")
 region_enabled = true
-region_rect = Rect2(0, 0, 4606, 102)
+region_rect = Rect2(0, 0, 3600, 102)
 texture_repeat = 1
 centered = false
 
