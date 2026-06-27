@@ -154,44 +154,402 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_dragzone")
 
-[node name="LeftHalf" type="Control" parent="PanelRoot/CenterPanel" unique_id=1398618028]
-anchors_preset = 0
-offset_right = 360.0
-offset_bottom = 530.0
-mouse_filter = 2
+[node name="CenterContent" type="MarginContainer" parent="PanelRoot/CenterPanel" unique_id=401000001]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
 
-[node name="CharLabel" type="Label" parent="PanelRoot/CenterPanel/LeftHalf" unique_id=2146564858]
-layout_mode = 0
-offset_left = 20.0
-offset_top = 20.0
-offset_right = 200.0
-offset_bottom = 52.0
-theme_override_font_sizes/font_size = 22
-text = "角色属性"
+[node name="MainRow" type="HBoxContainer" parent="PanelRoot/CenterPanel/CenterContent" unique_id=401000002]
+layout_mode = 2
+theme_override_constants/separation = 12
 
-[node name="EquipLabel" type="Label" parent="PanelRoot/CenterPanel/LeftHalf" unique_id=2141433801]
-layout_mode = 0
-offset_left = 20.0
-offset_top = 60.0
-offset_right = 200.0
-offset_bottom = 92.0
-text = "装备穿戴"
+[node name="LeftColumn" type="VBoxContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow" unique_id=401000003]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
 
-[node name="RightHalf" type="Control" parent="PanelRoot/CenterPanel" unique_id=2119262994]
-anchors_preset = 0
-offset_left = 360.0
-offset_right = 720.0
-offset_bottom = 530.0
-mouse_filter = 2
+[node name="CharCard" type="PanelContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn" unique_id=401000010]
+layout_mode = 2
+size_flags_vertical = 3
 
-[node name="BagLabel" type="Label" parent="PanelRoot/CenterPanel/RightHalf" unique_id=738403651]
-layout_mode = 0
-offset_left = 20.0
-offset_top = 20.0
-offset_right = 200.0
-offset_bottom = 52.0
+[node name="CharVB" type="VBoxContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharCard" unique_id=401000011]
+layout_mode = 2
+
+[node name="CharTitle" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharCard/CharVB" unique_id=401000012]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "角色展示"
+
+[node name="CharPlaceholder" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharCard/CharVB" unique_id=401000013]
+layout_mode = 2
+custom_minimum_size = Vector2(160, 140)
+color = Color(0.15, 0.15, 0.15, 1)
+
+[node name="EquipCard" type="PanelContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn" unique_id=401000020]
+layout_mode = 2
+
+[node name="EquipVB" type="VBoxContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/EquipCard" unique_id=401000021]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="EquipTitle" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/EquipCard/EquipVB" unique_id=401000022]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "装备"
+
+[node name="EquipGrid" type="GridContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/EquipCard/EquipVB" unique_id=401000023]
+layout_mode = 2
+columns = 3
+theme_override_constants/h_separation = 4
+theme_override_constants/v_separation = 4
+
+[node name="Slot01" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/EquipCard/EquipVB/EquipGrid" unique_id=401000024]
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Slot02" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/EquipCard/EquipVB/EquipGrid" unique_id=401000025]
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Slot03" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/EquipCard/EquipVB/EquipGrid" unique_id=401000026]
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Slot04" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/EquipCard/EquipVB/EquipGrid" unique_id=401000027]
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Slot05" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/EquipCard/EquipVB/EquipGrid" unique_id=401000028]
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Slot06" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/EquipCard/EquipVB/EquipGrid" unique_id=401000029]
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Slot07" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/EquipCard/EquipVB/EquipGrid" unique_id=401000030]
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Slot08" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/EquipCard/EquipVB/EquipGrid" unique_id=401000031]
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Slot09" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/EquipCard/EquipVB/EquipGrid" unique_id=401000032]
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="BasicAttrCard" type="PanelContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn" unique_id=401000040]
+layout_mode = 2
+
+[node name="BasicAttrVB" type="VBoxContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/BasicAttrCard" unique_id=401000041]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="BasicAttrTitle" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/BasicAttrCard/BasicAttrVB" unique_id=401000042]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "基础属性"
+
+[node name="BasicAttrGrid" type="GridContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/BasicAttrCard/BasicAttrVB" unique_id=401000043]
+layout_mode = 2
+columns = 2
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 2
+
+[node name="AtkLabel" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/BasicAttrCard/BasicAttrVB/BasicAttrGrid" unique_id=401000044]
+layout_mode = 2
+text = "攻击"
+
+[node name="AtkVal" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/BasicAttrCard/BasicAttrVB/BasicAttrGrid" unique_id=401000045]
+layout_mode = 2
+text = "--"
+
+[node name="DefLabel" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/BasicAttrCard/BasicAttrVB/BasicAttrGrid" unique_id=401000046]
+layout_mode = 2
+text = "防御"
+
+[node name="DefVal" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/BasicAttrCard/BasicAttrVB/BasicAttrGrid" unique_id=401000047]
+layout_mode = 2
+text = "--"
+
+[node name="HpLabel" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/BasicAttrCard/BasicAttrVB/BasicAttrGrid" unique_id=401000048]
+layout_mode = 2
+text = "生命"
+
+[node name="HpVal" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/BasicAttrCard/BasicAttrVB/BasicAttrGrid" unique_id=401000049]
+layout_mode = 2
+text = "--"
+
+[node name="SpdLabel" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/BasicAttrCard/BasicAttrVB/BasicAttrGrid" unique_id=401000050]
+layout_mode = 2
+text = "速度"
+
+[node name="SpdVal" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/BasicAttrCard/BasicAttrVB/BasicAttrGrid" unique_id=401000051]
+layout_mode = 2
+text = "--"
+
+[node name="DetailAttrCard" type="PanelContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn" unique_id=401000060]
+layout_mode = 2
+
+[node name="DetailAttrVB" type="VBoxContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/DetailAttrCard" unique_id=401000061]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="DetailAttrTitle" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/DetailAttrCard/DetailAttrVB" unique_id=401000062]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "详细属性"
+
+[node name="DetailAttrGrid" type="GridContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/DetailAttrCard/DetailAttrVB" unique_id=401000063]
+layout_mode = 2
+columns = 2
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 2
+
+[node name="CritLabel" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/DetailAttrCard/DetailAttrVB/DetailAttrGrid" unique_id=401000064]
+layout_mode = 2
+text = "暴击"
+
+[node name="CritVal" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/DetailAttrCard/DetailAttrVB/DetailAttrGrid" unique_id=401000065]
+layout_mode = 2
+text = "--"
+
+[node name="DodgeLabel" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/DetailAttrCard/DetailAttrVB/DetailAttrGrid" unique_id=401000066]
+layout_mode = 2
+text = "闪避"
+
+[node name="DodgeVal" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/DetailAttrCard/DetailAttrVB/DetailAttrGrid" unique_id=401000067]
+layout_mode = 2
+text = "--"
+
+[node name="ArmorLabel" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/DetailAttrCard/DetailAttrVB/DetailAttrGrid" unique_id=401000068]
+layout_mode = 2
+text = "护甲"
+
+[node name="ArmorVal" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/DetailAttrCard/DetailAttrVB/DetailAttrGrid" unique_id=401000069]
+layout_mode = 2
+text = "--"
+
+[node name="ResistLabel" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/DetailAttrCard/DetailAttrVB/DetailAttrGrid" unique_id=401000070]
+layout_mode = 2
+text = "抗性"
+
+[node name="ResistVal" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/DetailAttrCard/DetailAttrVB/DetailAttrGrid" unique_id=401000071]
+layout_mode = 2
+text = "--"
+
+[node name="RightColumn" type="VBoxContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow" unique_id=402000001]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="BagTitle" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn" unique_id=402000010]
+layout_mode = 2
 theme_override_font_sizes/font_size = 22
 text = "背包"
+
+[node name="CategoryTabs" type="HBoxContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn" unique_id=402000020]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="CatAll" type="Button" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/CategoryTabs" unique_id=402000021]
+layout_mode = 2
+text = "全部"
+
+[node name="CatWeapon" type="Button" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/CategoryTabs" unique_id=402000022]
+layout_mode = 2
+text = "武器"
+
+[node name="CatArmor" type="Button" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/CategoryTabs" unique_id=402000023]
+layout_mode = 2
+text = "防具"
+
+[node name="CatAccessory" type="Button" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/CategoryTabs" unique_id=402000024]
+layout_mode = 2
+text = "饰品"
+
+[node name="CatConsumable" type="Button" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/CategoryTabs" unique_id=402000025]
+layout_mode = 2
+text = "消耗"
+
+[node name="BagScroll" type="ScrollContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn" unique_id=402000030]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BagGrid" type="GridContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll" unique_id=402000031]
+layout_mode = 2
+columns = 6
+theme_override_constants/h_separation = 4
+theme_override_constants/v_separation = 4
+
+[node name="BSlot01" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000032]
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="BSlot02" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000033]
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="BSlot03" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000034]
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="BSlot04" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000035]
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="BSlot05" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000036]
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="BSlot06" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000037]
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="BSlot07" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000038]
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="BSlot08" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000039]
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="BSlot09" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000040]
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="BSlot10" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000041]
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="BSlot11" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000042]
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="BSlot12" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000043]
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="BSlot13" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000044]
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="BSlot14" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000045]
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="BSlot15" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000046]
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="BSlot16" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000047]
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="BSlot17" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000048]
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="BSlot18" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000049]
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="BSlot19" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000050]
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="BSlot20" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000051]
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="BSlot21" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000052]
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="BSlot22" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000053]
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="BSlot23" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000054]
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="BSlot24" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000055]
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="ItemDetailCard" type="PanelContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn" unique_id=402000060]
+layout_mode = 2
+
+[node name="ItemDetailVB" type="VBoxContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/ItemDetailCard" unique_id=402000061]
+layout_mode = 2
+
+[node name="ItemDetailTitle" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/ItemDetailCard/ItemDetailVB" unique_id=402000062]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "物品详情"
+
+[node name="ItemDetailEmpty" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/ItemDetailCard/ItemDetailVB" unique_id=402000063]
+layout_mode = 2
+text = "未选择物品"
+
+[node name="BottomBar" type="HBoxContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn" unique_id=402000070]
+layout_mode = 2
+alignment = 2
+theme_override_constants/separation = 4
+
+[node name="SortBtn" type="Button" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BottomBar" unique_id=402000071]
+layout_mode = 2
+text = "整理"
+
+[node name="FilterBtn" type="Button" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BottomBar" unique_id=402000072]
+layout_mode = 2
+text = "筛选"
+
+[node name="CloseBtn" type="Button" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BottomBar" unique_id=402000073]
+layout_mode = 2
+text = "关闭"
 
 [node name="LeftButtons" type="HBoxContainer" parent="PanelRoot/CenterPanel" unique_id=1796030888]
 layout_mode = 0
