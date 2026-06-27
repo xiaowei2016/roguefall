@@ -9,7 +9,7 @@ extends Node2D
 const MOVE_SPEED: float = 80.0
 const ATTACK_RANGE: float = 60.0
 const PATROL_MIN_X: float = 80.0
-const PATROL_MAX_X: float = 640.0
+const PATROL_MAX_X: float = 3520.0
 
 var patrol_direction: int = 1  # 1=right, -1=left
 var is_attacking: bool = false
