@@ -10,6 +10,13 @@
 [ext_resource type="PackedScene" uid="uid://bdybdd0qfhybk" path="res://scenes/characters/PlayerActor.tscn" id="8_player_actor"]
 [ext_resource type="PackedScene" path="res://scenes/characters/DummyEnemy.tscn" id="9_dummy_enemy"]
 [ext_resource type="Script" path="res://scripts/world_root_camera.gd" id="10_world_root_camera"]
+[ext_resource type="Texture2D" path="res://assets/grassland_tiles/grassland_sky_tile.png" id="11_sky_tile"]
+[ext_resource type="Texture2D" path="res://assets/grassland_tiles/grassland_cloud_tile.png" id="12_cloud_tile"]
+[ext_resource type="Texture2D" path="res://assets/grassland_tiles/grassland_hill_tile.png" id="13_hill_tile"]
+[ext_resource type="Texture2D" path="res://assets/grassland_tiles/grassland_village_tile.png" id="14_village_tile"]
+[ext_resource type="Texture2D" path="res://assets/grassland_tiles/grassland_tree_tile.png" id="15_tree_tile"]
+[ext_resource type="Texture2D" path="res://assets/grassland_tiles/grassland_ground_tile.png" id="16_ground_tile"]
+[ext_resource type="Texture2D" path="res://assets/grassland_tiles/grassland_grass_tile.png" id="17_grass_tile"]
 
 [node name="GrasslandStage2D" type="Control" unique_id=1494099990]
 layout_mode = 3
@@ -88,11 +95,11 @@ scroll_scale = Vector2(0.6, 1)
 scroll_offset = Vector2(0, 63)
 
 [node name="VillageSprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/VillageParallax" unique_id=466964404]
-position = Vector2(-3.774335, -1.2581127)
-scale = Vector2(0.331492, 0.331492)
-texture = ExtResource("4_village")
+position = Vector2(0, 0)
+scale = Vector2(0.419371, 0.417594)
+texture = ExtResource("14_village_tile")
 region_enabled = true
-region_rect = Rect2(0, 0, 4554, 100)
+region_rect = Rect2(0, 0, 3600, 77)
 texture_repeat = 1
 centered = false
 
