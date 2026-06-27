@@ -51,6 +51,9 @@ position = Vector2(0, -111)
 scale = Vector2(0.331492, 0.331492)
 texture = ExtResource("1_sky")
 centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 10860, 724)
+texture_repeat = true
 
 [node name="CloudParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=457854483]
 scroll_scale = Vector2(0.3, 1)
@@ -60,6 +63,9 @@ position = Vector2(0, -44)
 scale = Vector2(0.331492, 0.331492)
 texture = ExtResource("2_cloud")
 centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 10860, 109)
+texture_repeat = true
 
 [node name="HillParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=885054048]
 scroll_scale = Vector2(0.45, 1)
@@ -69,6 +75,9 @@ position = Vector2(0, -15)
 scale = Vector2(0.331492, 0.331492)
 texture = ExtResource("3_hill")
 centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 10860, 82)
+texture_repeat = true
 
 [node name="VillageParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=306800399]
 scroll_scale = Vector2(0.6, 1)
@@ -78,6 +87,9 @@ position = Vector2(0, -20)
 scale = Vector2(0.331492, 0.331492)
 texture = ExtResource("4_village")
 centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 10860, 100)
+texture_repeat = true
 
 [node name="TreeParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=1703287456]
 scroll_scale = Vector2(0.75, 1)
@@ -87,6 +99,9 @@ position = Vector2(0, -62)
 scale = Vector2(0.331492, 0.331492)
 texture = ExtResource("5_tree")
 centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 10860, 254)
+texture_repeat = true
 
 [node name="GroundParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=207362820]
 
@@ -95,6 +110,9 @@ position = Vector2(-11, 23)
 scale = Vector2(0.34162062, 0.331492)
 texture = ExtResource("7_ground")
 centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 10860, 74)
+texture_repeat = true
 
 [node name="GrassParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=2083546484]
 scroll_scale = Vector2(0.85, 1)
@@ -105,6 +123,9 @@ position = Vector2(0, 10)
 scale = Vector2(0.331492, 0.331492)
 texture = ExtResource("6_grass")
 centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 10860, 102)
+texture_repeat = true
 
 [node name="BattleBaseline" type="Node2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=1664908160]
 visible = false
