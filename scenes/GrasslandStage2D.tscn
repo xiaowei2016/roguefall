@@ -74,6 +74,7 @@ centered = false
 
 [node name="TreeParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=1703287456]
 scroll_scale = Vector2(0.75, 1)
+repeat_size = Vector2(720, 0)
 
 [node name="TreeSprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/TreeParallax" unique_id=1809913243]
 position = Vector2(174.00002, 34)
@@ -82,7 +83,7 @@ texture = ExtResource("5_tree")
 centered = false
 
 [node name="GroundParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=207362820]
-repeat_size = Vector2(726, 0)
+repeat_size = Vector2(725, 0)
 
 [node name="GroundSprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/GroundParallax" unique_id=1925209693]
 position = Vector2(-4, 135)
