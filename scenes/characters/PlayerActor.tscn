@@ -119,7 +119,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_attack8")
 }],
-"loop": 0,
+"loop": 1,
 "name": &"attack",
 "speed": 10.0
 }, {
@@ -174,13 +174,16 @@ animations = [{
 script = ExtResource("4_player_script")
 
 [node name="VisualRoot" type="Node2D" parent="." unique_id=1391786807]
+position = Vector2(0, -33)
 scale = Vector2(0.088, 0.088)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="VisualRoot" unique_id=1005033991]
+position = Vector2(0, 249.99998)
 sprite_frames = SubResource("SpriteFrames_idle")
 animation = &"idle"
 autoplay = "idle"
-offset = Vector2(0, -310)
+frame_progress = 0.04221553
+offset = Vector2(0, -260)
 
 [node name="FootMarker" type="Node2D" parent="." unique_id=1881716851]
 visible = false
