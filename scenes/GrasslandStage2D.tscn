@@ -102,28 +102,26 @@ texture = ExtResource("6_grass")
 centered = false
 
 [node name="BattleBaseline" type="Node2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=1664908160]
-visible = false
-position = Vector2(0, 173)
+position = Vector2(0, 160)
 
 [node name="BaselineLine" type="Line2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/BattleBaseline" unique_id=878822119]
-position = Vector2(0, 0)
 points = PackedVector2Array(0, 0, 3600, 0)
 width = 2.0
 default_color = Color(1, 0, 0, 1)
 
-[node name="ActorLayer" type="Node2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=1950641600]
+[node name="ActorLayer" type="Node2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/BattleBaseline" unique_id=1950641600]
+position = Vector2(0, 0)
 
-[node name="PlayerActor" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/ActorLayer" unique_id=497183763 instance=ExtResource("8_player_actor")]
-position = Vector2(180, 136)
+[node name="PlayerActor" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/BattleBaseline/ActorLayer" unique_id=497183763 instance=ExtResource("8_player_actor")]
+position = Vector2(180, 0)
 
-[node name="StageCamera2D" type="Camera2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/ActorLayer/PlayerActor" unique_id=209602788]
+[node name="StageCamera2D" type="Camera2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/BattleBaseline/ActorLayer/PlayerActor" unique_id=209602788]
 limit_left = 0
 limit_top = 0
 limit_right = 3600
 limit_bottom = 180
 
-[node name="DummyEnemy" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/ActorLayer" unique_id=1163137642 instance=ExtResource("9_dummy_enemy")]
-position = Vector2(2000, 173)
-battle_baseline_path = NodePath("../../BattleBaseline")
+[node name="DummyEnemy" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/BattleBaseline/ActorLayer" unique_id=1163137642 instance=ExtResource("9_dummy_enemy")]
+position = Vector2(2000, 0)
 
 [node name="EffectLayer" type="Node2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=1491436542]

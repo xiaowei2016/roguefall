@@ -2,9 +2,9 @@ extends Node2D
 
 ## Patrol-Seek-Attack state machine for PlayerActor.
 ## States: idle / run / attack
+## Y position bound to BattleBaseline via native node parent hierarchy.
 
 @onready var animated_sprite: AnimatedSprite2D = $VisualRoot/AnimatedSprite2D
-@onready var battle_baseline: Node2D = $"../../BattleBaseline"
 
 const MOVE_SPEED: float = 80.0
 const ATTACK_RANGE: float = 60.0
@@ -16,8 +16,6 @@ var is_attacking: bool = false
 
 
 func _ready() -> void:
-	if battle_baseline == null:
-		push_error("PlayerActor: BattleBaseline not found. Expected ../../BattleBaseline")
 	animated_sprite.animation_finished.connect(_on_animation_finished)
 
 
@@ -36,7 +34,6 @@ func _physics_process(delta: float) -> void:
 
 
 func _patrol(delta: float) -> void:
-	position.y = battle_baseline.position.y
 	position.x += patrol_direction * MOVE_SPEED * delta
 
 	if position.x >= PATROL_MAX_X:
@@ -51,8 +48,6 @@ func _patrol(delta: float) -> void:
 
 
 func _seek(enemy: Node2D, delta: float) -> void:
-	position.y = battle_baseline.position.y
-
 	var dx: float = enemy.global_position.x - global_position.x
 	var dist: float = abs(dx)
 

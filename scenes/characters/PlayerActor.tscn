@@ -174,7 +174,7 @@ animations = [{
 script = ExtResource("4_player_script")
 
 [node name="VisualRoot" type="Node2D" parent="." unique_id=1391786807]
-position = Vector2(0, -33)
+position = Vector2(0, -24)
 scale = Vector2(0.088, 0.088)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="VisualRoot" unique_id=1005033991]
