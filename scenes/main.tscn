@@ -349,34 +349,34 @@ script = ExtResource("2_dragzone")
 
 [node name="LvLabel" type="Label" parent="PanelRoot/BattleBar/Panel" unique_id=363035291]
 layout_mode = 0
-offset_left = 10.0
-offset_top = 10.0
-offset_right = 160.0
-offset_bottom = 30.0
+offset_left = 607.0
+offset_top = 153.0
+offset_right = 653.0
+offset_bottom = 176.0
 text = "Lv 1"
 
 [node name="HpLabel" type="Label" parent="PanelRoot/BattleBar/Panel" unique_id=764084625]
 layout_mode = 0
 offset_left = 10.0
-offset_top = 35.0
+offset_top = 153.0
 offset_right = 160.0
-offset_bottom = 55.0
+offset_bottom = 176.0
 text = "HP: 100/100"
 
 [node name="ExpLabel" type="Label" parent="PanelRoot/BattleBar/Panel" unique_id=1093886838]
 layout_mode = 0
-offset_left = 10.0
-offset_top = 60.0
-offset_right = 160.0
-offset_bottom = 80.0
+offset_left = 168.0
+offset_top = 153.0
+offset_right = 318.0
+offset_bottom = 176.0
 text = "EXP: 0/100"
 
 [node name="GoldLabel" type="Label" parent="PanelRoot/BattleBar/Panel" unique_id=923887163]
 layout_mode = 0
-offset_left = 10.0
-offset_top = 85.0
-offset_right = 160.0
-offset_bottom = 105.0
+offset_left = 325.0
+offset_top = 153.0
+offset_right = 475.0
+offset_bottom = 176.0
 text = "Gold: 0"
 
 [node name="Button" type="Button" parent="PanelRoot/BattleBar" unique_id=2068708050]

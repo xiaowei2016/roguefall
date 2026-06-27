@@ -2,7 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-path="res://.godot/imported/grassland_hill_tile.png-3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e.ctex"
+uid="uid://be1dveu00yj6n"
+path="res://.godot/imported/grassland_hill_tile.png-f09e86bdb62283d8f4aa581519b96e1f.ctex"
 metadata={
 "vram_texture": false
 }
@@ -10,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/grassland_tiles/grassland_hill_tile.png"
-dest_files=["res://.godot/imported/grassland_hill_tile.png-3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e.ctex"]
+dest_files=["res://.godot/imported/grassland_hill_tile.png-f09e86bdb62283d8f4aa581519b96e1f.ctex"]
 
 [params]
 

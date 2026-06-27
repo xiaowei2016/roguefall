@@ -2,7 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-path="res://.godot/imported/grassland_village_tile.png-4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f.ctex"
+uid="uid://cu287jlfkp6uj"
+path="res://.godot/imported/grassland_village_tile.png-bbed850dcd68cd21909355a0195cb72a.ctex"
 metadata={
 "vram_texture": false
 }
@@ -10,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/grassland_tiles/grassland_village_tile.png"
-dest_files=["res://.godot/imported/grassland_village_tile.png-4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f.ctex"]
+dest_files=["res://.godot/imported/grassland_village_tile.png-bbed850dcd68cd21909355a0195cb72a.ctex"]
 
 [params]
 
