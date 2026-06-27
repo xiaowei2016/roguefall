@@ -175,77 +175,82 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 8
 
-[node name="UpperRow" type="HBoxContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn" unique_id=401000100]
+[node name="CharEquipRow" type="HBoxContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn" unique_id=401000100]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 8
 
-[node name="EquipCard" type="PanelContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/UpperRow" unique_id=401000020]
-layout_mode = 2
-
-[node name="EquipVB" type="VBoxContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/UpperRow/EquipCard" unique_id=401000021]
+[node name="LeftEquipCol" type="VBoxContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow" unique_id=401000101]
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="EquipTitle" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/UpperRow/EquipCard/EquipVB" unique_id=401000022]
+[node name="LEquip01" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/LeftEquipCol" unique_id=401000110]
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
-text = "装备"
-
-[node name="EquipGrid" type="GridContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/UpperRow/EquipCard/EquipVB" unique_id=401000023]
-layout_mode = 2
-columns = 2
-theme_override_constants/h_separation = 4
-theme_override_constants/v_separation = 4
-
-[node name="Slot01" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/UpperRow/EquipCard/EquipVB/EquipGrid" unique_id=401000024]
-layout_mode = 2
-custom_minimum_size = Vector2(56, 48)
+custom_minimum_size = Vector2(56, 56)
 color = Color(0.2, 0.2, 0.2, 1)
 
-[node name="Slot02" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/UpperRow/EquipCard/EquipVB/EquipGrid" unique_id=401000025]
+[node name="LEquip02" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/LeftEquipCol" unique_id=401000111]
 layout_mode = 2
-custom_minimum_size = Vector2(56, 48)
+custom_minimum_size = Vector2(56, 56)
 color = Color(0.2, 0.2, 0.2, 1)
 
-[node name="Slot03" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/UpperRow/EquipCard/EquipVB/EquipGrid" unique_id=401000026]
+[node name="LEquip03" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/LeftEquipCol" unique_id=401000112]
 layout_mode = 2
-custom_minimum_size = Vector2(56, 48)
+custom_minimum_size = Vector2(56, 56)
 color = Color(0.2, 0.2, 0.2, 1)
 
-[node name="Slot04" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/UpperRow/EquipCard/EquipVB/EquipGrid" unique_id=401000027]
+[node name="LEquip04" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/LeftEquipCol" unique_id=401000113]
 layout_mode = 2
-custom_minimum_size = Vector2(56, 48)
+custom_minimum_size = Vector2(56, 56)
 color = Color(0.2, 0.2, 0.2, 1)
 
-[node name="Slot05" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/UpperRow/EquipCard/EquipVB/EquipGrid" unique_id=401000028]
+[node name="LEquip05" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/LeftEquipCol" unique_id=401000114]
 layout_mode = 2
-custom_minimum_size = Vector2(56, 48)
+custom_minimum_size = Vector2(56, 56)
 color = Color(0.2, 0.2, 0.2, 1)
 
-[node name="Slot06" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/UpperRow/EquipCard/EquipVB/EquipGrid" unique_id=401000029]
-layout_mode = 2
-custom_minimum_size = Vector2(56, 48)
-color = Color(0.2, 0.2, 0.2, 1)
-
-[node name="CharCard" type="PanelContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/UpperRow" unique_id=401000010]
+[node name="CharCenter" type="VBoxContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow" unique_id=401000120]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_constants/separation = 8
 
-[node name="CharVB" type="VBoxContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/UpperRow/CharCard" unique_id=401000011]
+[node name="CharFrame" type="PanelContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/CharCenter" unique_id=401000121]
 layout_mode = 2
-
-[node name="CharTitle" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/UpperRow/CharCard/CharVB" unique_id=401000012]
-layout_mode = 2
-theme_override_font_sizes/font_size = 16
-text = "角色展示"
-
-[node name="CharPlaceholder" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/UpperRow/CharCard/CharVB" unique_id=401000013]
-layout_mode = 2
-size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="CharPlaceholder" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/CharCenter/CharFrame" unique_id=401000122]
+layout_mode = 2
 custom_minimum_size = Vector2(120, 100)
 color = Color(0.15, 0.15, 0.15, 1)
+
+[node name="CharBase" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/CharCenter" unique_id=401000123]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 24)
+color = Color(0.25, 0.2, 0.15, 1)
+
+[node name="RightEquipCol" type="VBoxContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow" unique_id=401000130]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="REquip01" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/RightEquipCol" unique_id=401000131]
+layout_mode = 2
+custom_minimum_size = Vector2(56, 56)
+color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="REquip02" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/RightEquipCol" unique_id=401000132]
+layout_mode = 2
+custom_minimum_size = Vector2(56, 56)
+color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="REquip03" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/RightEquipCol" unique_id=401000133]
+layout_mode = 2
+custom_minimum_size = Vector2(56, 56)
+color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="REquip04" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/RightEquipCol" unique_id=401000134]
+layout_mode = 2
+custom_minimum_size = Vector2(56, 56)
+color = Color(0.2, 0.2, 0.2, 1)
 
 [node name="AttrRow" type="HBoxContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn" unique_id=401000200]
 layout_mode = 2
@@ -367,21 +372,21 @@ text = "背包"
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="CatAll" type="Button" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/CategoryTabs" unique_id=402000021]
+[node name="CatBag" type="Button" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/CategoryTabs" unique_id=402000021]
 layout_mode = 2
-text = "全部"
+text = "背包"
 
-[node name="CatEquip" type="Button" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/CategoryTabs" unique_id=402000022]
+[node name="CatWeapon" type="Button" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/CategoryTabs" unique_id=402000022]
 layout_mode = 2
-text = "装备"
+text = "武器"
 
-[node name="CatPotion" type="Button" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/CategoryTabs" unique_id=402000023]
+[node name="CatAccessory" type="Button" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/CategoryTabs" unique_id=402000023]
 layout_mode = 2
-text = "药剂"
+text = "饰品"
 
-[node name="CatAchieve" type="Button" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/CategoryTabs" unique_id=402000024]
+[node name="CatGift" type="Button" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/CategoryTabs" unique_id=402000024]
 layout_mode = 2
-text = "成就"
+text = "礼物"
 
 [node name="BagScroll" type="ScrollContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn" unique_id=402000030]
 layout_mode = 2
@@ -492,6 +497,51 @@ color = Color(0.25, 0.25, 0.25, 1)
 layout_mode = 2
 custom_minimum_size = Vector2(48, 48)
 color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="BSlot21" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000052]
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="BSlot22" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000053]
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="BSlot23" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000054]
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="BSlot24" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000055]
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.25, 0.25, 0.25, 1)
+
+
+[node name="BottomFuncBar" type="HBoxContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn" unique_id=402000070]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="BtnBag" type="Button" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BottomFuncBar" unique_id=402000071]
+layout_mode = 2
+text = "背包"
+
+[node name="BtnSkill" type="Button" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BottomFuncBar" unique_id=402000072]
+layout_mode = 2
+text = "技能"
+
+[node name="BtnTalent" type="Button" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BottomFuncBar" unique_id=402000073]
+layout_mode = 2
+text = "天赋"
+
+[node name="BtnMap" type="Button" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BottomFuncBar" unique_id=402000074]
+layout_mode = 2
+text = "地图"
+
+[node name="BtnSettings" type="Button" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BottomFuncBar" unique_id=402000075]
+layout_mode = 2
+text = "设置"
 
 [node name="ItemDetailCard" type="PanelContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn" unique_id=402000060]
 layout_mode = 2
