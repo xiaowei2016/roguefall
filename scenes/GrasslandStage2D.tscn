@@ -77,6 +77,9 @@ scroll_offset = Vector2(0, 63)
 position = Vector2(0.8387412, -7.129299)
 scale = Vector2(0.331492, 0.55234176)
 texture = ExtResource("3_hill")
+region_enabled = true
+region_rect = Rect2(0, 0, 4554, 82)
+texture_repeat = 1
 centered = false
 
 [node name="VillageParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=306800399]
