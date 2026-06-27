@@ -88,6 +88,9 @@ scroll_offset = Vector2(0, 63)
 position = Vector2(-3.774335, -1.2581127)
 scale = Vector2(0.331492, 0.331492)
 texture = ExtResource("4_village")
+region_enabled = true
+region_rect = Rect2(0, 0, 4554, 100)
+texture_repeat = 1
 centered = false
 
 [node name="TreeParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=1703287456]
@@ -126,6 +129,9 @@ scroll_offset = Vector2(0, 73)
 position = Vector2(0.41937056, 23.48475)
 scale = Vector2(0.32784668, 0.23155089)
 texture = ExtResource("6_grass")
+region_enabled = true
+region_rect = Rect2(0, 0, 4606, 102)
+texture_repeat = 1
 centered = false
 
 [node name="BattleBaseline" type="Node2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=1664908160]
