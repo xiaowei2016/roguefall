@@ -121,4 +121,11 @@ position = Vector2(180, 135)
 [node name="DummyEnemy" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/ActorLayer" unique_id=1163137642 instance=ExtResource("9_dummy_enemy")]
 position = Vector2(520, 135)
 
+[node name="CanvasGuide" type="Node2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot"]
+
+[node name="GuideRect" type="Line2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/CanvasGuide"]
+points = PackedVector2Array(0, 0, 720, 0, 720, 180, 0, 180, 0, 0)
+width = 1.0
+default_color = Color(0, 1, 0, 0.5)
+
 [node name="EffectLayer" type="Node2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=1491436542]
