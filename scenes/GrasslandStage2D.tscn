@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dr5ka6eovndrf" path="res://assets/grassland/ChatGPT Image 2026年6月26日 16_13_43 (5).png" id="5_tree"]
 [ext_resource type="Texture2D" uid="uid://djmbujknc0ypd" path="res://assets/grassland/ChatGPT Image 2026年6月26日 16_13_43 (6).png" id="6_grass"]
 [ext_resource type="Texture2D" uid="uid://c5g0wwydtqr3" path="res://assets/grassland/ChatGPT Image 2026年6月26日 16_13_44 (7).png" id="7_ground"]
-[ext_resource type="PackedScene" path="res://scenes/characters/PlayerActor.tscn" id="8_player_actor"]
+[ext_resource type="PackedScene" uid="uid://bdybdd0qfhybk" path="res://scenes/characters/PlayerActor.tscn" id="8_player_actor"]
 [ext_resource type="PackedScene" path="res://scenes/characters/DummyEnemy.tscn" id="9_dummy_enemy"]
 
 [node name="GrasslandStage2D" type="Control" unique_id=1494099990]
@@ -85,15 +85,6 @@ scale = Vector2(0.331492, 0.331492)
 texture = ExtResource("5_tree")
 centered = false
 
-[node name="GrassParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=2083546484]
-scroll_scale = Vector2(0.85, 1)
-
-[node name="GrassSprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/GrassParallax" unique_id=1395796407]
-position = Vector2(0, 10)
-scale = Vector2(0.331492, 0.331492)
-texture = ExtResource("6_grass")
-centered = false
-
 [node name="GroundParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=207362820]
 
 [node name="GroundSprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/GroundParallax" unique_id=1925209693]
@@ -102,9 +93,19 @@ scale = Vector2(0.34162062, 0.331492)
 texture = ExtResource("7_ground")
 centered = false
 
+[node name="GrassParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=2083546484]
+scroll_scale = Vector2(0.85, 1)
+scroll_offset = Vector2(0, 10)
+
+[node name="GrassSprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/GrassParallax" unique_id=1395796407]
+position = Vector2(0, 10)
+scale = Vector2(0.331492, 0.331492)
+texture = ExtResource("6_grass")
+centered = false
+
 [node name="BattleBaseline" type="Node2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=1664908160]
 visible = false
-position = Vector2(0, 135)
+position = Vector2(0, 140)
 
 [node name="BaselineLine" type="Line2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/BattleBaseline" unique_id=878822119]
 points = PackedVector2Array(0, 0, 720, 0)
@@ -112,11 +113,12 @@ width = 2.0
 default_color = Color(1, 0, 0, 1)
 
 [node name="ActorLayer" type="Node2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=1950641600]
+position = Vector2(0, 5)
 
-[node name="PlayerActor" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/ActorLayer" instance=ExtResource("8_player_actor")]
+[node name="PlayerActor" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/ActorLayer" unique_id=497183763 instance=ExtResource("8_player_actor")]
 position = Vector2(180, 135)
 
-[node name="DummyEnemy" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/ActorLayer" instance=ExtResource("9_dummy_enemy")]
+[node name="DummyEnemy" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/ActorLayer" unique_id=1163137642 instance=ExtResource("9_dummy_enemy")]
 position = Vector2(520, 135)
 
 [node name="EffectLayer" type="Node2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=1491436542]

@@ -1,63 +1,55 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene format=3 uid="uid://co1gy1xt0te7v"]
 
-[ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
-[ext_resource type="Script" path="res://scripts/native_drag_zone.gd" id="2_dragzone"]
-[ext_resource type="Script" path="res://scripts/DesktopPixelPassthrough.cs" id="3_pixel"]
-[ext_resource type="PackedScene" path="res://scenes/GrasslandStage2D.tscn" id="5_grassland_stage"]
+[ext_resource type="Script" uid="uid://dtadxwnca83tu" path="res://scripts/main.gd" id="1_main"]
+[ext_resource type="Script" uid="uid://5csn50l1ptiv" path="res://scripts/native_drag_zone.gd" id="2_dragzone"]
+[ext_resource type="Script" uid="uid://cpwj27yudk003" path="res://scripts/DesktopPixelPassthrough.cs" id="3_pixel"]
+[ext_resource type="PackedScene" uid="uid://bk7g3g0kc7g7e" path="res://scenes/GrasslandStage2D.tscn" id="5_grassland_stage"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1"]
 
-[node name="MainRoot" type="Control"]
+[node name="MainRoot" type="Control" unique_id=740616609]
 layout_mode = 3
+anchors_preset = 0
 offset_right = 1440.0
 offset_bottom = 720.0
 script = ExtResource("1_main")
 
-[node name="PixelPassthrough" type="Node" parent="."]
+[node name="PixelPassthrough" type="Node" parent="." unique_id=933343574]
 script = ExtResource("3_pixel")
 
-[node name="PanelRoot" type="Control" parent="."]
-layout_mode = 3
+[node name="PanelRoot" type="Control" parent="." unique_id=1673481439]
+anchors_preset = 0
 offset_right = 1440.0
 offset_bottom = 720.0
 mouse_filter = 2
 
-[node name="LeftPanel" type="Control" parent="PanelRoot"]
-layout_mode = 3
+[node name="LeftPanel" type="Control" parent="PanelRoot" unique_id=526910972]
+anchors_preset = 0
 offset_right = 352.0
 offset_bottom = 530.0
 mouse_filter = 2
 
-[node name="Panel" type="Panel" parent="PanelRoot/LeftPanel"]
-layout_mode = 3
+[node name="Panel" type="Panel" parent="PanelRoot/LeftPanel" unique_id=1908020485]
+layout_mode = 1
 anchors_preset = 15
-anchor_left = 0.0
-anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 0.0
-offset_bottom = 0.0
-mouse_filter = 0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("2_dragzone")
 
-[node name="WarehouseContent" type="Control" parent="PanelRoot/LeftPanel"]
+[node name="WarehouseContent" type="Control" parent="PanelRoot/LeftPanel" unique_id=1969126349]
 visible = false
-layout_mode = 3
+layout_mode = 1
 anchors_preset = 15
-anchor_left = 0.0
-anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 0.0
-offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 
-[node name="Label" type="Label" parent="PanelRoot/LeftPanel/WarehouseContent"]
-layout_mode = 3
+[node name="Label" type="Label" parent="PanelRoot/LeftPanel/WarehouseContent" unique_id=278360845]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -67,24 +59,22 @@ offset_left = -20.0
 offset_top = -10.0
 offset_right = 20.0
 offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
 text = "仓库"
 
-[node name="PetContent" type="Control" parent="PanelRoot/LeftPanel"]
+[node name="PetContent" type="Control" parent="PanelRoot/LeftPanel" unique_id=503872474]
 visible = false
-layout_mode = 3
+layout_mode = 1
 anchors_preset = 15
-anchor_left = 0.0
-anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 0.0
-offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 
-[node name="Label" type="Label" parent="PanelRoot/LeftPanel/PetContent"]
-layout_mode = 3
+[node name="Label" type="Label" parent="PanelRoot/LeftPanel/PetContent" unique_id=491655038]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -94,24 +84,22 @@ offset_left = -20.0
 offset_top = -10.0
 offset_right = 20.0
 offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
 text = "宠物"
 
-[node name="CodexContent" type="Control" parent="PanelRoot/LeftPanel"]
+[node name="CodexContent" type="Control" parent="PanelRoot/LeftPanel" unique_id=827552004]
 visible = false
-layout_mode = 3
+layout_mode = 1
 anchors_preset = 15
-anchor_left = 0.0
-anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 0.0
-offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 
-[node name="Label" type="Label" parent="PanelRoot/LeftPanel/CodexContent"]
-layout_mode = 3
+[node name="Label" type="Label" parent="PanelRoot/LeftPanel/CodexContent" unique_id=923040615]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -121,24 +109,22 @@ offset_left = -20.0
 offset_top = -10.0
 offset_right = 20.0
 offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
 text = "图鉴"
 
-[node name="MapContent" type="Control" parent="PanelRoot/LeftPanel"]
+[node name="MapContent" type="Control" parent="PanelRoot/LeftPanel" unique_id=1180133900]
 visible = false
-layout_mode = 3
+layout_mode = 1
 anchors_preset = 15
-anchor_left = 0.0
-anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 0.0
-offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 
-[node name="Label" type="Label" parent="PanelRoot/LeftPanel/MapContent"]
-layout_mode = 3
+[node name="Label" type="Label" parent="PanelRoot/LeftPanel/MapContent" unique_id=835440897]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -148,168 +134,135 @@ offset_left = -20.0
 offset_top = -10.0
 offset_right = 20.0
 offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
 text = "地图"
 
-[node name="CenterPanel" type="Control" parent="PanelRoot"]
-layout_mode = 3
+[node name="CenterPanel" type="Control" parent="PanelRoot" unique_id=2097642298]
+anchors_preset = 0
 offset_left = 360.0
-offset_top = 0.0
 offset_right = 1080.0
 offset_bottom = 530.0
 mouse_filter = 2
 
-[node name="Panel" type="Panel" parent="PanelRoot/CenterPanel"]
-layout_mode = 3
+[node name="Panel" type="Panel" parent="PanelRoot/CenterPanel" unique_id=1977904734]
+layout_mode = 1
 anchors_preset = 15
-anchor_left = 0.0
-anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 0.0
-offset_bottom = 0.0
-mouse_filter = 0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("2_dragzone")
 
-[node name="LeftHalf" type="Control" parent="PanelRoot/CenterPanel"]
-layout_mode = 3
+[node name="LeftHalf" type="Control" parent="PanelRoot/CenterPanel" unique_id=1398618028]
+anchors_preset = 0
 offset_right = 360.0
 offset_bottom = 530.0
 mouse_filter = 2
 
-[node name="CharLabel" type="Label" parent="PanelRoot/CenterPanel/LeftHalf"]
-layout_mode = 3
+[node name="CharLabel" type="Label" parent="PanelRoot/CenterPanel/LeftHalf" unique_id=2146564858]
+layout_mode = 0
 offset_left = 20.0
 offset_top = 20.0
 offset_right = 200.0
 offset_bottom = 52.0
-text = "角色属性"
 theme_override_font_sizes/font_size = 22
+text = "角色属性"
 
-[node name="EquipLabel" type="Label" parent="PanelRoot/CenterPanel/LeftHalf"]
-layout_mode = 3
+[node name="EquipLabel" type="Label" parent="PanelRoot/CenterPanel/LeftHalf" unique_id=2141433801]
+layout_mode = 0
 offset_left = 20.0
 offset_top = 60.0
 offset_right = 200.0
 offset_bottom = 92.0
 text = "装备穿戴"
 
-[node name="RightHalf" type="Control" parent="PanelRoot/CenterPanel"]
-layout_mode = 3
+[node name="RightHalf" type="Control" parent="PanelRoot/CenterPanel" unique_id=2119262994]
+anchors_preset = 0
 offset_left = 360.0
 offset_right = 720.0
 offset_bottom = 530.0
 mouse_filter = 2
 
-[node name="BagLabel" type="Label" parent="PanelRoot/CenterPanel/RightHalf"]
-layout_mode = 3
+[node name="BagLabel" type="Label" parent="PanelRoot/CenterPanel/RightHalf" unique_id=738403651]
+layout_mode = 0
 offset_left = 20.0
 offset_top = 20.0
 offset_right = 200.0
 offset_bottom = 52.0
-text = "背包"
 theme_override_font_sizes/font_size = 22
+text = "背包"
 
-[node name="LeftButtons" type="HBoxContainer" parent="PanelRoot/CenterPanel"]
-layout_mode = 3
+[node name="LeftButtons" type="HBoxContainer" parent="PanelRoot/CenterPanel" unique_id=1796030888]
+layout_mode = 0
 offset_left = 8.0
 offset_top = 500.0
 offset_right = 352.0
 offset_bottom = 528.0
 
-[node name="WarehouseBtn" type="Button" parent="PanelRoot/CenterPanel/LeftButtons"]
-layout_mode = 3
-offset_right = 80.0
-offset_bottom = 28.0
+[node name="WarehouseBtn" type="Button" parent="PanelRoot/CenterPanel/LeftButtons" unique_id=1325609187]
+layout_mode = 2
 text = "仓库"
 
-[node name="PetBtn" type="Button" parent="PanelRoot/CenterPanel/LeftButtons"]
-layout_mode = 3
-offset_left = 84.0
-offset_right = 164.0
-offset_bottom = 28.0
+[node name="PetBtn" type="Button" parent="PanelRoot/CenterPanel/LeftButtons" unique_id=1657072550]
+layout_mode = 2
 text = "宠物"
 
-[node name="CodexBtn" type="Button" parent="PanelRoot/CenterPanel/LeftButtons"]
-layout_mode = 3
-offset_left = 168.0
-offset_right = 248.0
-offset_bottom = 28.0
+[node name="CodexBtn" type="Button" parent="PanelRoot/CenterPanel/LeftButtons" unique_id=1388103180]
+layout_mode = 2
 text = "图鉴"
 
-[node name="MapBtn" type="Button" parent="PanelRoot/CenterPanel/LeftButtons"]
-layout_mode = 3
-offset_left = 252.0
-offset_right = 332.0
-offset_bottom = 28.0
+[node name="MapBtn" type="Button" parent="PanelRoot/CenterPanel/LeftButtons" unique_id=160158629]
+layout_mode = 2
 text = "地图"
 
-[node name="RightButtons" type="HBoxContainer" parent="PanelRoot/CenterPanel"]
-layout_mode = 3
+[node name="RightButtons" type="HBoxContainer" parent="PanelRoot/CenterPanel" unique_id=575522656]
+layout_mode = 0
 offset_left = 432.0
 offset_top = 500.0
 offset_right = 712.0
 offset_bottom = 528.0
 
-[node name="SettingsBtn" type="Button" parent="PanelRoot/CenterPanel/RightButtons"]
-layout_mode = 3
-offset_right = 80.0
-offset_bottom = 28.0
+[node name="SettingsBtn" type="Button" parent="PanelRoot/CenterPanel/RightButtons" unique_id=1117242987]
+layout_mode = 2
 text = "设置"
 
-[node name="RerollBtn" type="Button" parent="PanelRoot/CenterPanel/RightButtons"]
-layout_mode = 3
-offset_left = 84.0
-offset_right = 164.0
-offset_bottom = 28.0
+[node name="RerollBtn" type="Button" parent="PanelRoot/CenterPanel/RightButtons" unique_id=562891004]
+layout_mode = 2
 text = "洗练"
 
-[node name="DetailBtn" type="Button" parent="PanelRoot/CenterPanel/RightButtons"]
-layout_mode = 3
-offset_left = 168.0
-offset_right = 248.0
-offset_bottom = 28.0
+[node name="DetailBtn" type="Button" parent="PanelRoot/CenterPanel/RightButtons" unique_id=332166269]
+layout_mode = 2
 text = "详情"
 
-[node name="RightPanel" type="Control" parent="PanelRoot"]
-layout_mode = 3
+[node name="RightPanel" type="Control" parent="PanelRoot" unique_id=279125319]
+anchors_preset = 0
 offset_left = 1088.0
-offset_top = 0.0
 offset_right = 1440.0
 offset_bottom = 530.0
 mouse_filter = 2
 
-[node name="Panel" type="Panel" parent="PanelRoot/RightPanel"]
-layout_mode = 3
+[node name="Panel" type="Panel" parent="PanelRoot/RightPanel" unique_id=1747380607]
+layout_mode = 1
 anchors_preset = 15
-anchor_left = 0.0
-anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 0.0
-offset_bottom = 0.0
-mouse_filter = 0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("2_dragzone")
 
-[node name="SettingsContent" type="Control" parent="PanelRoot/RightPanel"]
+[node name="SettingsContent" type="Control" parent="PanelRoot/RightPanel" unique_id=1776554873]
 visible = false
-layout_mode = 3
+layout_mode = 1
 anchors_preset = 15
-anchor_left = 0.0
-anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 0.0
-offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 
-[node name="Label" type="Label" parent="PanelRoot/RightPanel/SettingsContent"]
-layout_mode = 3
+[node name="Label" type="Label" parent="PanelRoot/RightPanel/SettingsContent" unique_id=316036441]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -319,24 +272,22 @@ offset_left = -20.0
 offset_top = -10.0
 offset_right = 20.0
 offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
 text = "设置"
 
-[node name="RerollContent" type="Control" parent="PanelRoot/RightPanel"]
+[node name="RerollContent" type="Control" parent="PanelRoot/RightPanel" unique_id=266913480]
 visible = false
-layout_mode = 3
+layout_mode = 1
 anchors_preset = 15
-anchor_left = 0.0
-anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 0.0
-offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 
-[node name="Label" type="Label" parent="PanelRoot/RightPanel/RerollContent"]
-layout_mode = 3
+[node name="Label" type="Label" parent="PanelRoot/RightPanel/RerollContent" unique_id=2001148289]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -346,24 +297,22 @@ offset_left = -20.0
 offset_top = -10.0
 offset_right = 20.0
 offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
 text = "洗练"
 
-[node name="DetailContent" type="Control" parent="PanelRoot/RightPanel"]
+[node name="DetailContent" type="Control" parent="PanelRoot/RightPanel" unique_id=2087798207]
 visible = false
-layout_mode = 3
+layout_mode = 1
 anchors_preset = 15
-anchor_left = 0.0
-anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 0.0
-offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 
-[node name="Label" type="Label" parent="PanelRoot/RightPanel/DetailContent"]
-layout_mode = 3
+[node name="Label" type="Label" parent="PanelRoot/RightPanel/DetailContent" unique_id=1869694992]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -373,69 +322,67 @@ offset_left = -20.0
 offset_top = -10.0
 offset_right = 20.0
 offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
 text = "详情"
 
-[node name="BattleBar" type="Control" parent="PanelRoot"]
-layout_mode = 3
+[node name="BattleBar" type="Control" parent="PanelRoot" unique_id=535304019]
+anchors_preset = 0
 offset_left = 360.0
 offset_top = 540.0
 offset_right = 1080.0
 offset_bottom = 720.0
 mouse_filter = 2
 
-[node name="GrasslandStage2D" parent="PanelRoot/BattleBar" instance=ExtResource("5_grassland_stage")]
+[node name="GrasslandStage2D" parent="PanelRoot/BattleBar" unique_id=338729208 instance=ExtResource("5_grassland_stage")]
+layout_mode = 0
 
-[node name="Panel" type="Panel" parent="PanelRoot/BattleBar"]
-layout_mode = 3
+[node name="Panel" type="Panel" parent="PanelRoot/BattleBar" unique_id=1423645363]
+layout_mode = 1
 anchors_preset = 15
-anchor_left = 0.0
-anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 0.0
-offset_bottom = 0.0
-mouse_filter = 0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_1")
 script = ExtResource("2_dragzone")
 
-[node name="LvLabel" type="Label" parent="PanelRoot/BattleBar/Panel"]
-layout_mode = 3
+[node name="LvLabel" type="Label" parent="PanelRoot/BattleBar/Panel" unique_id=363035291]
+layout_mode = 0
 offset_left = 10.0
 offset_top = 10.0
 offset_right = 160.0
 offset_bottom = 30.0
 text = "Lv 1"
 
-[node name="HpLabel" type="Label" parent="PanelRoot/BattleBar/Panel"]
-layout_mode = 3
+[node name="HpLabel" type="Label" parent="PanelRoot/BattleBar/Panel" unique_id=764084625]
+layout_mode = 0
 offset_left = 10.0
 offset_top = 35.0
 offset_right = 160.0
 offset_bottom = 55.0
 text = "HP: 100/100"
 
-[node name="ExpLabel" type="Label" parent="PanelRoot/BattleBar/Panel"]
-layout_mode = 3
+[node name="ExpLabel" type="Label" parent="PanelRoot/BattleBar/Panel" unique_id=1093886838]
+layout_mode = 0
 offset_left = 10.0
 offset_top = 60.0
 offset_right = 160.0
 offset_bottom = 80.0
 text = "EXP: 0/100"
 
-[node name="GoldLabel" type="Label" parent="PanelRoot/BattleBar/Panel"]
-layout_mode = 3
+[node name="GoldLabel" type="Label" parent="PanelRoot/BattleBar/Panel" unique_id=923887163]
+layout_mode = 0
 offset_left = 10.0
 offset_top = 85.0
 offset_right = 160.0
 offset_bottom = 105.0
 text = "Gold: 0"
 
-[node name="Button" type="Button" parent="PanelRoot/BattleBar"]
-layout_mode = 3
-offset_left = 10.0
-offset_top = 10.0
-offset_right = 70.0
-offset_bottom = 40.0
+[node name="Button" type="Button" parent="PanelRoot/BattleBar" unique_id=2068708050]
+layout_mode = 0
+offset_left = 655.0
+offset_top = 145.0
+offset_right = 715.0
+offset_bottom = 176.0
 text = "背包"
