@@ -59,7 +59,7 @@ scroll_scale = Vector2(0.25, 1)
 repeat_size = Vector2(720, 0)
 
 [node name="HillSprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/HillParallax" unique_id=618396008]
-position = Vector2(0, 43.000004)
+position = Vector2(0, 66.00001)
 scale = Vector2(0.7817589, 1.2317072)
 texture = ExtResource("3_hill")
 centered = false
@@ -69,7 +69,7 @@ scroll_scale = Vector2(0.35, 1)
 repeat_size = Vector2(720, 0)
 
 [node name="VillageSprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/VillageParallax" unique_id=466964404]
-position = Vector2(-1, 46.999996)
+position = Vector2(-1, 70)
 scale = Vector2(0.7861022, 0.90149206)
 texture = ExtResource("4_village")
 centered = false
@@ -78,7 +78,7 @@ centered = false
 repeat_size = Vector2(550, 0)
 
 [node name="TreeSprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/TreeParallax" unique_id=1809913243]
-position = Vector2(122, 34)
+position = Vector2(122, 57)
 scale = Vector2(0.40086833, 0.41416916)
 texture = ExtResource("5_tree")
 centered = false
@@ -87,7 +87,7 @@ centered = false
 repeat_size = Vector2(720, 0)
 
 [node name="GroundSprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/GroundParallax" unique_id=1925209693]
-position = Vector2(-4.7683716e-07, 132)
+position = Vector2(-4.7683716e-07, 155)
 scale = Vector2(0.78175896, 0.7490234)
 texture = ExtResource("7_ground")
 centered = false
@@ -96,7 +96,7 @@ centered = false
 repeat_size = Vector2(720.66, 0)
 
 [node name="GrassSprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/GrassParallax" unique_id=1395796407]
-position = Vector2(3.5527137e-15, 128)
+position = Vector2(3.5527137e-15, 148.99998)
 scale = Vector2(0.7824724, 0.4981587)
 texture = ExtResource("6_grass")
 centered = false
@@ -114,7 +114,7 @@ default_color = Color(1, 0, 0, 1)
 [node name="ActorLayer" type="Node2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=1950641600]
 
 [node name="PlayerActor" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/ActorLayer" unique_id=497183763 instance=ExtResource("8_player_actor")]
-position = Vector2(180, 135)
+position = Vector2(180, 136)
 
 [node name="StageCamera2D" type="Camera2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/ActorLayer/PlayerActor" unique_id=209602788]
 limit_left = 0
@@ -123,6 +123,7 @@ limit_right = 3600
 limit_bottom = 180
 
 [node name="DummyEnemy" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/ActorLayer" unique_id=1163137642 instance=ExtResource("9_dummy_enemy")]
-position = Vector2(2000, 135)
+position = Vector2(2000, 140)
+battle_baseline_path = NodePath("../../BattleBaseline")
 
 [node name="EffectLayer" type="Node2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=1491436542]
