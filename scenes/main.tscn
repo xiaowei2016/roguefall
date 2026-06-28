@@ -155,7 +155,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("6_center_back")
-expand_mode = 1
+expand_mode = 0
+custom_minimum_size = Vector2(0, 0)
 stretch_mode = 0
 mouse_filter = 2
 
