@@ -13,7 +13,7 @@
 | 00 | 本文件 | GPT总控，游戏设计核心规则 |
 | 01 | 01_冒险者挂机_新项目设计基准_V3 | 设计基准、窗口规则、目录结构 |
 | 02 | 02_冒险者挂机_AI执行规则_V3 | AI执行规则、数据架构、开发流程、回执格式 |
-| 03 | 03_冒险者挂机_UI架构与Dock面板决策_V3 | UI节点树、DockLayoutController、窗口冻结规范 |
+| 03 | 03_冒险者挂机_UI架构与Dock面板决策_V3 | UI节点树、翻转让位穿透机制、窗口冻结规范 |
 | 04 | 04_冒险者挂机_UI设计规范与开发_V3 | UI视觉风格、组件体系、页面规格、原型转UI流程 |
 | 05 | 05_冒险者挂机_辅助系统_V3 | 装备幻化、图鉴、宠物系统 |
 | 06 | 06_冒险者挂机_AI口令模板与初始化_V3 | GPT口令规范（200-300字）、回执格式、冻结值 |
@@ -37,16 +37,13 @@
 ## 3. 平台与窗口总规则
 
 - 第一阶段只做Windows桌面版
-- 主窗口：1440×720透明逻辑画布
-- WindowShell统一管理窗口尺寸/拖动/透明/鼠标穿透
-- BattleWidget常驻挂机条（720×180），始终保持visible
-- BagPanel从BattleWidget.BagButton打开，宽度与BattleWidget一致
-- LeftDockHost/RightDockHost从BagPanel打开
-- DockLayoutController统一管理布局与翻转/让位
-- InputRegionManager统一管理鼠标穿透
-- 窗口核心数学冻结hash：0fd34a8，严禁修改
+- 主窗口：1440×718 透明逻辑画布，BattleBar 720×180 常驻挂机条
+- main.gd 统一管理：窗口属性、BattleBar拖拽、面板布局（翻转让位）、状态机、持久化
+- DesktopPixelPassthrough.cs 负责 Win32 像素级鼠标穿透（按像素 alpha 动态切换 WS_EX_TRANSPARENT）
+- CenterPanel 从 BattleBar.Button("背包") toggle 打开，LeftPanel/RightPanel 随 CenterPanel 联动
+- 窗口核心数学冻结 hash：0fd34a8，常量定义见 03号文档第9节
 
-旧架构已废弃：BattleStrip/layout_shell/动态UI创建/页面脚本控制穿透。禁止回流。
+旧架构已废弃：BattleStrip/layout_shell/动态UI创建/页面脚本控制穿透/WindowShell/DockLayoutController/InputRegionManager。禁止回流。
 
 ---
 
