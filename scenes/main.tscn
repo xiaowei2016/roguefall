@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://5csn50l1ptiv" path="res://scripts/native_drag_zone.gd" id="2_dragzone"]
 [ext_resource type="Script" uid="uid://cpwj27yudk003" path="res://scripts/DesktopPixelPassthrough.cs" id="3_pixel"]
 [ext_resource type="PackedScene" uid="uid://bk7g3g0kc7g7e" path="res://scenes/GrasslandStage2D.tscn" id="5_grassland_stage"]
+[ext_resource type="Texture2D" uid="uid://c37fyjcstmw83" path="res://assets/ui/_incoming/center_panel_back.png" id="6_center_back"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1"]
 
@@ -144,6 +145,18 @@ offset_left = 360.0
 offset_right = 1080.0
 offset_bottom = 530.0
 offset_transform_enabled = true
+mouse_filter = 2
+
+[node name="CenterPanelBack" type="TextureRect" parent="PanelRoot/CenterPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_center_back")
+expand_mode = 1
+stretch_mode = 0
 mouse_filter = 2
 
 [node name="Panel" type="Panel" parent="PanelRoot/CenterPanel" unique_id=1977904734]
