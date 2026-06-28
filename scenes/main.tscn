@@ -11,6 +11,13 @@
 [ext_resource type="CompressedTexture2D" uid="uid://bv1kln46dl1gp" path="res://assets/ui/icons/CategoryIcon_008.png" id="10_caticon_accessory"]
 [ext_resource type="CompressedTexture2D" uid="uid://u2fc6lxojs4l" path="res://assets/ui/icons/CategoryIcon_010.png" id="11_caticon_gift"]
 [ext_resource type="CompressedTexture2D" uid="uid://c70i8ud3hfp7a" path="res://assets/ui/icons/CategoryIcon_003.png" id="12_caticon_weapon"]
+[ext_resource type="Texture2D" path="res://assets/ui/buttons/ButtonIcon_016.png" id="13_btn_warehouse"]
+[ext_resource type="Texture2D" path="res://assets/ui/buttons/ButtonIcon_021.png" id="14_btn_pet"]
+[ext_resource type="Texture2D" path="res://assets/ui/buttons/ButtonIcon_020.png" id="15_btn_codex"]
+[ext_resource type="Texture2D" path="res://assets/ui/buttons/ButtonIcon_019.png" id="16_btn_map"]
+[ext_resource type="Texture2D" path="res://assets/ui/buttons/ButtonIcon_017.png" id="17_btn_settings"]
+[ext_resource type="Texture2D" path="res://assets/ui/buttons/ButtonIcon_018.png" id="18_btn_reroll"]
+[ext_resource type="Texture2D" path="res://assets/ui/buttons/ButtonIcon_014.png" id="19_btn_detail"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1"]
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_charframe"]
@@ -647,6 +654,8 @@ text = "宠物"
 [node name="CodexBtn" type="Button" parent="PanelRoot/CenterPanel/LeftButtons" unique_id=1388103180]
 layout_mode = 2
 text = "图鉴"
+icon = ExtResource("15_btn_codex")
+theme_override_constants/icon_max_width = 18
 
 [node name="MapBtn" type="Button" parent="PanelRoot/CenterPanel/LeftButtons" unique_id=160158629]
 layout_mode = 2
@@ -662,14 +671,20 @@ offset_bottom = 528.0
 [node name="SettingsBtn" type="Button" parent="PanelRoot/CenterPanel/RightButtons" unique_id=1117242987]
 layout_mode = 2
 text = "设置"
+icon = ExtResource("17_btn_settings")
+theme_override_constants/icon_max_width = 18
 
 [node name="RerollBtn" type="Button" parent="PanelRoot/CenterPanel/RightButtons" unique_id=562891004]
 layout_mode = 2
 text = "洗练"
+icon = ExtResource("18_btn_reroll")
+theme_override_constants/icon_max_width = 18
 
 [node name="DetailBtn" type="Button" parent="PanelRoot/CenterPanel/RightButtons" unique_id=332166269]
 layout_mode = 2
 text = "详情"
+icon = ExtResource("19_btn_detail")
+theme_override_constants/icon_max_width = 18
 
 [node name="RightPanel" type="Control" parent="PanelRoot" unique_id=279125319]
 anchors_preset = 0
