@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" path="res://assets/ui/center_panel/CharFrame.png" id="6_charframe"]
 [ext_resource type="Texture2D" path="res://assets/ui/center_panel/BasicAttrCard.png" id="7_basicattr"]
 [ext_resource type="Texture2D" path="res://assets/ui/center_panel/DetailAttrCard.png" id="8_detailattr"]
+[ext_resource type="Texture2D" path="res://assets/ui/center_panel/LeftEquipBack.png" id="9_leftequip"]
+[ext_resource type="Texture2D" path="res://assets/ui/center_panel/RightEquipBack.png" id="10_rightequip"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1"]
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_charframe"]
@@ -17,6 +19,12 @@ texture = ExtResource("7_basicattr")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_detailattr"]
 texture = ExtResource("8_detailattr")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_leftequip"]
+texture = ExtResource("9_leftequip")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rightequip"]
+texture = ExtResource("10_rightequip")
 
 [node name="MainRoot" type="Control" unique_id=740616609]
 layout_mode = 3
@@ -192,32 +200,36 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 8
 
-[node name="LeftEquipCol" type="VBoxContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow" unique_id=401000101]
+[node name="LeftEquipCol" type="PanelContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow" unique_id=401000101]
 custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_leftequip")
+
+[node name="LeftEquipInner" type="VBoxContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/LeftEquipCol" unique_id=401000109]
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="LEquip01" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/LeftEquipCol" unique_id=401000110]
+[node name="LEquip01" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/LeftEquipCol/LeftEquipInner" unique_id=401000110]
 custom_minimum_size = Vector2(56, 56)
 layout_mode = 2
 color = Color(0.2, 0.2, 0.2, 1)
 
-[node name="LEquip02" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/LeftEquipCol" unique_id=401000111]
+[node name="LEquip02" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/LeftEquipCol/LeftEquipInner" unique_id=401000111]
 custom_minimum_size = Vector2(56, 56)
 layout_mode = 2
 color = Color(0.2, 0.2, 0.2, 1)
 
-[node name="LEquip03" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/LeftEquipCol" unique_id=401000112]
+[node name="LEquip03" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/LeftEquipCol/LeftEquipInner" unique_id=401000112]
 custom_minimum_size = Vector2(56, 56)
 layout_mode = 2
 color = Color(0.2, 0.2, 0.2, 1)
 
-[node name="LEquip04" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/LeftEquipCol" unique_id=401000113]
+[node name="LEquip04" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/LeftEquipCol/LeftEquipInner" unique_id=401000113]
 custom_minimum_size = Vector2(56, 56)
 layout_mode = 2
 color = Color(0.2, 0.2, 0.2, 1)
 
-[node name="LEquip05" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/LeftEquipCol" unique_id=401000114]
+[node name="LEquip05" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/LeftEquipCol/LeftEquipInner" unique_id=401000114]
 custom_minimum_size = Vector2(56, 56)
 layout_mode = 2
 color = Color(0.2, 0.2, 0.2, 1)
@@ -242,26 +254,30 @@ custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
 color = Color(0.25, 0.2, 0.15, 1)
 
-[node name="RightEquipCol" type="VBoxContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow" unique_id=401000130]
+[node name="RightEquipCol" type="PanelContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow" unique_id=401000130]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_rightequip")
+
+[node name="RightEquipInner" type="VBoxContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/RightEquipCol" unique_id=401000139]
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="REquip01" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/RightEquipCol" unique_id=401000131]
+[node name="REquip01" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/RightEquipCol/RightEquipInner" unique_id=401000131]
 custom_minimum_size = Vector2(56, 56)
 layout_mode = 2
 color = Color(0.2, 0.2, 0.2, 1)
 
-[node name="REquip02" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/RightEquipCol" unique_id=401000132]
+[node name="REquip02" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/RightEquipCol/RightEquipInner" unique_id=401000132]
 custom_minimum_size = Vector2(56, 56)
 layout_mode = 2
 color = Color(0.2, 0.2, 0.2, 1)
 
-[node name="REquip03" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/RightEquipCol" unique_id=401000133]
+[node name="REquip03" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/RightEquipCol/RightEquipInner" unique_id=401000133]
 custom_minimum_size = Vector2(56, 56)
 layout_mode = 2
 color = Color(0.2, 0.2, 0.2, 1)
 
-[node name="REquip04" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/RightEquipCol" unique_id=401000134]
+[node name="REquip04" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/RightEquipCol/RightEquipInner" unique_id=401000134]
 custom_minimum_size = Vector2(56, 56)
 layout_mode = 2
 color = Color(0.2, 0.2, 0.2, 1)
