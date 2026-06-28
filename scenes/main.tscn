@@ -282,6 +282,7 @@ theme_override_constants/separation = 4
 [node name="BasicAttrTitle" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/BasicAttrCard/BasicAttrVB" unique_id=401000042]
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(0.1804, 0.3098, 0.5608, 1)
 text = "基础属性"
 
 [node name="BasicAttrGrid" type="GridContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/BasicAttrCard/BasicAttrVB" unique_id=401000043]
@@ -292,34 +293,42 @@ columns = 2
 
 [node name="AtkLabel" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/BasicAttrCard/BasicAttrVB/BasicAttrGrid" unique_id=401000044]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.3529, 0.2275, 0.1176, 1)
 text = "攻击"
 
 [node name="AtkVal" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/BasicAttrCard/BasicAttrVB/BasicAttrGrid" unique_id=401000045]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.5412, 0.4784, 0.4000, 1)
 text = "--"
 
 [node name="DefLabel" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/BasicAttrCard/BasicAttrVB/BasicAttrGrid" unique_id=401000046]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.3529, 0.2275, 0.1176, 1)
 text = "防御"
 
 [node name="DefVal" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/BasicAttrCard/BasicAttrVB/BasicAttrGrid" unique_id=401000047]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.5412, 0.4784, 0.4000, 1)
 text = "--"
 
 [node name="HpLabel" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/BasicAttrCard/BasicAttrVB/BasicAttrGrid" unique_id=401000048]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.3529, 0.2275, 0.1176, 1)
 text = "生命"
 
 [node name="HpVal" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/BasicAttrCard/BasicAttrVB/BasicAttrGrid" unique_id=401000049]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.5412, 0.4784, 0.4000, 1)
 text = "--"
 
 [node name="SpdLabel" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/BasicAttrCard/BasicAttrVB/BasicAttrGrid" unique_id=401000050]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.3529, 0.2275, 0.1176, 1)
 text = "速度"
 
 [node name="SpdVal" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/BasicAttrCard/BasicAttrVB/BasicAttrGrid" unique_id=401000051]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.5412, 0.4784, 0.4000, 1)
 text = "--"
 
 [node name="DetailAttrCard" type="PanelContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow" unique_id=401000060]
@@ -334,6 +343,7 @@ theme_override_constants/separation = 4
 [node name="DetailAttrTitle" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/DetailAttrCard/DetailAttrVB" unique_id=401000062]
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(0.1804, 0.3098, 0.5608, 1)
 text = "详细属性"
 
 [node name="DetailAttrGrid" type="GridContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/DetailAttrCard/DetailAttrVB" unique_id=401000063]
@@ -344,34 +354,42 @@ columns = 2
 
 [node name="CritLabel" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/DetailAttrCard/DetailAttrVB/DetailAttrGrid" unique_id=401000064]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.3529, 0.2275, 0.1176, 1)
 text = "暴击"
 
 [node name="CritVal" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/DetailAttrCard/DetailAttrVB/DetailAttrGrid" unique_id=401000065]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.5412, 0.4784, 0.4000, 1)
 text = "--"
 
 [node name="DodgeLabel" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/DetailAttrCard/DetailAttrVB/DetailAttrGrid" unique_id=401000066]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.3529, 0.2275, 0.1176, 1)
 text = "闪避"
 
 [node name="DodgeVal" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/DetailAttrCard/DetailAttrVB/DetailAttrGrid" unique_id=401000067]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.5412, 0.4784, 0.4000, 1)
 text = "--"
 
 [node name="ArmorLabel" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/DetailAttrCard/DetailAttrVB/DetailAttrGrid" unique_id=401000068]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.3529, 0.2275, 0.1176, 1)
 text = "护甲"
 
 [node name="ArmorVal" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/DetailAttrCard/DetailAttrVB/DetailAttrGrid" unique_id=401000069]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.5412, 0.4784, 0.4000, 1)
 text = "--"
 
 [node name="ResistLabel" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/DetailAttrCard/DetailAttrVB/DetailAttrGrid" unique_id=401000070]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.3529, 0.2275, 0.1176, 1)
 text = "抗性"
 
 [node name="ResistVal" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/DetailAttrCard/DetailAttrVB/DetailAttrGrid" unique_id=401000071]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.5412, 0.4784, 0.4000, 1)
 text = "--"
 
 [node name="RightColumn" type="VBoxContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow" unique_id=402000001]
@@ -382,6 +400,7 @@ theme_override_constants/separation = 8
 [node name="BagTitle" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn" unique_id=402000010]
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
+theme_override_colors/font_color = Color(0.1804, 0.3098, 0.5608, 1)
 text = "背包"
 horizontal_alignment = 1
 
