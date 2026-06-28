@@ -168,6 +168,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_dragzone")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_1")
 
 [node name="CenterContent" type="MarginContainer" parent="PanelRoot/CenterPanel" unique_id=401000001]
 layout_mode = 1
@@ -189,6 +190,7 @@ theme_override_constants/separation = 12
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 8
+theme_override_styles/panel = SubResource("StyleBoxSidePanel")
 
 [node name="CharEquipRow" type="HBoxContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn" unique_id=401000100]
 layout_mode = 2
@@ -396,6 +398,7 @@ text = "--"
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 8
+theme_override_styles/panel = SubResource("StyleBoxSidePanel")
 
 [node name="BagTitle" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn" unique_id=402000010]
 layout_mode = 2
