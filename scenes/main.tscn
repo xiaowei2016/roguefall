@@ -4,21 +4,10 @@
 [ext_resource type="Script" uid="uid://5csn50l1ptiv" path="res://scripts/native_drag_zone.gd" id="2_dragzone"]
 [ext_resource type="Script" uid="uid://cpwj27yudk003" path="res://scripts/DesktopPixelPassthrough.cs" id="3_pixel"]
 [ext_resource type="PackedScene" uid="uid://bk7g3g0kc7g7e" path="res://scenes/GrasslandStage2D.tscn" id="5_grassland_stage"]
-[ext_resource type="Texture2D" path="res://assets/ui/center_panel/CharFrame.png" id="6_charframe"]
-[ext_resource type="Texture2D" path="res://assets/ui/center_panel/BasicAttrCard.png" id="7_basicattr"]
-[ext_resource type="Texture2D" path="res://assets/ui/center_panel/DetailAttrCard.png" id="8_detailattr"]
 [ext_resource type="Texture2D" path="res://assets/ui/center_panel/LeftEquipBack.png" id="9_leftequip"]
 [ext_resource type="Texture2D" path="res://assets/ui/center_panel/RightEquipBack.png" id="10_rightequip"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1"]
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_charframe"]
-texture = ExtResource("6_charframe")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_basicattr"]
-texture = ExtResource("7_basicattr")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_detailattr"]
-texture = ExtResource("8_detailattr")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_leftequip"]
 texture = ExtResource("9_leftequip")
@@ -242,7 +231,6 @@ theme_override_constants/separation = 8
 [node name="CharFrame" type="PanelContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/CharCenter" unique_id=401000121]
 custom_minimum_size = Vector2(0, 296)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_charframe")
 
 [node name="CharPlaceholder" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/CharCenter/CharFrame" unique_id=401000122]
 custom_minimum_size = Vector2(120, 100)
@@ -289,7 +277,6 @@ theme_override_constants/separation = 8
 [node name="BasicAttrCard" type="PanelContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow" unique_id=401000040]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/panel = SubResource("StyleBoxTexture_basicattr")
 
 [node name="BasicAttrVB" type="VBoxContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/BasicAttrCard" unique_id=401000041]
 layout_mode = 2
@@ -341,7 +328,6 @@ text = "--"
 [node name="DetailAttrCard" type="PanelContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow" unique_id=401000060]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/panel = SubResource("StyleBoxTexture_detailattr")
 
 [node name="DetailAttrVB" type="VBoxContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/DetailAttrCard" unique_id=401000061]
 layout_mode = 2
