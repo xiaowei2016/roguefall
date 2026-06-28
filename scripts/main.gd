@@ -79,15 +79,15 @@ func _ready() -> void:
 	$PanelRoot/BattleBar/Button.pressed.connect(_on_bag)
 
 	# CenterPanel 左栏按钮
-	$PanelRoot/CenterPanel/LeftButtons/WarehouseBtn.pressed.connect(func(): _on_left_button(LeftContent.WAREHOUSE))
-	$PanelRoot/CenterPanel/LeftButtons/PetBtn.pressed.connect(func(): _on_left_button(LeftContent.PET))
-	$PanelRoot/CenterPanel/LeftButtons/CodexBtn.pressed.connect(func(): _on_left_button(LeftContent.CODEX))
-	$PanelRoot/CenterPanel/LeftButtons/MapBtn.pressed.connect(func(): _on_left_button(LeftContent.MAP))
+	$PanelRoot/CenterPanel/CenterLayoutRoot/BottomArea/LeftButtons/WarehouseBtn.pressed.connect(func(): _on_left_button(LeftContent.WAREHOUSE))
+	$PanelRoot/CenterPanel/CenterLayoutRoot/BottomArea/LeftButtons/PetBtn.pressed.connect(func(): _on_left_button(LeftContent.PET))
+	$PanelRoot/CenterPanel/CenterLayoutRoot/BottomArea/LeftButtons/CodexBtn.pressed.connect(func(): _on_left_button(LeftContent.CODEX))
+	$PanelRoot/CenterPanel/CenterLayoutRoot/BottomArea/LeftButtons/MapBtn.pressed.connect(func(): _on_left_button(LeftContent.MAP))
 
 	# CenterPanel 右栏按钮
-	$PanelRoot/CenterPanel/RightButtons/SettingsBtn.pressed.connect(func(): _on_right_button(RightContent.SETTINGS))
-	$PanelRoot/CenterPanel/RightButtons/RerollBtn.pressed.connect(func(): _on_right_button(RightContent.REROLL))
-	$PanelRoot/CenterPanel/RightButtons/DetailBtn.pressed.connect(func(): _on_right_button(RightContent.DETAIL))
+	$PanelRoot/CenterPanel/CenterLayoutRoot/BottomArea/RightButtons/SettingsBtn.pressed.connect(func(): _on_right_button(RightContent.SETTINGS))
+	$PanelRoot/CenterPanel/CenterLayoutRoot/BottomArea/RightButtons/RerollBtn.pressed.connect(func(): _on_right_button(RightContent.REROLL))
+	$PanelRoot/CenterPanel/CenterLayoutRoot/BottomArea/RightButtons/DetailBtn.pressed.connect(func(): _on_right_button(RightContent.DETAIL))
 
 	battle_bar.position.y = FLIP_BOT
 
