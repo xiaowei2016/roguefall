@@ -143,6 +143,7 @@ anchors_preset = 0
 offset_left = 360.0
 offset_right = 1080.0
 offset_bottom = 530.0
+offset_transform_enabled = true
 mouse_filter = 2
 
 [node name="Panel" type="Panel" parent="PanelRoot/CenterPanel" unique_id=1977904734]
@@ -181,32 +182,33 @@ size_flags_vertical = 3
 theme_override_constants/separation = 8
 
 [node name="LeftEquipCol" type="VBoxContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow" unique_id=401000101]
+custom_minimum_size = Vector2(0, 300)
 layout_mode = 2
 theme_override_constants/separation = 4
 
 [node name="LEquip01" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/LeftEquipCol" unique_id=401000110]
-layout_mode = 2
 custom_minimum_size = Vector2(56, 56)
+layout_mode = 2
 color = Color(0.2, 0.2, 0.2, 1)
 
 [node name="LEquip02" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/LeftEquipCol" unique_id=401000111]
-layout_mode = 2
 custom_minimum_size = Vector2(56, 56)
+layout_mode = 2
 color = Color(0.2, 0.2, 0.2, 1)
 
 [node name="LEquip03" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/LeftEquipCol" unique_id=401000112]
-layout_mode = 2
 custom_minimum_size = Vector2(56, 56)
+layout_mode = 2
 color = Color(0.2, 0.2, 0.2, 1)
 
 [node name="LEquip04" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/LeftEquipCol" unique_id=401000113]
-layout_mode = 2
 custom_minimum_size = Vector2(56, 56)
+layout_mode = 2
 color = Color(0.2, 0.2, 0.2, 1)
 
 [node name="LEquip05" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/LeftEquipCol" unique_id=401000114]
-layout_mode = 2
 custom_minimum_size = Vector2(56, 56)
+layout_mode = 2
 color = Color(0.2, 0.2, 0.2, 1)
 
 [node name="CharCenter" type="VBoxContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow" unique_id=401000120]
@@ -215,17 +217,17 @@ size_flags_horizontal = 3
 theme_override_constants/separation = 8
 
 [node name="CharFrame" type="PanelContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/CharCenter" unique_id=401000121]
+custom_minimum_size = Vector2(0, 296)
 layout_mode = 2
-size_flags_vertical = 3
 
 [node name="CharPlaceholder" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/CharCenter/CharFrame" unique_id=401000122]
-layout_mode = 2
 custom_minimum_size = Vector2(120, 100)
+layout_mode = 2
 color = Color(0.15, 0.15, 0.15, 1)
 
 [node name="CharBase" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/CharCenter" unique_id=401000123]
-layout_mode = 2
 custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
 color = Color(0.25, 0.2, 0.15, 1)
 
 [node name="RightEquipCol" type="VBoxContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow" unique_id=401000130]
@@ -233,23 +235,23 @@ layout_mode = 2
 theme_override_constants/separation = 4
 
 [node name="REquip01" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/RightEquipCol" unique_id=401000131]
-layout_mode = 2
 custom_minimum_size = Vector2(56, 56)
+layout_mode = 2
 color = Color(0.2, 0.2, 0.2, 1)
 
 [node name="REquip02" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/RightEquipCol" unique_id=401000132]
-layout_mode = 2
 custom_minimum_size = Vector2(56, 56)
+layout_mode = 2
 color = Color(0.2, 0.2, 0.2, 1)
 
 [node name="REquip03" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/RightEquipCol" unique_id=401000133]
-layout_mode = 2
 custom_minimum_size = Vector2(56, 56)
+layout_mode = 2
 color = Color(0.2, 0.2, 0.2, 1)
 
 [node name="REquip04" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/CharEquipRow/RightEquipCol" unique_id=401000134]
-layout_mode = 2
 custom_minimum_size = Vector2(56, 56)
+layout_mode = 2
 color = Color(0.2, 0.2, 0.2, 1)
 
 [node name="AttrRow" type="HBoxContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn" unique_id=401000200]
@@ -271,9 +273,9 @@ text = "基础属性"
 
 [node name="BasicAttrGrid" type="GridContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/BasicAttrCard/BasicAttrVB" unique_id=401000043]
 layout_mode = 2
-columns = 2
 theme_override_constants/h_separation = 8
 theme_override_constants/v_separation = 2
+columns = 2
 
 [node name="AtkLabel" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/BasicAttrCard/BasicAttrVB/BasicAttrGrid" unique_id=401000044]
 layout_mode = 2
@@ -322,9 +324,9 @@ text = "详细属性"
 
 [node name="DetailAttrGrid" type="GridContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/DetailAttrCard/DetailAttrVB" unique_id=401000063]
 layout_mode = 2
-columns = 2
 theme_override_constants/h_separation = 8
 theme_override_constants/v_separation = 2
+columns = 2
 
 [node name="CritLabel" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/DetailAttrCard/DetailAttrVB/DetailAttrGrid" unique_id=401000064]
 layout_mode = 2
@@ -367,6 +369,7 @@ theme_override_constants/separation = 8
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
 text = "背包"
+horizontal_alignment = 1
 
 [node name="CategoryTabs" type="HBoxContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn" unique_id=402000020]
 layout_mode = 2
@@ -397,195 +400,195 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-columns = 6
 theme_override_constants/h_separation = 4
 theme_override_constants/v_separation = 4
+columns = 6
 
 [node name="BSlot01" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000032]
-layout_mode = 2
 custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 color = Color(0.25, 0.25, 0.25, 1)
 
 [node name="BSlot02" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000033]
-layout_mode = 2
 custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 color = Color(0.25, 0.25, 0.25, 1)
 
 [node name="BSlot03" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000034]
-layout_mode = 2
 custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 color = Color(0.25, 0.25, 0.25, 1)
 
 [node name="BSlot04" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000035]
-layout_mode = 2
 custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 color = Color(0.25, 0.25, 0.25, 1)
 
 [node name="BSlot05" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000036]
-layout_mode = 2
 custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 color = Color(0.25, 0.25, 0.25, 1)
 
 [node name="BSlot06" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000037]
-layout_mode = 2
 custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 color = Color(0.25, 0.25, 0.25, 1)
 
 [node name="BSlot07" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000038]
-layout_mode = 2
 custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 color = Color(0.25, 0.25, 0.25, 1)
 
 [node name="BSlot08" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000039]
-layout_mode = 2
 custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 color = Color(0.25, 0.25, 0.25, 1)
 
 [node name="BSlot09" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000040]
-layout_mode = 2
 custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 color = Color(0.25, 0.25, 0.25, 1)
 
 [node name="BSlot10" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000041]
-layout_mode = 2
 custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 color = Color(0.25, 0.25, 0.25, 1)
 
 [node name="BSlot11" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000042]
-layout_mode = 2
 custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 color = Color(0.25, 0.25, 0.25, 1)
 
 [node name="BSlot12" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000043]
-layout_mode = 2
 custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 color = Color(0.25, 0.25, 0.25, 1)
 
 [node name="BSlot13" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000044]
-layout_mode = 2
 custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 color = Color(0.25, 0.25, 0.25, 1)
 
 [node name="BSlot14" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000045]
-layout_mode = 2
 custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 color = Color(0.25, 0.25, 0.25, 1)
 
 [node name="BSlot15" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000046]
-layout_mode = 2
 custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 color = Color(0.25, 0.25, 0.25, 1)
 
 [node name="BSlot16" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000047]
-layout_mode = 2
 custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 color = Color(0.25, 0.25, 0.25, 1)
 
 [node name="BSlot17" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000048]
-layout_mode = 2
 custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 color = Color(0.25, 0.25, 0.25, 1)
 
 [node name="BSlot18" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000049]
-layout_mode = 2
 custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 color = Color(0.25, 0.25, 0.25, 1)
 
 [node name="BSlot19" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000050]
-layout_mode = 2
 custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 color = Color(0.25, 0.25, 0.25, 1)
 
 [node name="BSlot20" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000051]
-layout_mode = 2
 custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 color = Color(0.25, 0.25, 0.25, 1)
 
 [node name="BSlot21" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000052]
-layout_mode = 2
 custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 color = Color(0.25, 0.25, 0.25, 1)
 
 [node name="BSlot22" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000053]
-layout_mode = 2
 custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 color = Color(0.25, 0.25, 0.25, 1)
 
 [node name="BSlot23" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000054]
-layout_mode = 2
 custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 color = Color(0.25, 0.25, 0.25, 1)
 
 [node name="BSlot24" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000055]
-layout_mode = 2
 custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 color = Color(0.25, 0.25, 0.25, 1)
+
 [node name="BSlot25" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000056]
-layout_mode = 2
 custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 color = Color(0.25, 0.25, 0.25, 1)
 
 [node name="BSlot26" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000057]
-layout_mode = 2
 custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 color = Color(0.25, 0.25, 0.25, 1)
 
 [node name="BSlot27" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000058]
-layout_mode = 2
 custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 color = Color(0.25, 0.25, 0.25, 1)
 
 [node name="BSlot28" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000059]
-layout_mode = 2
 custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 color = Color(0.25, 0.25, 0.25, 1)
 
 [node name="BSlot29" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000060]
-layout_mode = 2
 custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 color = Color(0.25, 0.25, 0.25, 1)
 
 [node name="BSlot30" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000061]
-layout_mode = 2
 custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 color = Color(0.25, 0.25, 0.25, 1)
 
 [node name="BSlot31" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000062]
-layout_mode = 2
 custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 color = Color(0.25, 0.25, 0.25, 1)
 
 [node name="BSlot32" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000063]
-layout_mode = 2
 custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 color = Color(0.25, 0.25, 0.25, 1)
 
 [node name="BSlot33" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000064]
-layout_mode = 2
 custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 color = Color(0.25, 0.25, 0.25, 1)
 
 [node name="BSlot34" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000065]
-layout_mode = 2
 custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 color = Color(0.25, 0.25, 0.25, 1)
 
 [node name="BSlot35" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000066]
-layout_mode = 2
 custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 color = Color(0.25, 0.25, 0.25, 1)
 
 [node name="BSlot36" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000067]
-layout_mode = 2
 custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 color = Color(0.25, 0.25, 0.25, 1)
-
 
 [node name="LeftButtons" type="HBoxContainer" parent="PanelRoot/CenterPanel" unique_id=1796030888]
 layout_mode = 0
-offset_left = 8.0
-offset_top = 500.0
-offset_right = 352.0
+offset_left = 371.0
+offset_top = 497.0
+offset_right = 544.0
 offset_bottom = 528.0
 
 [node name="WarehouseBtn" type="Button" parent="PanelRoot/CenterPanel/LeftButtons" unique_id=1325609187]
@@ -606,8 +609,8 @@ text = "地图"
 
 [node name="RightButtons" type="HBoxContainer" parent="PanelRoot/CenterPanel" unique_id=575522656]
 layout_mode = 0
-offset_left = 432.0
-offset_top = 500.0
+offset_left = 547.0
+offset_top = 497.0
 offset_right = 712.0
 offset_bottom = 528.0
 
