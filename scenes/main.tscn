@@ -390,11 +390,14 @@ text = "礼物"
 
 [node name="BagScroll" type="ScrollContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn" unique_id=402000030]
 layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="BagGrid" type="GridContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll" unique_id=402000031]
 layout_mode = 2
-columns = 4
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 6
 theme_override_constants/h_separation = 4
 theme_override_constants/v_separation = 4
 
@@ -517,46 +520,66 @@ color = Color(0.25, 0.25, 0.25, 1)
 layout_mode = 2
 custom_minimum_size = Vector2(48, 48)
 color = Color(0.25, 0.25, 0.25, 1)
-
-
-[node name="BottomFuncBar" type="HBoxContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn" unique_id=402000070]
+[node name="BSlot25" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000056]
 layout_mode = 2
-theme_override_constants/separation = 4
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.25, 0.25, 0.25, 1)
 
-[node name="BtnBag" type="Button" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BottomFuncBar" unique_id=402000071]
+[node name="BSlot26" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000057]
 layout_mode = 2
-text = "背包"
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.25, 0.25, 0.25, 1)
 
-[node name="BtnSkill" type="Button" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BottomFuncBar" unique_id=402000072]
+[node name="BSlot27" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000058]
 layout_mode = 2
-text = "技能"
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.25, 0.25, 0.25, 1)
 
-[node name="BtnTalent" type="Button" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BottomFuncBar" unique_id=402000073]
+[node name="BSlot28" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000059]
 layout_mode = 2
-text = "天赋"
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.25, 0.25, 0.25, 1)
 
-[node name="BtnMap" type="Button" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BottomFuncBar" unique_id=402000074]
+[node name="BSlot29" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000060]
 layout_mode = 2
-text = "地图"
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.25, 0.25, 0.25, 1)
 
-[node name="BtnSettings" type="Button" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BottomFuncBar" unique_id=402000075]
+[node name="BSlot30" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000061]
 layout_mode = 2
-text = "设置"
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.25, 0.25, 0.25, 1)
 
-[node name="ItemDetailCard" type="PanelContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn" unique_id=402000060]
+[node name="BSlot31" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000062]
 layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.25, 0.25, 0.25, 1)
 
-[node name="ItemDetailVB" type="VBoxContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/ItemDetailCard" unique_id=402000061]
+[node name="BSlot32" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000063]
 layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.25, 0.25, 0.25, 1)
 
-[node name="ItemDetailTitle" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/ItemDetailCard/ItemDetailVB" unique_id=402000062]
+[node name="BSlot33" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000064]
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
-text = "物品详情"
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.25, 0.25, 0.25, 1)
 
-[node name="ItemDetailEmpty" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/ItemDetailCard/ItemDetailVB" unique_id=402000063]
+[node name="BSlot34" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000065]
 layout_mode = 2
-text = "未选择物品"
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="BSlot35" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000066]
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="BSlot36" type="ColorRect" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/BagScroll/BagGrid" unique_id=402000067]
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+color = Color(0.25, 0.25, 0.25, 1)
+
 
 [node name="LeftButtons" type="HBoxContainer" parent="PanelRoot/CenterPanel" unique_id=1796030888]
 layout_mode = 0
