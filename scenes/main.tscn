@@ -4,22 +4,18 @@
 [ext_resource type="Script" uid="uid://5csn50l1ptiv" path="res://scripts/native_drag_zone.gd" id="2_dragzone"]
 [ext_resource type="Script" uid="uid://cpwj27yudk003" path="res://scripts/DesktopPixelPassthrough.cs" id="3_pixel"]
 [ext_resource type="PackedScene" uid="uid://bk7g3g0kc7g7e" path="res://scenes/GrasslandStage2D.tscn" id="5_grassland_stage"]
-[ext_resource type="Texture2D" path="res://assets/ui/center_panel/CharFrame.png" id="6_charframe"]
-[ext_resource type="Texture2D" path="res://assets/ui/center_panel/BasicAttrCard.png" id="7_basicattr"]
-[ext_resource type="Texture2D" path="res://assets/ui/center_panel/DetailAttrCard.png" id="8_detailattr"]
-[ext_resource type="CompressedTexture2D" uid="uid://cjq7iynj580i4" path="res://assets/ui/icons/CategoryIcon_005.png" id="9_caticon_bag"]
-[ext_resource type="CompressedTexture2D" uid="uid://bv1kln46dl1gp" path="res://assets/ui/icons/CategoryIcon_008.png" id="10_caticon_accessory"]
-[ext_resource type="CompressedTexture2D" uid="uid://u2fc6lxojs4l" path="res://assets/ui/icons/CategoryIcon_010.png" id="11_caticon_gift"]
-[ext_resource type="CompressedTexture2D" uid="uid://c70i8ud3hfp7a" path="res://assets/ui/icons/CategoryIcon_003.png" id="12_caticon_weapon"]
-[ext_resource type="Texture2D" path="res://assets/ui/buttons/ButtonIcon_016.png" id="13_btn_warehouse"]
-[ext_resource type="Texture2D" path="res://assets/ui/buttons/ButtonIcon_021.png" id="14_btn_pet"]
-[ext_resource type="Texture2D" path="res://assets/ui/buttons/ButtonIcon_020.png" id="15_btn_codex"]
-[ext_resource type="Texture2D" path="res://assets/ui/buttons/ButtonIcon_019.png" id="16_btn_map"]
-[ext_resource type="Texture2D" path="res://assets/ui/buttons/ButtonIcon_017.png" id="17_btn_settings"]
-[ext_resource type="Texture2D" path="res://assets/ui/buttons/ButtonIcon_018.png" id="18_btn_reroll"]
-[ext_resource type="Texture2D" path="res://assets/ui/buttons/ButtonIcon_014.png" id="19_btn_detail"]
+[ext_resource type="Texture2D" uid="uid://b0t8jthucuk0k" path="res://assets/ui/center_panel/CharFrame.png" id="6_charframe"]
+[ext_resource type="Texture2D" uid="uid://c3mcevipppkjf" path="res://assets/ui/center_panel/BasicAttrCard.png" id="7_basicattr"]
+[ext_resource type="Texture2D" uid="uid://b3gtd6564r0l6" path="res://assets/ui/center_panel/DetailAttrCard.png" id="8_detailattr"]
+[ext_resource type="Texture2D" uid="uid://cjq7iynj580i4" path="res://assets/ui/icons/CategoryIcon_003.png" id="9_caticon_bag"]
+[ext_resource type="Texture2D" uid="uid://bv1kln46dl1gp" path="res://assets/ui/icons/CategoryIcon_004.png" id="10_caticon_accessory"]
+[ext_resource type="Texture2D" uid="uid://u2fc6lxojs4l" path="res://assets/ui/icons/CategoryIcon_010.png" id="11_caticon_gift"]
+[ext_resource type="Texture2D" uid="uid://c70i8ud3hfp7a" path="res://assets/ui/icons/CategoryIcon_011.png" id="12_caticon_weapon"]
+[ext_resource type="Texture2D" uid="uid://b00b72tf0vu1m" path="res://assets/ui/buttons/ButtonIcon_020.png" id="15_btn_codex"]
+[ext_resource type="Texture2D" uid="uid://clvtvfgm3bqjn" path="res://assets/ui/buttons/ButtonIcon_017.png" id="17_btn_settings"]
+[ext_resource type="Texture2D" uid="uid://dilufadh5qrrn" path="res://assets/ui/buttons/ButtonIcon_018.png" id="18_btn_reroll"]
+[ext_resource type="Texture2D" uid="uid://f62jq4o3gbt2" path="res://assets/ui/buttons/ButtonIcon_014.png" id="19_btn_detail"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1"]
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_charframe"]
 texture = ExtResource("6_charframe")
 
@@ -28,6 +24,8 @@ texture = ExtResource("7_basicattr")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_detailattr"]
 texture = ExtResource("8_detailattr")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1"]
 
 [node name="MainRoot" type="Control" unique_id=740616609]
 layout_mode = 3
@@ -292,8 +290,8 @@ theme_override_constants/separation = 4
 
 [node name="BasicAttrTitle" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/BasicAttrCard/BasicAttrVB" unique_id=401000042]
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
 theme_override_colors/font_color = Color(0.1804, 0.3098, 0.5608, 1)
+theme_override_font_sizes/font_size = 16
 text = "基础属性"
 
 [node name="BasicAttrGrid" type="GridContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/BasicAttrCard/BasicAttrVB" unique_id=401000043]
@@ -309,7 +307,7 @@ text = "攻击"
 
 [node name="AtkVal" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/BasicAttrCard/BasicAttrVB/BasicAttrGrid" unique_id=401000045]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.5412, 0.4784, 0.4000, 1)
+theme_override_colors/font_color = Color(0.5412, 0.4784, 0.4, 1)
 text = "--"
 
 [node name="DefLabel" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/BasicAttrCard/BasicAttrVB/BasicAttrGrid" unique_id=401000046]
@@ -319,7 +317,7 @@ text = "防御"
 
 [node name="DefVal" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/BasicAttrCard/BasicAttrVB/BasicAttrGrid" unique_id=401000047]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.5412, 0.4784, 0.4000, 1)
+theme_override_colors/font_color = Color(0.5412, 0.4784, 0.4, 1)
 text = "--"
 
 [node name="HpLabel" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/BasicAttrCard/BasicAttrVB/BasicAttrGrid" unique_id=401000048]
@@ -329,7 +327,7 @@ text = "生命"
 
 [node name="HpVal" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/BasicAttrCard/BasicAttrVB/BasicAttrGrid" unique_id=401000049]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.5412, 0.4784, 0.4000, 1)
+theme_override_colors/font_color = Color(0.5412, 0.4784, 0.4, 1)
 text = "--"
 
 [node name="SpdLabel" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/BasicAttrCard/BasicAttrVB/BasicAttrGrid" unique_id=401000050]
@@ -339,7 +337,7 @@ text = "速度"
 
 [node name="SpdVal" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/BasicAttrCard/BasicAttrVB/BasicAttrGrid" unique_id=401000051]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.5412, 0.4784, 0.4000, 1)
+theme_override_colors/font_color = Color(0.5412, 0.4784, 0.4, 1)
 text = "--"
 
 [node name="DetailAttrCard" type="PanelContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow" unique_id=401000060]
@@ -353,8 +351,8 @@ theme_override_constants/separation = 4
 
 [node name="DetailAttrTitle" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/DetailAttrCard/DetailAttrVB" unique_id=401000062]
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
 theme_override_colors/font_color = Color(0.1804, 0.3098, 0.5608, 1)
+theme_override_font_sizes/font_size = 16
 text = "详细属性"
 
 [node name="DetailAttrGrid" type="GridContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/DetailAttrCard/DetailAttrVB" unique_id=401000063]
@@ -370,7 +368,7 @@ text = "暴击"
 
 [node name="CritVal" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/DetailAttrCard/DetailAttrVB/DetailAttrGrid" unique_id=401000065]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.5412, 0.4784, 0.4000, 1)
+theme_override_colors/font_color = Color(0.5412, 0.4784, 0.4, 1)
 text = "--"
 
 [node name="DodgeLabel" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/DetailAttrCard/DetailAttrVB/DetailAttrGrid" unique_id=401000066]
@@ -380,7 +378,7 @@ text = "闪避"
 
 [node name="DodgeVal" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/DetailAttrCard/DetailAttrVB/DetailAttrGrid" unique_id=401000067]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.5412, 0.4784, 0.4000, 1)
+theme_override_colors/font_color = Color(0.5412, 0.4784, 0.4, 1)
 text = "--"
 
 [node name="ArmorLabel" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/DetailAttrCard/DetailAttrVB/DetailAttrGrid" unique_id=401000068]
@@ -390,7 +388,7 @@ text = "护甲"
 
 [node name="ArmorVal" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/DetailAttrCard/DetailAttrVB/DetailAttrGrid" unique_id=401000069]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.5412, 0.4784, 0.4000, 1)
+theme_override_colors/font_color = Color(0.5412, 0.4784, 0.4, 1)
 text = "--"
 
 [node name="ResistLabel" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/DetailAttrCard/DetailAttrVB/DetailAttrGrid" unique_id=401000070]
@@ -400,7 +398,7 @@ text = "抗性"
 
 [node name="ResistVal" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/LeftColumn/AttrRow/DetailAttrCard/DetailAttrVB/DetailAttrGrid" unique_id=401000071]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.5412, 0.4784, 0.4000, 1)
+theme_override_colors/font_color = Color(0.5412, 0.4784, 0.4, 1)
 text = "--"
 
 [node name="RightColumn" type="VBoxContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow" unique_id=402000001]
@@ -410,8 +408,8 @@ theme_override_constants/separation = 8
 
 [node name="BagTitle" type="Label" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn" unique_id=402000010]
 layout_mode = 2
-theme_override_font_sizes/font_size = 22
 theme_override_colors/font_color = Color(0.1804, 0.3098, 0.5608, 1)
+theme_override_font_sizes/font_size = 22
 text = "背包"
 horizontal_alignment = 1
 
@@ -421,27 +419,27 @@ theme_override_constants/separation = 4
 
 [node name="CatBag" type="Button" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/CategoryTabs" unique_id=402000021]
 layout_mode = 2
+theme_override_constants/icon_max_width = 18
 text = "背包"
 icon = ExtResource("9_caticon_bag")
-theme_override_constants/icon_max_width = 18
 
 [node name="CatWeapon" type="Button" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/CategoryTabs" unique_id=402000022]
 layout_mode = 2
+theme_override_constants/icon_max_width = 18
 text = "武器"
 icon = ExtResource("12_caticon_weapon")
-theme_override_constants/icon_max_width = 18
 
 [node name="CatAccessory" type="Button" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/CategoryTabs" unique_id=402000023]
 layout_mode = 2
+theme_override_constants/icon_max_width = 18
 text = "饰品"
 icon = ExtResource("10_caticon_accessory")
-theme_override_constants/icon_max_width = 18
 
 [node name="CatGift" type="Button" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn/CategoryTabs" unique_id=402000024]
 layout_mode = 2
+theme_override_constants/icon_max_width = 18
 text = "礼物"
 icon = ExtResource("11_caticon_gift")
-theme_override_constants/icon_max_width = 18
 
 [node name="BagScroll" type="ScrollContainer" parent="PanelRoot/CenterPanel/CenterContent/MainRow/RightColumn" unique_id=402000030]
 layout_mode = 2
@@ -638,9 +636,9 @@ color = Color(0.25, 0.25, 0.25, 1)
 
 [node name="LeftButtons" type="HBoxContainer" parent="PanelRoot/CenterPanel" unique_id=1796030888]
 layout_mode = 0
-offset_left = 371.0
+offset_left = 154.0
 offset_top = 497.0
-offset_right = 544.0
+offset_right = 348.0
 offset_bottom = 528.0
 
 [node name="WarehouseBtn" type="Button" parent="PanelRoot/CenterPanel/LeftButtons" unique_id=1325609187]
@@ -653,9 +651,9 @@ text = "宠物"
 
 [node name="CodexBtn" type="Button" parent="PanelRoot/CenterPanel/LeftButtons" unique_id=1388103180]
 layout_mode = 2
+theme_override_constants/icon_max_width = 18
 text = "图鉴"
 icon = ExtResource("15_btn_codex")
-theme_override_constants/icon_max_width = 18
 
 [node name="MapBtn" type="Button" parent="PanelRoot/CenterPanel/LeftButtons" unique_id=160158629]
 layout_mode = 2
@@ -663,28 +661,28 @@ text = "地图"
 
 [node name="RightButtons" type="HBoxContainer" parent="PanelRoot/CenterPanel" unique_id=575522656]
 layout_mode = 0
-offset_left = 547.0
+offset_left = 371.0
 offset_top = 497.0
-offset_right = 712.0
+offset_right = 565.0
 offset_bottom = 528.0
 
 [node name="SettingsBtn" type="Button" parent="PanelRoot/CenterPanel/RightButtons" unique_id=1117242987]
 layout_mode = 2
+theme_override_constants/icon_max_width = 18
 text = "设置"
 icon = ExtResource("17_btn_settings")
-theme_override_constants/icon_max_width = 18
 
 [node name="RerollBtn" type="Button" parent="PanelRoot/CenterPanel/RightButtons" unique_id=562891004]
 layout_mode = 2
+theme_override_constants/icon_max_width = 18
 text = "洗练"
 icon = ExtResource("18_btn_reroll")
-theme_override_constants/icon_max_width = 18
 
 [node name="DetailBtn" type="Button" parent="PanelRoot/CenterPanel/RightButtons" unique_id=332166269]
 layout_mode = 2
+theme_override_constants/icon_max_width = 18
 text = "详情"
 icon = ExtResource("19_btn_detail")
-theme_override_constants/icon_max_width = 18
 
 [node name="RightPanel" type="Control" parent="PanelRoot" unique_id=279125319]
 anchors_preset = 0
