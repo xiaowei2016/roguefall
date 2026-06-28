@@ -7,10 +7,10 @@
 [ext_resource type="Texture2D" path="res://assets/ui/center_panel/CharFrame.png" id="6_charframe"]
 [ext_resource type="Texture2D" path="res://assets/ui/center_panel/BasicAttrCard.png" id="7_basicattr"]
 [ext_resource type="Texture2D" path="res://assets/ui/center_panel/DetailAttrCard.png" id="8_detailattr"]
-[ext_resource type="CompressedTexture2D" uid="uid://cjq7iynj580i4" path="res://assets/ui/icons/CategoryIcon_003.png" id="9_caticon_bag"]
-[ext_resource type="CompressedTexture2D" uid="uid://bv1kln46dl1gp" path="res://assets/ui/icons/CategoryIcon_004.png" id="10_caticon_accessory"]
+[ext_resource type="CompressedTexture2D" uid="uid://cjq7iynj580i4" path="res://assets/ui/icons/CategoryIcon_005.png" id="9_caticon_bag"]
+[ext_resource type="CompressedTexture2D" uid="uid://bv1kln46dl1gp" path="res://assets/ui/icons/CategoryIcon_008.png" id="10_caticon_accessory"]
 [ext_resource type="CompressedTexture2D" uid="uid://u2fc6lxojs4l" path="res://assets/ui/icons/CategoryIcon_010.png" id="11_caticon_gift"]
-[ext_resource type="CompressedTexture2D" uid="uid://c70i8ud3hfp7a" path="res://assets/ui/icons/CategoryIcon_011.png" id="12_caticon_weapon"]
+[ext_resource type="CompressedTexture2D" uid="uid://c70i8ud3hfp7a" path="res://assets/ui/icons/CategoryIcon_003.png" id="12_caticon_weapon"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1"]
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_charframe"]
