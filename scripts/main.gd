@@ -49,15 +49,15 @@ var _shift_log_frame: int = 0
 @onready var center_panel := $PanelRoot/CenterPanel
 @onready var right_panel := $PanelRoot/RightPanel
 
-# ---- 内容容器 ----
-@onready var warehouse_content := $PanelRoot/LeftPanel/WarehouseContent
-@onready var pet_content := $PanelRoot/LeftPanel/PetContent
-@onready var codex_content := $PanelRoot/LeftPanel/CodexContent
-@onready var map_content := $PanelRoot/LeftPanel/MapContent
+# ---- 内容 host ----
+@onready var host_warehouse := $PanelRoot/LeftPanel/host_warehouse
+@onready var host_pet := $PanelRoot/LeftPanel/host_pet
+@onready var host_codex := $PanelRoot/LeftPanel/host_codex
+@onready var host_map := $PanelRoot/LeftPanel/host_map
 
-@onready var settings_content := $PanelRoot/RightPanel/SettingsContent
-@onready var reroll_content := $PanelRoot/RightPanel/RerollContent
-@onready var detail_content := $PanelRoot/RightPanel/DetailContent
+@onready var host_settings := $PanelRoot/RightPanel/host_settings
+@onready var host_reroll := $PanelRoot/RightPanel/host_reroll
+@onready var host_detail := $PanelRoot/RightPanel/host_detail
 
 
 func _ready() -> void:
@@ -116,15 +116,15 @@ func _apply_state() -> void:
 	right_panel.visible = _center_open and _right_content != RightContent.NONE
 
 	# 左栏内容切换
-	warehouse_content.visible = _left_content == LeftContent.WAREHOUSE
-	pet_content.visible = _left_content == LeftContent.PET
-	codex_content.visible = _left_content == LeftContent.CODEX
-	map_content.visible = _left_content == LeftContent.MAP
+	host_warehouse.visible = _left_content == LeftContent.WAREHOUSE
+	host_pet.visible = _left_content == LeftContent.PET
+	host_codex.visible = _left_content == LeftContent.CODEX
+	host_map.visible = _left_content == LeftContent.MAP
 
 	# 右栏内容切换
-	settings_content.visible = _right_content == RightContent.SETTINGS
-	reroll_content.visible = _right_content == RightContent.REROLL
-	detail_content.visible = _right_content == RightContent.DETAIL
+	host_settings.visible = _right_content == RightContent.SETTINGS
+	host_reroll.visible = _right_content == RightContent.REROLL
+	host_detail.visible = _right_content == RightContent.DETAIL
 
 	_do_layout()
 	_update_passthrough()

@@ -1,11 +1,9 @@
 [gd_scene format=3 uid="uid://co1gy1xt0te7v"]
-
 [ext_resource type="Script" uid="uid://dtadxwnca83tu" path="res://scripts/main.gd" id="1_main"]
 [ext_resource type="Script" uid="uid://5csn50l1ptiv" path="res://scripts/native_drag_zone.gd" id="2_dragzone"]
 [ext_resource type="Script" uid="uid://cpwj27yudk003" path="res://scripts/DesktopPixelPassthrough.cs" id="3_pixel"]
 [ext_resource type="PackedScene" uid="uid://bk7g3g0kc7g7e" path="res://scenes/GrasslandStage2D.tscn" id="5_grassland_stage"]
 [ext_resource type="Texture2D" uid="uid://dyuu0iay6mfdc" path="res://assets/ui/_incoming/center_panel_back.png" id="6_center_panel_back"]
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8svgy"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
@@ -42,7 +40,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_dragzone")
 
-[node name="WarehouseContent" type="Control" parent="PanelRoot/LeftPanel" unique_id=1969126349]
+[node name="host_warehouse" type="Control" parent="PanelRoot/LeftPanel"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -52,22 +50,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Label" type="Label" parent="PanelRoot/LeftPanel/WarehouseContent" unique_id=278360845]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -10.0
-offset_right = 20.0
-offset_bottom = 10.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "仓库"
-
-[node name="PetContent" type="Control" parent="PanelRoot/LeftPanel" unique_id=503872474]
+[node name="host_pet" type="Control" parent="PanelRoot/LeftPanel"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -77,22 +60,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Label" type="Label" parent="PanelRoot/LeftPanel/PetContent" unique_id=491655038]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -10.0
-offset_right = 20.0
-offset_bottom = 10.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "宠物"
-
-[node name="CodexContent" type="Control" parent="PanelRoot/LeftPanel" unique_id=827552004]
+[node name="host_codex" type="Control" parent="PanelRoot/LeftPanel"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -102,22 +70,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Label" type="Label" parent="PanelRoot/LeftPanel/CodexContent" unique_id=923040615]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -10.0
-offset_right = 20.0
-offset_bottom = 10.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "图鉴"
-
-[node name="MapContent" type="Control" parent="PanelRoot/LeftPanel" unique_id=1180133900]
+[node name="host_map" type="Control" parent="PanelRoot/LeftPanel"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -126,21 +79,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-
-[node name="Label" type="Label" parent="PanelRoot/LeftPanel/MapContent" unique_id=835440897]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -10.0
-offset_right = 20.0
-offset_bottom = 10.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "地图"
 
 [node name="CenterPanel" type="Control" parent="PanelRoot" unique_id=2097642298]
 anchors_preset = 0
@@ -175,475 +113,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-
-[node name="LeftArea" type="Control" parent="PanelRoot/CenterPanel/CenterLayoutRoot" unique_id=759362423]
-anchors_preset = 0
-offset_left = 28.0
-offset_top = 28.0
-offset_right = 328.0
-offset_bottom = 418.0
-
-[node name="CharEquipArea" type="VBoxContainer" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea" unique_id=1947457925]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 200.0
-grow_horizontal = 2
-theme_override_constants/separation = 8
-
-[node name="CharEquipRow" type="HBoxContainer" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/CharEquipArea" unique_id=401000100]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/separation = 8
-
-[node name="LeftEquipCol" type="VBoxContainer" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/CharEquipArea/CharEquipRow" unique_id=401000101]
-custom_minimum_size = Vector2(0, 300)
-layout_mode = 2
-theme_override_constants/separation = 4
-
-[node name="LEquip01" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/CharEquipArea/CharEquipRow/LeftEquipCol" unique_id=401000110]
-custom_minimum_size = Vector2(56, 56)
-layout_mode = 2
-color = Color(0.2, 0.2, 0.2, 1)
-
-[node name="LEquip02" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/CharEquipArea/CharEquipRow/LeftEquipCol" unique_id=401000111]
-custom_minimum_size = Vector2(56, 56)
-layout_mode = 2
-color = Color(0.2, 0.2, 0.2, 1)
-
-[node name="LEquip03" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/CharEquipArea/CharEquipRow/LeftEquipCol" unique_id=401000112]
-custom_minimum_size = Vector2(56, 56)
-layout_mode = 2
-color = Color(0.2, 0.2, 0.2, 1)
-
-[node name="LEquip04" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/CharEquipArea/CharEquipRow/LeftEquipCol" unique_id=401000113]
-custom_minimum_size = Vector2(56, 56)
-layout_mode = 2
-color = Color(0.2, 0.2, 0.2, 1)
-
-[node name="LEquip05" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/CharEquipArea/CharEquipRow/LeftEquipCol" unique_id=401000114]
-custom_minimum_size = Vector2(56, 56)
-layout_mode = 2
-color = Color(0.2, 0.2, 0.2, 1)
-
-[node name="CharCenter" type="VBoxContainer" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/CharEquipArea/CharEquipRow" unique_id=401000120]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 8
-
-[node name="CharFrame" type="PanelContainer" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/CharEquipArea/CharEquipRow/CharCenter" unique_id=401000121]
-custom_minimum_size = Vector2(0, 296)
-layout_mode = 2
-
-[node name="CharPlaceholder" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/CharEquipArea/CharEquipRow/CharCenter/CharFrame" unique_id=401000122]
-custom_minimum_size = Vector2(120, 100)
-layout_mode = 2
-color = Color(0.15, 0.15, 0.15, 1)
-
-[node name="CharBase" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/CharEquipArea/CharEquipRow/CharCenter" unique_id=401000123]
-custom_minimum_size = Vector2(0, 24)
-layout_mode = 2
-color = Color(0.25, 0.2, 0.15, 1)
-
-[node name="RightEquipCol" type="VBoxContainer" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/CharEquipArea/CharEquipRow" unique_id=401000130]
-layout_mode = 2
-theme_override_constants/separation = 4
-
-[node name="REquip01" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/CharEquipArea/CharEquipRow/RightEquipCol" unique_id=401000131]
-custom_minimum_size = Vector2(56, 56)
-layout_mode = 2
-color = Color(0.2, 0.2, 0.2, 1)
-
-[node name="REquip02" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/CharEquipArea/CharEquipRow/RightEquipCol" unique_id=401000132]
-custom_minimum_size = Vector2(56, 56)
-layout_mode = 2
-color = Color(0.2, 0.2, 0.2, 1)
-
-[node name="REquip03" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/CharEquipArea/CharEquipRow/RightEquipCol" unique_id=401000133]
-custom_minimum_size = Vector2(56, 56)
-layout_mode = 2
-color = Color(0.2, 0.2, 0.2, 1)
-
-[node name="REquip04" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/CharEquipArea/CharEquipRow/RightEquipCol" unique_id=401000134]
-custom_minimum_size = Vector2(56, 56)
-layout_mode = 2
-color = Color(0.2, 0.2, 0.2, 1)
-
-[node name="AttrScroll" type="ScrollContainer" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea" unique_id=89170251]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 208.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="AttrContent" type="VBoxContainer" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/AttrScroll" unique_id=1267957796]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_constants/separation = 8
-
-[node name="AttrRow" type="HBoxContainer" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/AttrScroll/AttrContent" unique_id=401000200]
-layout_mode = 2
-theme_override_constants/separation = 8
-
-[node name="BasicAttrCard" type="PanelContainer" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/AttrScroll/AttrContent/AttrRow" unique_id=401000040]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="BasicAttrVB" type="VBoxContainer" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/AttrScroll/AttrContent/AttrRow/BasicAttrCard" unique_id=401000041]
-layout_mode = 2
-theme_override_constants/separation = 4
-
-[node name="BasicAttrTitle" type="Label" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/AttrScroll/AttrContent/AttrRow/BasicAttrCard/BasicAttrVB" unique_id=401000042]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.1804, 0.3098, 0.5608, 1)
-theme_override_font_sizes/font_size = 16
-text = "基础属性"
-
-[node name="BasicAttrGrid" type="GridContainer" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/AttrScroll/AttrContent/AttrRow/BasicAttrCard/BasicAttrVB" unique_id=401000043]
-layout_mode = 2
-theme_override_constants/h_separation = 8
-theme_override_constants/v_separation = 2
-columns = 2
-
-[node name="AtkLabel" type="Label" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/AttrScroll/AttrContent/AttrRow/BasicAttrCard/BasicAttrVB/BasicAttrGrid" unique_id=401000044]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.3529, 0.2275, 0.1176, 1)
-text = "攻击"
-
-[node name="AtkVal" type="Label" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/AttrScroll/AttrContent/AttrRow/BasicAttrCard/BasicAttrVB/BasicAttrGrid" unique_id=401000045]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.5412, 0.4784, 0.4, 1)
-text = "--"
-
-[node name="DefLabel" type="Label" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/AttrScroll/AttrContent/AttrRow/BasicAttrCard/BasicAttrVB/BasicAttrGrid" unique_id=401000046]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.3529, 0.2275, 0.1176, 1)
-text = "防御"
-
-[node name="DefVal" type="Label" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/AttrScroll/AttrContent/AttrRow/BasicAttrCard/BasicAttrVB/BasicAttrGrid" unique_id=401000047]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.5412, 0.4784, 0.4, 1)
-text = "--"
-
-[node name="HpLabel" type="Label" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/AttrScroll/AttrContent/AttrRow/BasicAttrCard/BasicAttrVB/BasicAttrGrid" unique_id=401000048]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.3529, 0.2275, 0.1176, 1)
-text = "生命"
-
-[node name="HpVal" type="Label" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/AttrScroll/AttrContent/AttrRow/BasicAttrCard/BasicAttrVB/BasicAttrGrid" unique_id=401000049]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.5412, 0.4784, 0.4, 1)
-text = "--"
-
-[node name="SpdLabel" type="Label" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/AttrScroll/AttrContent/AttrRow/BasicAttrCard/BasicAttrVB/BasicAttrGrid" unique_id=401000050]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.3529, 0.2275, 0.1176, 1)
-text = "速度"
-
-[node name="SpdVal" type="Label" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/AttrScroll/AttrContent/AttrRow/BasicAttrCard/BasicAttrVB/BasicAttrGrid" unique_id=401000051]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.5412, 0.4784, 0.4, 1)
-text = "--"
-
-[node name="DetailAttrCard" type="PanelContainer" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/AttrScroll/AttrContent/AttrRow" unique_id=401000060]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="DetailAttrVB" type="VBoxContainer" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/AttrScroll/AttrContent/AttrRow/DetailAttrCard" unique_id=401000061]
-layout_mode = 2
-theme_override_constants/separation = 4
-
-[node name="DetailAttrTitle" type="Label" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/AttrScroll/AttrContent/AttrRow/DetailAttrCard/DetailAttrVB" unique_id=401000062]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.1804, 0.3098, 0.5608, 1)
-theme_override_font_sizes/font_size = 16
-text = "详细属性"
-
-[node name="DetailAttrGrid" type="GridContainer" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/AttrScroll/AttrContent/AttrRow/DetailAttrCard/DetailAttrVB" unique_id=401000063]
-layout_mode = 2
-theme_override_constants/h_separation = 8
-theme_override_constants/v_separation = 2
-columns = 2
-
-[node name="CritLabel" type="Label" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/AttrScroll/AttrContent/AttrRow/DetailAttrCard/DetailAttrVB/DetailAttrGrid" unique_id=401000064]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.3529, 0.2275, 0.1176, 1)
-text = "暴击"
-
-[node name="CritVal" type="Label" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/AttrScroll/AttrContent/AttrRow/DetailAttrCard/DetailAttrVB/DetailAttrGrid" unique_id=401000065]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.5412, 0.4784, 0.4, 1)
-text = "--"
-
-[node name="DodgeLabel" type="Label" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/AttrScroll/AttrContent/AttrRow/DetailAttrCard/DetailAttrVB/DetailAttrGrid" unique_id=401000066]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.3529, 0.2275, 0.1176, 1)
-text = "闪避"
-
-[node name="DodgeVal" type="Label" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/AttrScroll/AttrContent/AttrRow/DetailAttrCard/DetailAttrVB/DetailAttrGrid" unique_id=401000067]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.5412, 0.4784, 0.4, 1)
-text = "--"
-
-[node name="ArmorLabel" type="Label" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/AttrScroll/AttrContent/AttrRow/DetailAttrCard/DetailAttrVB/DetailAttrGrid" unique_id=401000068]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.3529, 0.2275, 0.1176, 1)
-text = "护甲"
-
-[node name="ArmorVal" type="Label" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/AttrScroll/AttrContent/AttrRow/DetailAttrCard/DetailAttrVB/DetailAttrGrid" unique_id=401000069]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.5412, 0.4784, 0.4, 1)
-text = "--"
-
-[node name="ResistLabel" type="Label" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/AttrScroll/AttrContent/AttrRow/DetailAttrCard/DetailAttrVB/DetailAttrGrid" unique_id=401000070]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.3529, 0.2275, 0.1176, 1)
-text = "抗性"
-
-[node name="ResistVal" type="Label" parent="PanelRoot/CenterPanel/CenterLayoutRoot/LeftArea/AttrScroll/AttrContent/AttrRow/DetailAttrCard/DetailAttrVB/DetailAttrGrid" unique_id=401000071]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.5412, 0.4784, 0.4, 1)
-text = "--"
-
-[node name="RightArea" type="Control" parent="PanelRoot/CenterPanel/CenterLayoutRoot" unique_id=967505202]
-anchors_preset = 0
-offset_left = 350.0
-offset_top = 28.0
-offset_right = 680.0
-offset_bottom = 418.0
-
-[node name="BagTitle" type="Label" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea" unique_id=402000010]
-layout_mode = 0
-offset_right = 330.0
-offset_bottom = 28.0
-theme_override_colors/font_color = Color(0.1804, 0.3098, 0.5608, 1)
-theme_override_font_sizes/font_size = 22
-text = "背包"
-horizontal_alignment = 1
-
-[node name="CategoryTabs" type="HBoxContainer" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea" unique_id=402000020]
-layout_mode = 0
-offset_top = 28.0
-offset_right = 330.0
-offset_bottom = 60.0
-theme_override_constants/separation = 4
-
-[node name="CatBag" type="Button" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/CategoryTabs" unique_id=402000021]
-layout_mode = 2
-theme_override_constants/icon_max_width = 18
-text = "背包"
-
-[node name="CatWeapon" type="Button" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/CategoryTabs" unique_id=402000022]
-layout_mode = 2
-theme_override_constants/icon_max_width = 18
-text = "武器"
-
-[node name="CatAccessory" type="Button" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/CategoryTabs" unique_id=402000023]
-layout_mode = 2
-theme_override_constants/icon_max_width = 18
-text = "饰品"
-
-[node name="CatGift" type="Button" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/CategoryTabs" unique_id=402000024]
-layout_mode = 2
-theme_override_constants/icon_max_width = 18
-text = "礼物"
-
-[node name="BagScroll" type="ScrollContainer" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea" unique_id=402000030]
-layout_mode = 0
-offset_top = 60.0
-offset_right = 330.0
-offset_bottom = 390.0
-
-[node name="BagGrid" type="GridContainer" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/BagScroll" unique_id=402000031]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_constants/h_separation = 4
-theme_override_constants/v_separation = 4
-columns = 6
-
-[node name="BSlot01" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/BagScroll/BagGrid" unique_id=402000032]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-color = Color(0.25, 0.25, 0.25, 1)
-
-[node name="BSlot02" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/BagScroll/BagGrid" unique_id=402000033]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-color = Color(0.25, 0.25, 0.25, 1)
-
-[node name="BSlot03" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/BagScroll/BagGrid" unique_id=402000034]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-color = Color(0.25, 0.25, 0.25, 1)
-
-[node name="BSlot04" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/BagScroll/BagGrid" unique_id=402000035]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-color = Color(0.25, 0.25, 0.25, 1)
-
-[node name="BSlot05" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/BagScroll/BagGrid" unique_id=402000036]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-color = Color(0.25, 0.25, 0.25, 1)
-
-[node name="BSlot06" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/BagScroll/BagGrid" unique_id=402000037]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-color = Color(0.25, 0.25, 0.25, 1)
-
-[node name="BSlot07" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/BagScroll/BagGrid" unique_id=402000038]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-color = Color(0.25, 0.25, 0.25, 1)
-
-[node name="BSlot08" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/BagScroll/BagGrid" unique_id=402000039]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-color = Color(0.25, 0.25, 0.25, 1)
-
-[node name="BSlot09" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/BagScroll/BagGrid" unique_id=402000040]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-color = Color(0.25, 0.25, 0.25, 1)
-
-[node name="BSlot10" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/BagScroll/BagGrid" unique_id=402000041]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-color = Color(0.25, 0.25, 0.25, 1)
-
-[node name="BSlot11" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/BagScroll/BagGrid" unique_id=402000042]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-color = Color(0.25, 0.25, 0.25, 1)
-
-[node name="BSlot12" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/BagScroll/BagGrid" unique_id=402000043]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-color = Color(0.25, 0.25, 0.25, 1)
-
-[node name="BSlot13" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/BagScroll/BagGrid" unique_id=402000044]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-color = Color(0.25, 0.25, 0.25, 1)
-
-[node name="BSlot14" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/BagScroll/BagGrid" unique_id=402000045]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-color = Color(0.25, 0.25, 0.25, 1)
-
-[node name="BSlot15" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/BagScroll/BagGrid" unique_id=402000046]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-color = Color(0.25, 0.25, 0.25, 1)
-
-[node name="BSlot16" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/BagScroll/BagGrid" unique_id=402000047]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-color = Color(0.25, 0.25, 0.25, 1)
-
-[node name="BSlot17" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/BagScroll/BagGrid" unique_id=402000048]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-color = Color(0.25, 0.25, 0.25, 1)
-
-[node name="BSlot18" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/BagScroll/BagGrid" unique_id=402000049]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-color = Color(0.25, 0.25, 0.25, 1)
-
-[node name="BSlot19" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/BagScroll/BagGrid" unique_id=402000050]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-color = Color(0.25, 0.25, 0.25, 1)
-
-[node name="BSlot20" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/BagScroll/BagGrid" unique_id=402000051]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-color = Color(0.25, 0.25, 0.25, 1)
-
-[node name="BSlot21" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/BagScroll/BagGrid" unique_id=402000052]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-color = Color(0.25, 0.25, 0.25, 1)
-
-[node name="BSlot22" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/BagScroll/BagGrid" unique_id=402000053]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-color = Color(0.25, 0.25, 0.25, 1)
-
-[node name="BSlot23" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/BagScroll/BagGrid" unique_id=402000054]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-color = Color(0.25, 0.25, 0.25, 1)
-
-[node name="BSlot24" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/BagScroll/BagGrid" unique_id=402000055]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-color = Color(0.25, 0.25, 0.25, 1)
-
-[node name="BSlot25" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/BagScroll/BagGrid" unique_id=402000056]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-color = Color(0.25, 0.25, 0.25, 1)
-
-[node name="BSlot26" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/BagScroll/BagGrid" unique_id=402000057]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-color = Color(0.25, 0.25, 0.25, 1)
-
-[node name="BSlot27" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/BagScroll/BagGrid" unique_id=402000058]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-color = Color(0.25, 0.25, 0.25, 1)
-
-[node name="BSlot28" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/BagScroll/BagGrid" unique_id=402000059]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-color = Color(0.25, 0.25, 0.25, 1)
-
-[node name="BSlot29" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/BagScroll/BagGrid" unique_id=402000060]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-color = Color(0.25, 0.25, 0.25, 1)
-
-[node name="BSlot30" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/BagScroll/BagGrid" unique_id=402000061]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-color = Color(0.25, 0.25, 0.25, 1)
-
-[node name="BSlot31" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/BagScroll/BagGrid" unique_id=402000062]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-color = Color(0.25, 0.25, 0.25, 1)
-
-[node name="BSlot32" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/BagScroll/BagGrid" unique_id=402000063]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-color = Color(0.25, 0.25, 0.25, 1)
-
-[node name="BSlot33" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/BagScroll/BagGrid" unique_id=402000064]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-color = Color(0.25, 0.25, 0.25, 1)
-
-[node name="BSlot34" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/BagScroll/BagGrid" unique_id=402000065]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-color = Color(0.25, 0.25, 0.25, 1)
-
-[node name="BSlot35" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/BagScroll/BagGrid" unique_id=402000066]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-color = Color(0.25, 0.25, 0.25, 1)
-
-[node name="BSlot36" type="ColorRect" parent="PanelRoot/CenterPanel/CenterLayoutRoot/RightArea/BagScroll/BagGrid" unique_id=402000067]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-color = Color(0.25, 0.25, 0.25, 1)
 
 [node name="BottomArea" type="Control" parent="PanelRoot/CenterPanel/CenterLayoutRoot" unique_id=299704467]
 anchors_preset = 0
@@ -701,6 +170,22 @@ layout_mode = 2
 theme_override_constants/icon_max_width = 18
 text = "详情"
 
+[node name="host_left_area" type="Control" parent="PanelRoot/CenterPanel/CenterLayoutRoot"]
+anchors_preset = 0
+offset_left = 28.0
+offset_top = 28.0
+offset_right = 328.0
+offset_bottom = 418.0
+mouse_filter = 2
+
+[node name="host_right_area" type="Control" parent="PanelRoot/CenterPanel/CenterLayoutRoot"]
+anchors_preset = 0
+offset_left = 350.0
+offset_top = 28.0
+offset_right = 680.0
+offset_bottom = 418.0
+mouse_filter = 2
+
 [node name="RightPanel" type="Control" parent="PanelRoot" unique_id=279125319]
 anchors_preset = 0
 offset_left = 1088.0
@@ -717,7 +202,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_dragzone")
 
-[node name="SettingsContent" type="Control" parent="PanelRoot/RightPanel" unique_id=1776554873]
+[node name="host_settings" type="Control" parent="PanelRoot/RightPanel"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -727,22 +212,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Label" type="Label" parent="PanelRoot/RightPanel/SettingsContent" unique_id=316036441]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -10.0
-offset_right = 20.0
-offset_bottom = 10.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "设置"
-
-[node name="RerollContent" type="Control" parent="PanelRoot/RightPanel" unique_id=266913480]
+[node name="host_reroll" type="Control" parent="PanelRoot/RightPanel"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -752,22 +222,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Label" type="Label" parent="PanelRoot/RightPanel/RerollContent" unique_id=2001148289]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -10.0
-offset_right = 20.0
-offset_bottom = 10.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "洗练"
-
-[node name="DetailContent" type="Control" parent="PanelRoot/RightPanel" unique_id=2087798207]
+[node name="host_detail" type="Control" parent="PanelRoot/RightPanel"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -776,21 +231,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-
-[node name="Label" type="Label" parent="PanelRoot/RightPanel/DetailContent" unique_id=1869694992]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -10.0
-offset_right = 20.0
-offset_bottom = 10.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "详情"
 
 [node name="BattleBar" type="Control" parent="PanelRoot" unique_id=535304019]
 anchors_preset = 0

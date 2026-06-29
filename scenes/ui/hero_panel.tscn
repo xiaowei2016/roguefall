@@ -1,184 +1,259 @@
-[gd_scene load_steps=5 format=3 uid="uid://dhero_panel_001"]
+[gd_scene load_steps=2 format=3 uid="uid://d7qmx6pnkh0w8"]
 
 [ext_resource type="Theme" path="res://assets/ui/theme/roguefall_theme.tres" id="1_theme"]
-[ext_resource type="PackedScene" uid="uid://dequip_slot_001" path="res://scenes/ui/equip_slot.tscn" id="2_equip_slot"]
-[ext_resource type="PackedScene" uid="uid://dattr_row_001" path="res://scenes/ui/attr_row.tscn" id="3_attr_row"]
-[ext_resource type="PackedScene" uid="uid://dbag_slot_001" path="res://scenes/ui/bag_slot.tscn" id="4_bag_slot"]
 
 [node name="hero_panel" type="Control"]
-layout_mode = 1
-anchor_left = 0.0
-anchor_top = 0.0
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 0.0
-offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
 theme = ExtResource("1_theme")
+mouse_filter = 2
 
 [node name="panel_bg" type="TextureRect" parent="."]
 layout_mode = 1
-anchor_left = 0.0
-anchor_top = 0.0
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 0.0
-offset_bottom = 0.0
-stretch_mode = 0
-self_modulate = Color(1.0, 0.0, 1.0, 1.0)
+grow_horizontal = 2
+grow_vertical = 2
+self_modulate = Color(1, 0, 1, 1)
+mouse_filter = 2
 
 [node name="content_root" type="HBoxContainer" parent="."]
 layout_mode = 1
-anchor_left = 0.0
-anchor_top = 0.0
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 16.0
 offset_top = 16.0
 offset_right = -16.0
 offset_bottom = -16.0
-theme = ExtResource("1_theme")
-theme_override_constants/separation = 8
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+mouse_filter = 2
 
 [node name="left_section" type="VBoxContainer" parent="content_root"]
-theme = ExtResource("1_theme")
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_constants/separation = 8
-size_flags_vertical = 3
 
-[node name="char_display" type="Control" parent="left_section"]
+[node name="char_display" type="Control" parent="content_root/left_section"]
 custom_minimum_size = Vector2(200, 220)
-theme = ExtResource("1_theme")
+layout_mode = 2
 
-[node name="char_frame" type="TextureRect" parent="char_display"]
+[node name="char_frame" type="TextureRect" parent="content_root/left_section/char_display"]
 layout_mode = 1
-anchor_left = 0.0
-anchor_top = 0.0
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 0.0
-offset_bottom = 0.0
-stretch_mode = 0
-self_modulate = Color(0.25, 0.25, 0.25, 0.5)
+grow_horizontal = 2
+grow_vertical = 2
+self_modulate = Color(0.5, 0.5, 0.5, 0.3)
+mouse_filter = 2
 
-[node name="char_placeholder" type="Label" parent="char_display"]
+[node name="char_placeholder" type="Label" parent="content_root/left_section/char_display"]
 layout_mode = 1
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 0.0
-offset_bottom = 0.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -10.0
+offset_right = 60.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
 text = "角色展示（待接入）"
 horizontal_alignment = 1
-vertical_alignment = 1
-theme = ExtResource("1_theme")
-
-[node name="equip_grid" type="GridContainer" parent="left_section"]
-theme = ExtResource("1_theme")
-theme_override_constants/h_separation = 8
-theme_override_constants/v_separation = 8
-columns = 3
-
-[node name="equip_slot_01" parent="equip_grid" instance=ExtResource("2_equip_slot")]
-[node name="equip_slot_02" parent="equip_grid" instance=ExtResource("2_equip_slot")]
-[node name="equip_slot_03" parent="equip_grid" instance=ExtResource("2_equip_slot")]
-[node name="equip_slot_04" parent="equip_grid" instance=ExtResource("2_equip_slot")]
-[node name="equip_slot_05" parent="equip_grid" instance=ExtResource("2_equip_slot")]
-[node name="equip_slot_06" parent="equip_grid" instance=ExtResource("2_equip_slot")]
-[node name="equip_slot_07" parent="equip_grid" instance=ExtResource("2_equip_slot")]
-[node name="equip_slot_08" parent="equip_grid" instance=ExtResource("2_equip_slot")]
-[node name="equip_slot_09" parent="equip_grid" instance=ExtResource("2_equip_slot")]
-
-[node name="basic_attr" type="VBoxContainer" parent="left_section"]
-theme = ExtResource("1_theme")
-theme_override_constants/separation = 8
-
-[node name="attr_title" type="Label" parent="basic_attr"]
-text = "基础属性"
-theme = ExtResource("1_theme")
-theme_override_font_sizes/font_size = 18
-
-[node name="attr_row_hp" parent="basic_attr" instance=ExtResource("3_attr_row")]
-[node name="attr_row_attack" parent="basic_attr" instance=ExtResource("3_attr_row")]
-[node name="attr_row_defense" parent="basic_attr" instance=ExtResource("3_attr_row")]
-[node name="attr_row_speed" parent="basic_attr" instance=ExtResource("3_attr_row")]
 
 [node name="right_section" type="VBoxContainer" parent="content_root"]
-theme = ExtResource("1_theme")
-theme_override_constants/separation = 8
+layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 3
+theme_override_constants/separation = 12
 
-[node name="detail_attr" type="VBoxContainer" parent="right_section"]
-theme = ExtResource("1_theme")
-theme_override_constants/separation = 8
+[node name="basic_attr" type="VBoxContainer" parent="content_root/right_section"]
+layout_mode = 2
+theme_override_constants/separation = 4
 
-[node name="attr_title" type="Label" parent="detail_attr"]
+[node name="attr_title" type="Label" parent="content_root/right_section/basic_attr"]
+layout_mode = 2
+text = "基础属性"
+
+[node name="attr_row1" type="Label" parent="content_root/right_section/basic_attr"]
+layout_mode = 2
+text = "占位"
+
+[node name="attr_row2" type="Label" parent="content_root/right_section/basic_attr"]
+layout_mode = 2
+text = "占位"
+
+[node name="attr_row3" type="Label" parent="content_root/right_section/basic_attr"]
+layout_mode = 2
+text = "占位"
+
+[node name="attr_row4" type="Label" parent="content_root/right_section/basic_attr"]
+layout_mode = 2
+text = "占位"
+
+[node name="detail_attr" type="VBoxContainer" parent="content_root/right_section"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="attr_title" type="Label" parent="content_root/right_section/detail_attr"]
+layout_mode = 2
 text = "详细属性"
-theme = ExtResource("1_theme")
-theme_override_font_sizes/font_size = 18
 
-[node name="attr_row_crit" parent="detail_attr" instance=ExtResource("3_attr_row")]
-[node name="attr_row_dodge" parent="detail_attr" instance=ExtResource("3_attr_row")]
-[node name="attr_row_armor" parent="detail_attr" instance=ExtResource("3_attr_row")]
-[node name="attr_row_resistance" parent="detail_attr" instance=ExtResource("3_attr_row")]
+[node name="attr_row1" type="Label" parent="content_root/right_section/detail_attr"]
+layout_mode = 2
+text = "占位"
 
-[node name="bag_section" type="VBoxContainer" parent="right_section"]
-theme = ExtResource("1_theme")
-theme_override_constants/separation = 8
-size_flags_vertical = 3
+[node name="attr_row2" type="Label" parent="content_root/right_section/detail_attr"]
+layout_mode = 2
+text = "占位"
 
-[node name="bag_title" type="Label" parent="bag_section"]
+[node name="attr_row3" type="Label" parent="content_root/right_section/detail_attr"]
+layout_mode = 2
+text = "占位"
+
+[node name="attr_row4" type="Label" parent="content_root/right_section/detail_attr"]
+layout_mode = 2
+text = "占位"
+
+[node name="bag_section" type="VBoxContainer" parent="content_root/right_section"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="bag_title" type="Label" parent="content_root/right_section/bag_section"]
+layout_mode = 2
 text = "背包"
-theme = ExtResource("1_theme")
-theme_override_font_sizes/font_size = 18
 
-[node name="bag_grid" type="GridContainer" parent="bag_section"]
-theme = ExtResource("1_theme")
-theme_override_constants/h_separation = 8
-theme_override_constants/v_separation = 8
-columns = 9
+[node name="bag_grid" type="GridContainer" parent="content_root/right_section/bag_section"]
+layout_mode = 2
+theme_override_constants/h_separation = 4
+theme_override_constants/v_separation = 4
+columns = 6
 
-[node name="bag_slot_01" parent="bag_grid" instance=ExtResource("4_bag_slot")]
-[node name="bag_slot_02" parent="bag_grid" instance=ExtResource("4_bag_slot")]
-[node name="bag_slot_03" parent="bag_grid" instance=ExtResource("4_bag_slot")]
-[node name="bag_slot_04" parent="bag_grid" instance=ExtResource("4_bag_slot")]
-[node name="bag_slot_05" parent="bag_grid" instance=ExtResource("4_bag_slot")]
-[node name="bag_slot_06" parent="bag_grid" instance=ExtResource("4_bag_slot")]
-[node name="bag_slot_07" parent="bag_grid" instance=ExtResource("4_bag_slot")]
-[node name="bag_slot_08" parent="bag_grid" instance=ExtResource("4_bag_slot")]
-[node name="bag_slot_09" parent="bag_grid" instance=ExtResource("4_bag_slot")]
-[node name="bag_slot_10" parent="bag_grid" instance=ExtResource("4_bag_slot")]
-[node name="bag_slot_11" parent="bag_grid" instance=ExtResource("4_bag_slot")]
-[node name="bag_slot_12" parent="bag_grid" instance=ExtResource("4_bag_slot")]
-[node name="bag_slot_13" parent="bag_grid" instance=ExtResource("4_bag_slot")]
-[node name="bag_slot_14" parent="bag_grid" instance=ExtResource("4_bag_slot")]
-[node name="bag_slot_15" parent="bag_grid" instance=ExtResource("4_bag_slot")]
-[node name="bag_slot_16" parent="bag_grid" instance=ExtResource("4_bag_slot")]
-[node name="bag_slot_17" parent="bag_grid" instance=ExtResource("4_bag_slot")]
-[node name="bag_slot_18" parent="bag_grid" instance=ExtResource("4_bag_slot")]
-[node name="bag_slot_19" parent="bag_grid" instance=ExtResource("4_bag_slot")]
-[node name="bag_slot_20" parent="bag_grid" instance=ExtResource("4_bag_slot")]
-[node name="bag_slot_21" parent="bag_grid" instance=ExtResource("4_bag_slot")]
-[node name="bag_slot_22" parent="bag_grid" instance=ExtResource("4_bag_slot")]
-[node name="bag_slot_23" parent="bag_grid" instance=ExtResource("4_bag_slot")]
-[node name="bag_slot_24" parent="bag_grid" instance=ExtResource("4_bag_slot")]
-[node name="bag_slot_25" parent="bag_grid" instance=ExtResource("4_bag_slot")]
-[node name="bag_slot_26" parent="bag_grid" instance=ExtResource("4_bag_slot")]
-[node name="bag_slot_27" parent="bag_grid" instance=ExtResource("4_bag_slot")]
-[node name="bag_slot_28" parent="bag_grid" instance=ExtResource("4_bag_slot")]
-[node name="bag_slot_29" parent="bag_grid" instance=ExtResource("4_bag_slot")]
-[node name="bag_slot_30" parent="bag_grid" instance=ExtResource("4_bag_slot")]
-[node name="bag_slot_31" parent="bag_grid" instance=ExtResource("4_bag_slot")]
-[node name="bag_slot_32" parent="bag_grid" instance=ExtResource("4_bag_slot")]
-[node name="bag_slot_33" parent="bag_grid" instance=ExtResource("4_bag_slot")]
-[node name="bag_slot_34" parent="bag_grid" instance=ExtResource("4_bag_slot")]
-[node name="bag_slot_35" parent="bag_grid" instance=ExtResource("4_bag_slot")]
-[node name="bag_slot_36" parent="bag_grid" instance=ExtResource("4_bag_slot")]
+[node name="bag_slot1" type="ColorRect" parent="content_root/right_section/bag_section/bag_grid"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="bag_slot2" type="ColorRect" parent="content_root/right_section/bag_section/bag_grid"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="bag_slot3" type="ColorRect" parent="content_root/right_section/bag_section/bag_grid"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="bag_slot4" type="ColorRect" parent="content_root/right_section/bag_section/bag_grid"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="bag_slot5" type="ColorRect" parent="content_root/right_section/bag_section/bag_grid"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="bag_slot6" type="ColorRect" parent="content_root/right_section/bag_section/bag_grid"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="bag_slot7" type="ColorRect" parent="content_root/right_section/bag_section/bag_grid"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="bag_slot8" type="ColorRect" parent="content_root/right_section/bag_section/bag_grid"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="bag_slot9" type="ColorRect" parent="content_root/right_section/bag_section/bag_grid"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="bag_slot10" type="ColorRect" parent="content_root/right_section/bag_section/bag_grid"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="bag_slot11" type="ColorRect" parent="content_root/right_section/bag_section/bag_grid"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="bag_slot12" type="ColorRect" parent="content_root/right_section/bag_section/bag_grid"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="bag_slot13" type="ColorRect" parent="content_root/right_section/bag_section/bag_grid"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="bag_slot14" type="ColorRect" parent="content_root/right_section/bag_section/bag_grid"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="bag_slot15" type="ColorRect" parent="content_root/right_section/bag_section/bag_grid"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="bag_slot16" type="ColorRect" parent="content_root/right_section/bag_section/bag_grid"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="bag_slot17" type="ColorRect" parent="content_root/right_section/bag_section/bag_grid"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="bag_slot18" type="ColorRect" parent="content_root/right_section/bag_section/bag_grid"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="bag_slot19" type="ColorRect" parent="content_root/right_section/bag_section/bag_grid"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="bag_slot20" type="ColorRect" parent="content_root/right_section/bag_section/bag_grid"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="bag_slot21" type="ColorRect" parent="content_root/right_section/bag_section/bag_grid"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="bag_slot22" type="ColorRect" parent="content_root/right_section/bag_section/bag_grid"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="bag_slot23" type="ColorRect" parent="content_root/right_section/bag_section/bag_grid"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="bag_slot24" type="ColorRect" parent="content_root/right_section/bag_section/bag_grid"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+color = Color(0.25, 0.25, 0.25, 1)
