@@ -1,0 +1,167 @@
+[gd_scene load_steps=6 format=3 uid="uid://dcenter_main_panel_001"]
+
+[ext_resource type="Theme" path="res://assets/ui/theme/roguefall_theme.tres" id="1_theme"]
+[ext_resource type="PackedScene" uid="uid://dequip_slot_001" path="res://scenes/ui/equip_slot.tscn" id="2_equip_slot"]
+[ext_resource type="PackedScene" uid="uid://dattr_row_001" path="res://scenes/ui/attr_row.tscn" id="3_attr_row"]
+[ext_resource type="Script" path="res://scenes/ui/center_main_panel.gd" id="4_script"]
+
+[node name="CenterMainPanel" type="Control"]
+theme = ExtResource("1_theme")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("4_script")
+
+[node name="MainHBox" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="LeftContent" type="VBoxContainer" parent="MainHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 6
+
+[node name="HeroArea" type="Control" parent="MainHBox/LeftContent"]
+layout_mode = 2
+custom_minimum_size = Vector2(300, 290)
+size_flags_horizontal = 3
+
+[node name="HeroBg" type="TextureRect" parent="MainHBox/LeftContent/HeroArea"]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 14.0
+offset_right = 258.0
+offset_bottom = 220.0
+self_modulate = Color(0.15, 0.15, 0.15, 1)
+expand_mode = 1
+
+[node name="EquipSlot0" parent="MainHBox/LeftContent/HeroArea" instance=ExtResource("2_equip_slot")]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 20.0
+offset_right = 56.0
+offset_bottom = 76.0
+
+[node name="EquipSlot1" parent="MainHBox/LeftContent/HeroArea" instance=ExtResource("2_equip_slot")]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 94.0
+offset_right = 56.0
+offset_bottom = 150.0
+
+[node name="EquipSlot2" parent="MainHBox/LeftContent/HeroArea" instance=ExtResource("2_equip_slot")]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 168.0
+offset_right = 56.0
+offset_bottom = 224.0
+
+[node name="EquipSlot3" parent="MainHBox/LeftContent/HeroArea" instance=ExtResource("2_equip_slot")]
+layout_mode = 0
+offset_left = 244.0
+offset_top = 20.0
+offset_right = 300.0
+offset_bottom = 76.0
+
+[node name="EquipSlot4" parent="MainHBox/LeftContent/HeroArea" instance=ExtResource("2_equip_slot")]
+layout_mode = 0
+offset_left = 244.0
+offset_top = 94.0
+offset_right = 300.0
+offset_bottom = 150.0
+
+[node name="EquipSlot5" parent="MainHBox/LeftContent/HeroArea" instance=ExtResource("2_equip_slot")]
+layout_mode = 0
+offset_left = 244.0
+offset_top = 168.0
+offset_right = 300.0
+offset_bottom = 224.0
+
+[node name="EquipSlot6" parent="MainHBox/LeftContent/HeroArea" instance=ExtResource("2_equip_slot")]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 234.0
+offset_right = 84.0
+offset_bottom = 290.0
+
+[node name="EquipSlot7" parent="MainHBox/LeftContent/HeroArea" instance=ExtResource("2_equip_slot")]
+layout_mode = 0
+offset_left = 122.0
+offset_top = 234.0
+offset_right = 178.0
+offset_bottom = 290.0
+
+[node name="EquipSlot8" parent="MainHBox/LeftContent/HeroArea" instance=ExtResource("2_equip_slot")]
+layout_mode = 0
+offset_left = 216.0
+offset_top = 234.0
+offset_right = 272.0
+offset_bottom = 290.0
+
+[node name="AttrSection" type="PanelContainer" parent="MainHBox/LeftContent"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AttrVBox" type="VBoxContainer" parent="MainHBox/LeftContent/AttrSection"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AttrRow_Attack" parent="MainHBox/LeftContent/AttrSection/AttrVBox" instance=ExtResource("3_attr_row")]
+
+[node name="AttrRow_Defense" parent="MainHBox/LeftContent/AttrSection/AttrVBox" instance=ExtResource("3_attr_row")]
+
+[node name="AttrRow_Health" parent="MainHBox/LeftContent/AttrSection/AttrVBox" instance=ExtResource("3_attr_row")]
+
+[node name="RightContent" type="VBoxContainer" parent="MainHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 6
+
+[node name="BagHeader" type="HBoxContainer" parent="MainHBox/RightContent"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="BagTitle" type="Label" parent="MainHBox/RightContent/BagHeader"]
+text = "背包"
+theme_override_font_sizes/font_size = 20
+theme_override_colors/font_color = Color(0.2, 0.6, 0.8, 1)
+
+[node name="BagTabs" type="HBoxContainer" parent="MainHBox/RightContent/BagHeader"]
+layout_mode = 2
+size_flags_horizontal = 8
+alignment = 2
+theme_override_constants/separation = 3
+
+[node name="TabAll" type="Button" parent="MainHBox/RightContent/BagHeader/BagTabs"]
+theme_override_font_sizes/font_size = 12
+text = "背包"
+
+[node name="TabWeapon" type="Button" parent="MainHBox/RightContent/BagHeader/BagTabs"]
+theme_override_font_sizes/font_size = 12
+text = "武器"
+
+[node name="TabAccessory" type="Button" parent="MainHBox/RightContent/BagHeader/BagTabs"]
+theme_override_font_sizes/font_size = 12
+text = "饰品"
+
+[node name="TabGift" type="Button" parent="MainHBox/RightContent/BagHeader/BagTabs"]
+theme_override_font_sizes/font_size = 12
+text = "礼物"
+
+[node name="BagGrid" type="GridContainer" parent="MainHBox/RightContent"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 6
+theme_override_constants/h_separation = 2
+theme_override_constants/v_separation = 2

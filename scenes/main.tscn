@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://cpwj27yudk003" path="res://scripts/DesktopPixelPassthrough.cs" id="3_pixel"]
 [ext_resource type="PackedScene" uid="uid://bk7g3g0kc7g7e" path="res://scenes/GrasslandStage2D.tscn" id="5_grassland_stage"]
 [ext_resource type="Texture2D" uid="uid://dyuu0iay6mfdc" path="res://assets/ui/_incoming/center_panel_back.png" id="6_center_panel_back"]
+[ext_resource type="PackedScene" uid="uid://dcenter_main_panel_001" path="res://scenes/ui/center_main_panel.tscn" id="7_center_main"]
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8svgy"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
@@ -170,21 +171,12 @@ layout_mode = 2
 theme_override_constants/icon_max_width = 18
 text = "详情"
 
-[node name="host_left_area" type="Control" parent="PanelRoot/CenterPanel/CenterLayoutRoot"]
+[node name="CenterMainPanel" parent="PanelRoot/CenterPanel/CenterLayoutRoot" instance=ExtResource("7_center_main")]
 anchors_preset = 0
 offset_left = 28.0
 offset_top = 28.0
-offset_right = 328.0
-offset_bottom = 418.0
-mouse_filter = 2
-
-[node name="host_right_area" type="Control" parent="PanelRoot/CenterPanel/CenterLayoutRoot"]
-anchors_preset = 0
-offset_left = 350.0
-offset_top = 28.0
 offset_right = 680.0
 offset_bottom = 418.0
-mouse_filter = 2
 
 [node name="RightPanel" type="Control" parent="PanelRoot" unique_id=279125319]
 anchors_preset = 0
