@@ -69,34 +69,34 @@ mouse_filter = 2
 [node name="player_anchor" type="Control" parent="Frame/actor_layer"]
 layout_mode = 0
 offset_left = 180.0
-offset_top = 100.0
-offset_right = 244.0
-offset_bottom = 180.0
+offset_top = 140.0
+offset_right = 181.0
+offset_bottom = 141.0
 mouse_filter = 2
 
 [node name="player_placeholder" type="ColorRect" parent="Frame/actor_layer/player_anchor"]
 layout_mode = 0
-offset_left = 16.0
-offset_top = -8.0
-offset_right = 48.0
-offset_bottom = 40.0
+offset_left = -16.0
+offset_top = -48.0
+offset_right = 16.0
+offset_bottom = 0.0
 mouse_filter = 2
 color = Color(0.267, 0.533, 1, 1)
 
 [node name="enemy_anchor" type="Control" parent="Frame/actor_layer"]
 layout_mode = 0
 offset_left = 480.0
-offset_top = 100.0
-offset_right = 544.0
-offset_bottom = 180.0
+offset_top = 140.0
+offset_right = 481.0
+offset_bottom = 141.0
 mouse_filter = 2
 
 [node name="enemy_placeholder" type="ColorRect" parent="Frame/actor_layer/enemy_anchor"]
 layout_mode = 0
-offset_left = 16.0
-offset_top = -8.0
-offset_right = 48.0
-offset_bottom = 40.0
+offset_left = -16.0
+offset_top = -48.0
+offset_right = 16.0
+offset_bottom = 0.0
 mouse_filter = 2
 color = Color(1, 0.267, 0.267, 1)
 
