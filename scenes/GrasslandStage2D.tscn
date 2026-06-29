@@ -63,14 +63,14 @@ expand_mode = 1
 layout_mode = 0
 offset_left = 12.0
 offset_top = 140.0
-offset_right = 708.0
+offset_right = 3588.0
 offset_bottom = 142.0
 mouse_filter = 2
 color = Color(0.3, 0.8, 0.3, 0.5)
 
 [node name="actor_layer" type="Control" parent="Frame/world_root"]
 layout_mode = 0
-offset_right = 720.0
+offset_right = 3600.0
 offset_bottom = 180.0
 mouse_filter = 2
 
@@ -110,13 +110,13 @@ color = Color(1, 0.267, 0.267, 1)
 
 [node name="drop_layer" type="Control" parent="Frame/world_root"]
 layout_mode = 0
-offset_right = 720.0
+offset_right = 3600.0
 offset_bottom = 180.0
 mouse_filter = 2
 
 [node name="effect_layer" type="Control" parent="Frame/world_root"]
 layout_mode = 0
-offset_right = 720.0
+offset_right = 3600.0
 offset_bottom = 180.0
 mouse_filter = 2
 
