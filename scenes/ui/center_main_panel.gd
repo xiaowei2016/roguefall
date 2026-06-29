@@ -1,7 +1,7 @@
 extends Control
 
-@onready var bag_grid: GridContainer = $MainHBox/RightContent/BagGrid
-@onready var attr_vbox: VBoxContainer = $MainHBox/LeftContent/AttrSection/AttrVBox
+@onready var bag_grid: GridContainer = $bag_area/bag_grid
+@onready var attr_vbox: VBoxContainer = $attr_area/attr_vbox
 
 const BAG_SLOT = preload("res://scenes/ui/bag_slot.tscn")
 const BAG_COLS: int = 6
@@ -9,9 +9,9 @@ const BAG_ROWS: int = 5
 const TOTAL_SLOTS: int = BAG_COLS * BAG_ROWS
 
 const ATTR_NAMES := {
-	"AttrRow_Attack": "攻击",
-	"AttrRow_Defense": "防御",
-	"AttrRow_Health": "生命",
+	"attr_row_attack": "攻击",
+	"attr_row_defense": "防御",
+	"attr_row_health": "生命",
 }
 
 func _ready() -> void:

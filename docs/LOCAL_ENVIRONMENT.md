@@ -5,7 +5,7 @@
 | 项目 | 值 |
 |------|-----|
 | 引擎版本 | Godot 4.7 stable (Mono) |
-| 可执行文件路径 | `D:\Projects\Godot_v4.7-stable_mono_win64\Godot_v4.7-stable_mono_win64.exe` |
+| 可执行文件路径 | `D:\Projects\Godot\godot_console.exe` |
 | 项目路径 | `D:\Projects\roguefall` |
 | 渲染后端 | gl_compatibility |
 
@@ -22,7 +22,7 @@
 
 ```bat
 cd /d D:\Projects\roguefall
-"D:\Projects\Godot_v4.7-stable_mono_win64\Godot_v4.7-stable_mono_win64.exe" --headless --quit
+"D:\Projects\Godot\godot_console.exe" --headless --quit
 dotnet build
 ```
 
