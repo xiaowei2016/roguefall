@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://dcenter_main_panel_001"]
+[gd_scene load_steps=7 format=3 uid="uid://dcenter_main_panel_001"]
 
 [ext_resource type="Theme" path="res://assets/ui/theme/roguefall_theme.tres" id="1_theme"]
 [ext_resource type="PackedScene" uid="uid://dequip_slot_001" path="res://scenes/ui/equip_slot.tscn" id="2_equip_slot"]
 [ext_resource type="PackedScene" uid="uid://dattr_row_001" path="res://scenes/ui/attr_row.tscn" id="3_attr_row"]
 [ext_resource type="Script" path="res://scenes/ui/center_main_panel.gd" id="4_script"]
+[ext_resource type="PackedScene" uid="uid://dbag_slot_001" path="res://scenes/ui/bag_slot.tscn" id="5_bag_slot"]
 
 [node name="CenterMainPanel" type="Control"]
 theme = ExtResource("1_theme")
@@ -42,68 +43,140 @@ offset_top = 0.0
 offset_right = 300.0
 offset_bottom = 270.0
 
-[node name="equip_slot_0" parent="equip_area" instance=ExtResource("2_equip_slot")]
+[node name="slot_weapon" type="Control" parent="equip_area"]
 layout_mode = 0
 offset_left = 0.0
 offset_top = 20.0
 offset_right = 56.0
 offset_bottom = 76.0
 
-[node name="equip_slot_1" parent="equip_area" instance=ExtResource("2_equip_slot")]
+[node name="EquipSlot" parent="equip_area/slot_weapon" instance=ExtResource("2_equip_slot")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="slot_helmet" type="Control" parent="equip_area"]
 layout_mode = 0
 offset_left = 0.0
 offset_top = 78.0
 offset_right = 56.0
 offset_bottom = 134.0
 
-[node name="equip_slot_2" parent="equip_area" instance=ExtResource("2_equip_slot")]
+[node name="EquipSlot" parent="equip_area/slot_helmet" instance=ExtResource("2_equip_slot")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="slot_clothes" type="Control" parent="equip_area"]
 layout_mode = 0
 offset_left = 0.0
 offset_top = 136.0
 offset_right = 56.0
 offset_bottom = 192.0
 
-[node name="equip_slot_3" parent="equip_area" instance=ExtResource("2_equip_slot")]
+[node name="EquipSlot" parent="equip_area/slot_clothes" instance=ExtResource("2_equip_slot")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="slot_gloves" type="Control" parent="equip_area"]
 layout_mode = 0
 offset_left = 244.0
 offset_top = 20.0
 offset_right = 300.0
 offset_bottom = 76.0
 
-[node name="equip_slot_4" parent="equip_area" instance=ExtResource("2_equip_slot")]
+[node name="EquipSlot" parent="equip_area/slot_gloves" instance=ExtResource("2_equip_slot")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="slot_shoes" type="Control" parent="equip_area"]
 layout_mode = 0
 offset_left = 244.0
 offset_top = 78.0
 offset_right = 300.0
 offset_bottom = 134.0
 
-[node name="equip_slot_5" parent="equip_area" instance=ExtResource("2_equip_slot")]
+[node name="EquipSlot" parent="equip_area/slot_shoes" instance=ExtResource("2_equip_slot")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="slot_ring" type="Control" parent="equip_area"]
 layout_mode = 0
 offset_left = 244.0
 offset_top = 136.0
 offset_right = 300.0
 offset_bottom = 192.0
 
-[node name="equip_slot_6" parent="equip_area" instance=ExtResource("2_equip_slot")]
+[node name="EquipSlot" parent="equip_area/slot_ring" instance=ExtResource("2_equip_slot")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="slot_earring" type="Control" parent="equip_area"]
 layout_mode = 0
 offset_left = 64.0
 offset_top = 212.0
 offset_right = 120.0
 offset_bottom = 268.0
 
-[node name="equip_slot_7" parent="equip_area" instance=ExtResource("2_equip_slot")]
+[node name="EquipSlot" parent="equip_area/slot_earring" instance=ExtResource("2_equip_slot")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="slot_necklace" type="Control" parent="equip_area"]
 layout_mode = 0
 offset_left = 122.0
 offset_top = 212.0
 offset_right = 178.0
 offset_bottom = 268.0
 
-[node name="equip_slot_8" parent="equip_area" instance=ExtResource("2_equip_slot")]
+[node name="EquipSlot" parent="equip_area/slot_necklace" instance=ExtResource("2_equip_slot")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="slot_badge" type="Control" parent="equip_area"]
 layout_mode = 0
 offset_left = 180.0
 offset_top = 212.0
 offset_right = 236.0
 offset_bottom = 268.0
+
+[node name="EquipSlot" parent="equip_area/slot_badge" instance=ExtResource("2_equip_slot")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="attr_area" type="Control" parent="."]
 layout_mode = 0
@@ -170,15 +243,212 @@ text = "饰品"
 theme_override_font_sizes/font_size = 12
 text = "礼物"
 
-[node name="bag_grid" type="GridContainer" parent="bag_area"]
-layout_mode = 1
-anchor_top = 32.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-columns = 6
-theme_override_constants/h_separation = 2
-theme_override_constants/v_separation = 2
+[node name="bag_slot_0" parent="bag_area" instance=ExtResource("5_bag_slot")]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 32.0
+offset_right = 48.0
+offset_bottom = 80.0
+
+[node name="bag_slot_1" parent="bag_area" instance=ExtResource("5_bag_slot")]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 32.0
+offset_right = 98.0
+offset_bottom = 80.0
+
+[node name="bag_slot_2" parent="bag_area" instance=ExtResource("5_bag_slot")]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 32.0
+offset_right = 148.0
+offset_bottom = 80.0
+
+[node name="bag_slot_3" parent="bag_area" instance=ExtResource("5_bag_slot")]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 32.0
+offset_right = 198.0
+offset_bottom = 80.0
+
+[node name="bag_slot_4" parent="bag_area" instance=ExtResource("5_bag_slot")]
+layout_mode = 0
+offset_left = 200.0
+offset_top = 32.0
+offset_right = 248.0
+offset_bottom = 80.0
+
+[node name="bag_slot_5" parent="bag_area" instance=ExtResource("5_bag_slot")]
+layout_mode = 0
+offset_left = 250.0
+offset_top = 32.0
+offset_right = 298.0
+offset_bottom = 80.0
+
+[node name="bag_slot_6" parent="bag_area" instance=ExtResource("5_bag_slot")]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 82.0
+offset_right = 48.0
+offset_bottom = 130.0
+
+[node name="bag_slot_7" parent="bag_area" instance=ExtResource("5_bag_slot")]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 82.0
+offset_right = 98.0
+offset_bottom = 130.0
+
+[node name="bag_slot_8" parent="bag_area" instance=ExtResource("5_bag_slot")]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 82.0
+offset_right = 148.0
+offset_bottom = 130.0
+
+[node name="bag_slot_9" parent="bag_area" instance=ExtResource("5_bag_slot")]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 82.0
+offset_right = 198.0
+offset_bottom = 130.0
+
+[node name="bag_slot_10" parent="bag_area" instance=ExtResource("5_bag_slot")]
+layout_mode = 0
+offset_left = 200.0
+offset_top = 82.0
+offset_right = 248.0
+offset_bottom = 130.0
+
+[node name="bag_slot_11" parent="bag_area" instance=ExtResource("5_bag_slot")]
+layout_mode = 0
+offset_left = 250.0
+offset_top = 82.0
+offset_right = 298.0
+offset_bottom = 130.0
+
+[node name="bag_slot_12" parent="bag_area" instance=ExtResource("5_bag_slot")]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 132.0
+offset_right = 48.0
+offset_bottom = 180.0
+
+[node name="bag_slot_13" parent="bag_area" instance=ExtResource("5_bag_slot")]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 132.0
+offset_right = 98.0
+offset_bottom = 180.0
+
+[node name="bag_slot_14" parent="bag_area" instance=ExtResource("5_bag_slot")]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 132.0
+offset_right = 148.0
+offset_bottom = 180.0
+
+[node name="bag_slot_15" parent="bag_area" instance=ExtResource("5_bag_slot")]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 132.0
+offset_right = 198.0
+offset_bottom = 180.0
+
+[node name="bag_slot_16" parent="bag_area" instance=ExtResource("5_bag_slot")]
+layout_mode = 0
+offset_left = 200.0
+offset_top = 132.0
+offset_right = 248.0
+offset_bottom = 180.0
+
+[node name="bag_slot_17" parent="bag_area" instance=ExtResource("5_bag_slot")]
+layout_mode = 0
+offset_left = 250.0
+offset_top = 132.0
+offset_right = 298.0
+offset_bottom = 180.0
+
+[node name="bag_slot_18" parent="bag_area" instance=ExtResource("5_bag_slot")]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 182.0
+offset_right = 48.0
+offset_bottom = 230.0
+
+[node name="bag_slot_19" parent="bag_area" instance=ExtResource("5_bag_slot")]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 182.0
+offset_right = 98.0
+offset_bottom = 230.0
+
+[node name="bag_slot_20" parent="bag_area" instance=ExtResource("5_bag_slot")]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 182.0
+offset_right = 148.0
+offset_bottom = 230.0
+
+[node name="bag_slot_21" parent="bag_area" instance=ExtResource("5_bag_slot")]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 182.0
+offset_right = 198.0
+offset_bottom = 230.0
+
+[node name="bag_slot_22" parent="bag_area" instance=ExtResource("5_bag_slot")]
+layout_mode = 0
+offset_left = 200.0
+offset_top = 182.0
+offset_right = 248.0
+offset_bottom = 230.0
+
+[node name="bag_slot_23" parent="bag_area" instance=ExtResource("5_bag_slot")]
+layout_mode = 0
+offset_left = 250.0
+offset_top = 182.0
+offset_right = 298.0
+offset_bottom = 230.0
+
+[node name="bag_slot_24" parent="bag_area" instance=ExtResource("5_bag_slot")]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 232.0
+offset_right = 48.0
+offset_bottom = 280.0
+
+[node name="bag_slot_25" parent="bag_area" instance=ExtResource("5_bag_slot")]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 232.0
+offset_right = 98.0
+offset_bottom = 280.0
+
+[node name="bag_slot_26" parent="bag_area" instance=ExtResource("5_bag_slot")]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 232.0
+offset_right = 148.0
+offset_bottom = 280.0
+
+[node name="bag_slot_27" parent="bag_area" instance=ExtResource("5_bag_slot")]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 232.0
+offset_right = 198.0
+offset_bottom = 280.0
+
+[node name="bag_slot_28" parent="bag_area" instance=ExtResource("5_bag_slot")]
+layout_mode = 0
+offset_left = 200.0
+offset_top = 232.0
+offset_right = 248.0
+offset_bottom = 280.0
+
+[node name="bag_slot_29" parent="bag_area" instance=ExtResource("5_bag_slot")]
+layout_mode = 0
+offset_left = 250.0
+offset_top = 232.0
+offset_right = 298.0
+offset_bottom = 280.0
