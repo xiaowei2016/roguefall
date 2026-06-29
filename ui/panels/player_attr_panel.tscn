@@ -1,0 +1,92 @@
+[gd_scene load_steps=3 format=3 uid="uid://dplayer_attr_panel_001"]
+
+[ext_resource type="Theme" path="res://assets/ui/theme/roguefall_theme.tres" id="1_theme"]
+[ext_resource type="PackedScene" uid="uid://dattr_row_001" path="res://ui/components/attr_row.tscn" id="2_attr_row"]
+
+[node name="PlayerAttrPanel" type="Control"]
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 530.0
+
+[node name="attr_bg" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 530.0
+self_modulate = Color(0.12, 0.13, 0.15, 0.95)
+mouse_filter = 2
+
+[node name="vbox_attr_main" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 6
+
+[node name="label_title" type="Label" parent="vbox_attr_main"]
+layout_mode = 2
+text = "属性"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 20
+theme_override_colors/font_color = Color(0.2, 0.6, 0.8, 1)
+
+[node name="scroll_attr_list" type="ScrollContainer" parent="vbox_attr_main"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="hbox_two_col" type="HBoxContainer" parent="vbox_attr_main/scroll_attr_list"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="vbox_left_col" type="VBoxContainer" parent="vbox_attr_main/scroll_attr_list/hbox_two_col"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.0
+theme_override_constants/separation = 2
+
+[node name="attr_row_0" parent="vbox_attr_main/scroll_attr_list/hbox_two_col/vbox_left_col" instance=ExtResource("2_attr_row")]
+
+[node name="attr_row_1" parent="vbox_attr_main/scroll_attr_list/hbox_two_col/vbox_left_col" instance=ExtResource("2_attr_row")]
+
+[node name="attr_row_2" parent="vbox_attr_main/scroll_attr_list/hbox_two_col/vbox_left_col" instance=ExtResource("2_attr_row")]
+
+[node name="attr_row_3" parent="vbox_attr_main/scroll_attr_list/hbox_two_col/vbox_left_col" instance=ExtResource("2_attr_row")]
+
+[node name="attr_row_4" parent="vbox_attr_main/scroll_attr_list/hbox_two_col/vbox_left_col" instance=ExtResource("2_attr_row")]
+
+[node name="attr_row_5" parent="vbox_attr_main/scroll_attr_list/hbox_two_col/vbox_left_col" instance=ExtResource("2_attr_row")]
+
+[node name="attr_row_6" parent="vbox_attr_main/scroll_attr_list/hbox_two_col/vbox_left_col" instance=ExtResource("2_attr_row")]
+
+[node name="attr_row_7" parent="vbox_attr_main/scroll_attr_list/hbox_two_col/vbox_left_col" instance=ExtResource("2_attr_row")]
+
+[node name="vbox_right_col" type="VBoxContainer" parent="vbox_attr_main/scroll_attr_list/hbox_two_col"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.0
+theme_override_constants/separation = 2
+
+[node name="attr_row_8" parent="vbox_attr_main/scroll_attr_list/hbox_two_col/vbox_right_col" instance=ExtResource("2_attr_row")]
+
+[node name="attr_row_9" parent="vbox_attr_main/scroll_attr_list/hbox_two_col/vbox_right_col" instance=ExtResource("2_attr_row")]
+
+[node name="attr_row_10" parent="vbox_attr_main/scroll_attr_list/hbox_two_col/vbox_right_col" instance=ExtResource("2_attr_row")]
+
+[node name="attr_row_11" parent="vbox_attr_main/scroll_attr_list/hbox_two_col/vbox_right_col" instance=ExtResource("2_attr_row")]
+
+[node name="attr_row_12" parent="vbox_attr_main/scroll_attr_list/hbox_two_col/vbox_right_col" instance=ExtResource("2_attr_row")]
+
+[node name="attr_row_13" parent="vbox_attr_main/scroll_attr_list/hbox_two_col/vbox_right_col" instance=ExtResource("2_attr_row")]
+
+[node name="attr_row_14" parent="vbox_attr_main/scroll_attr_list/hbox_two_col/vbox_right_col" instance=ExtResource("2_attr_row")]
+
+[node name="attr_row_15" parent="vbox_attr_main/scroll_attr_list/hbox_two_col/vbox_right_col" instance=ExtResource("2_attr_row")]
+
+[node name="bottom_tab_btn" type="Button" parent="vbox_attr_main"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "切换"
+theme_override_font_sizes/font_size = 12

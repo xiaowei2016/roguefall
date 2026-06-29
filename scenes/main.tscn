@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://cpwj27yudk003" path="res://scripts/DesktopPixelPassthrough.cs" id="3_pixel"]
 [ext_resource type="PackedScene" uid="uid://bk7g3g0kc7g7e" path="res://scenes/GrasslandStage2D.tscn" id="5_grassland_stage"]
 [ext_resource type="Texture2D" uid="uid://dyuu0iay6mfdc" path="res://assets/ui/_incoming/center_panel_back.png" id="6_center_panel_back"]
-[ext_resource type="PackedScene" uid="uid://dcenter_main_panel_001" path="res://scenes/ui/center_main_panel.tscn" id="7_center_main"]
+[ext_resource type="PackedScene" uid="uid://dcenter_main_panel_001" path="res://ui/root/center_main_panel.tscn" id="7_center_main"]
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8svgy"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 

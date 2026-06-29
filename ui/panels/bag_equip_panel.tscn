@@ -1,0 +1,147 @@
+[gd_scene load_steps=4 format=3 uid="uid://dbag_equip_panel_001"]
+
+[ext_resource type="Theme" path="res://assets/ui/theme/roguefall_theme.tres" id="1_theme"]
+[ext_resource type="PackedScene" uid="uid://dequip_slot_001" path="res://ui/components/equip_slot.tscn" id="2_equip_slot"]
+[ext_resource type="PackedScene" uid="uid://dbag_slot_001" path="res://ui/components/bag_slot.tscn" id="3_bag_slot"]
+
+[node name="BagEquipPanel" type="Control"]
+layout_mode = 0
+offset_right = 420.0
+offset_bottom = 530.0
+
+[node name="bag_bg" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 420.0
+offset_bottom = 530.0
+self_modulate = Color(0.12, 0.13, 0.15, 0.95)
+mouse_filter = 2
+
+[node name="vbox_main" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 4
+
+[node name="tab_container" type="HBoxContainer" parent="vbox_main"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+theme_override_constants/separation = 3
+
+[node name="tab_bag" type="Button" parent="vbox_main/tab_container"]
+theme_override_font_sizes/font_size = 12
+text = "背包"
+
+[node name="tab_equip" type="Button" parent="vbox_main/tab_container"]
+theme_override_font_sizes/font_size = 12
+text = "装备"
+
+[node name="tab_accessory" type="Button" parent="vbox_main/tab_container"]
+theme_override_font_sizes/font_size = 12
+text = "饰品"
+
+[node name="tab_gift" type="Button" parent="vbox_main/tab_container"]
+theme_override_font_sizes/font_size = 12
+text = "礼物"
+
+[node name="scroll_equip" type="ScrollContainer" parent="vbox_main"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_minimum_size = Vector2(0, 180)
+
+[node name="grid_equip" type="GridContainer" parent="vbox_main/scroll_equip"]
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 3
+theme_override_constants/h_separation = 4
+theme_override_constants/v_separation = 4
+
+[node name="equip_slot_0" parent="vbox_main/scroll_equip/grid_equip" instance=ExtResource("2_equip_slot")]
+
+[node name="equip_slot_1" parent="vbox_main/scroll_equip/grid_equip" instance=ExtResource("2_equip_slot")]
+
+[node name="equip_slot_2" parent="vbox_main/scroll_equip/grid_equip" instance=ExtResource("2_equip_slot")]
+
+[node name="equip_slot_3" parent="vbox_main/scroll_equip/grid_equip" instance=ExtResource("2_equip_slot")]
+
+[node name="equip_slot_4" parent="vbox_main/scroll_equip/grid_equip" instance=ExtResource("2_equip_slot")]
+
+[node name="equip_slot_5" parent="vbox_main/scroll_equip/grid_equip" instance=ExtResource("2_equip_slot")]
+
+[node name="equip_slot_6" parent="vbox_main/scroll_equip/grid_equip" instance=ExtResource("2_equip_slot")]
+
+[node name="equip_slot_7" parent="vbox_main/scroll_equip/grid_equip" instance=ExtResource("2_equip_slot")]
+
+[node name="equip_slot_8" parent="vbox_main/scroll_equip/grid_equip" instance=ExtResource("2_equip_slot")]
+
+[node name="grid_bag" type="GridContainer" parent="vbox_main"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+columns = 6
+theme_override_constants/h_separation = 2
+theme_override_constants/v_separation = 2
+
+[node name="bag_slot_0" parent="vbox_main/grid_bag" instance=ExtResource("3_bag_slot")]
+
+[node name="bag_slot_1" parent="vbox_main/grid_bag" instance=ExtResource("3_bag_slot")]
+
+[node name="bag_slot_2" parent="vbox_main/grid_bag" instance=ExtResource("3_bag_slot")]
+
+[node name="bag_slot_3" parent="vbox_main/grid_bag" instance=ExtResource("3_bag_slot")]
+
+[node name="bag_slot_4" parent="vbox_main/grid_bag" instance=ExtResource("3_bag_slot")]
+
+[node name="bag_slot_5" parent="vbox_main/grid_bag" instance=ExtResource("3_bag_slot")]
+
+[node name="bag_slot_6" parent="vbox_main/grid_bag" instance=ExtResource("3_bag_slot")]
+
+[node name="bag_slot_7" parent="vbox_main/grid_bag" instance=ExtResource("3_bag_slot")]
+
+[node name="bag_slot_8" parent="vbox_main/grid_bag" instance=ExtResource("3_bag_slot")]
+
+[node name="bag_slot_9" parent="vbox_main/grid_bag" instance=ExtResource("3_bag_slot")]
+
+[node name="bag_slot_10" parent="vbox_main/grid_bag" instance=ExtResource("3_bag_slot")]
+
+[node name="bag_slot_11" parent="vbox_main/grid_bag" instance=ExtResource("3_bag_slot")]
+
+[node name="bag_slot_12" parent="vbox_main/grid_bag" instance=ExtResource("3_bag_slot")]
+
+[node name="bag_slot_13" parent="vbox_main/grid_bag" instance=ExtResource("3_bag_slot")]
+
+[node name="bag_slot_14" parent="vbox_main/grid_bag" instance=ExtResource("3_bag_slot")]
+
+[node name="bag_slot_15" parent="vbox_main/grid_bag" instance=ExtResource("3_bag_slot")]
+
+[node name="bag_slot_16" parent="vbox_main/grid_bag" instance=ExtResource("3_bag_slot")]
+
+[node name="bag_slot_17" parent="vbox_main/grid_bag" instance=ExtResource("3_bag_slot")]
+
+[node name="bag_slot_18" parent="vbox_main/grid_bag" instance=ExtResource("3_bag_slot")]
+
+[node name="bag_slot_19" parent="vbox_main/grid_bag" instance=ExtResource("3_bag_slot")]
+
+[node name="bag_slot_20" parent="vbox_main/grid_bag" instance=ExtResource("3_bag_slot")]
+
+[node name="bag_slot_21" parent="vbox_main/grid_bag" instance=ExtResource("3_bag_slot")]
+
+[node name="bag_slot_22" parent="vbox_main/grid_bag" instance=ExtResource("3_bag_slot")]
+
+[node name="bag_slot_23" parent="vbox_main/grid_bag" instance=ExtResource("3_bag_slot")]
+
+[node name="bag_slot_24" parent="vbox_main/grid_bag" instance=ExtResource("3_bag_slot")]
+
+[node name="bag_slot_25" parent="vbox_main/grid_bag" instance=ExtResource("3_bag_slot")]
+
+[node name="bag_slot_26" parent="vbox_main/grid_bag" instance=ExtResource("3_bag_slot")]
+
+[node name="bag_slot_27" parent="vbox_main/grid_bag" instance=ExtResource("3_bag_slot")]
+
+[node name="bag_slot_28" parent="vbox_main/grid_bag" instance=ExtResource("3_bag_slot")]
+
+[node name="bag_slot_29" parent="vbox_main/grid_bag" instance=ExtResource("3_bag_slot")]
