@@ -1,9 +1,9 @@
 extends Control
 
 @onready var power_label: Label = $HeroCard/PowerPanel/PowerLabel
-@onready var atk_label: Label = $HeroCard/StatList/AtkLabel
-@onready var def_label: Label = $HeroCard/StatList/DefLabel
-@onready var hp_label: Label = $HeroCard/StatList/HpLabel
+@onready var atk_label: Label = $HeroCard/StatsScroll/StatList/AtkLabel
+@onready var def_label: Label = $HeroCard/StatsScroll/StatList/DefLabel
+@onready var hp_label: Label = $HeroCard/StatsScroll/StatList/HpLabel
 @onready var level_label: Label = $HeroCard/LevelLabel
 
 

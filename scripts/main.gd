@@ -380,8 +380,8 @@ func _refresh_battle_bar() -> void:
 
 
 func _refresh_detail_panel() -> void:
-	$PanelRoot/RightPanel/host_detail/Card/Stats/Stat1.text = "等级：" + str(GameData.level)
-	$PanelRoot/RightPanel/host_detail/Card/Stats/Stat2.text = "攻击：" + str(GameData.attack)
-	$PanelRoot/RightPanel/host_detail/Card/Stats/Stat3.text = "防御：" + str(GameData.defense)
-	$PanelRoot/RightPanel/host_detail/Card/Stats/Stat4.text = "生命：" + str(GameData.hp) + " / " + str(GameData.max_hp)
-	$PanelRoot/RightPanel/host_detail/Card/Stats/Stat5.text = "金币：" + str(GameData.gold)
+	$PanelRoot/RightPanel/host_detail/Card/StatsScroll/Stats/Stat1.text = "等级：" + str(GameData.level)
+	$PanelRoot/RightPanel/host_detail/Card/StatsScroll/Stats/Stat2.text = "攻击：" + str(GameData.attack)
+	$PanelRoot/RightPanel/host_detail/Card/StatsScroll/Stats/Stat3.text = "防御：" + str(GameData.defense)
+	$PanelRoot/RightPanel/host_detail/Card/StatsScroll/Stats/Stat4.text = "生命：" + str(GameData.hp) + " / " + str(GameData.max_hp)
+	$PanelRoot/RightPanel/host_detail/Card/StatsScroll/Stats/Stat5.text = "金币：" + str(GameData.gold)

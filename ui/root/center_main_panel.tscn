@@ -324,39 +324,67 @@ text = "战力 1,300"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="StatList" type="GridContainer" parent="HeroCard" unique_id=38452306]
+[node name="StatsScroll" type="ScrollContainer" parent="HeroCard"]
 layout_mode = 0
 offset_left = 24.0
 offset_top = 306.0
 offset_right = 292.0
 offset_bottom = 383.0
+horizontal_scroll_mode = 0
+
+[node name="StatList" type="GridContainer" parent="HeroCard/StatsScroll" unique_id=38452306]
+layout_mode = 2
 theme_override_constants/h_separation = 18
 theme_override_constants/v_separation = 4
 columns = 2
 
-[node name="AtkLabel" type="Label" parent="HeroCard/StatList" unique_id=1886971657]
+[node name="AtkLabel" type="Label" parent="HeroCard/StatsScroll/StatList" unique_id=1886971657]
 custom_minimum_size = Vector2(122, 18)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
 text = "攻击 10"
 
-[node name="DefLabel" type="Label" parent="HeroCard/StatList" unique_id=1303180858]
+[node name="DefLabel" type="Label" parent="HeroCard/StatsScroll/StatList" unique_id=1303180858]
 custom_minimum_size = Vector2(122, 18)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
 text = "防御 5"
 
-[node name="HpLabel" type="Label" parent="HeroCard/StatList" unique_id=715458823]
+[node name="HpLabel" type="Label" parent="HeroCard/StatsScroll/StatList" unique_id=715458823]
 custom_minimum_size = Vector2(122, 18)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
 text = "生命 100 / 100"
 
-[node name="LuckLabel" type="Label" parent="HeroCard/StatList" unique_id=343014091]
+[node name="LuckLabel" type="Label" parent="HeroCard/StatsScroll/StatList" unique_id=343014091]
 custom_minimum_size = Vector2(122, 18)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
 text = "暴击 0%"
+
+[node name="PowerStatLabel" type="Label" parent="HeroCard/StatsScroll/StatList"]
+custom_minimum_size = Vector2(122, 18)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+text = "力量 12"
+
+[node name="SpeedStatLabel" type="Label" parent="HeroCard/StatsScroll/StatList"]
+custom_minimum_size = Vector2(122, 18)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+text = "敏捷 8"
+
+[node name="CritLabel" type="Label" parent="HeroCard/StatsScroll/StatList"]
+custom_minimum_size = Vector2(122, 18)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+text = "暴伤 150%"
+
+[node name="LuckStatLabel" type="Label" parent="HeroCard/StatsScroll/StatList"]
+custom_minimum_size = Vector2(122, 18)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+text = "幸运 0"
 
 [node name="BagPanel" type="Panel" parent="." unique_id=2125614390]
 layout_mode = 0
@@ -423,137 +451,304 @@ texture = ExtResource("6_reroll")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="BagGrid" type="GridContainer" parent="BagPanel" unique_id=1464491975]
+[node name="BagScroll" type="ScrollContainer" parent="BagPanel"]
 layout_mode = 0
-offset_left = 40.0
+offset_left = 28.0
 offset_top = 86.0
-offset_right = 280.0
-offset_bottom = 329.0
+offset_right = 292.0
+offset_bottom = 322.0
+horizontal_scroll_mode = 0
+
+[node name="BagGrid" type="GridContainer" parent="BagPanel/BagScroll" unique_id=1464491975]
+custom_minimum_size = Vector2(239, 243)
+layout_mode = 2
 theme_override_constants/h_separation = 6
 theme_override_constants/v_separation = 6
 columns = 5
 
-[node name="BagSlot1" type="Panel" parent="BagPanel/BagGrid" unique_id=1763061415]
+[node name="BagSlot1" type="Panel" parent="BagPanel/BagScroll/BagGrid" unique_id=1763061415]
 custom_minimum_size = Vector2(43, 43)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
 
-[node name="BagSlot2" type="Panel" parent="BagPanel/BagGrid" unique_id=1750569230]
+[node name="Icon" type="TextureRect" parent="BagPanel/BagScroll/BagGrid/BagSlot1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 7.0
+offset_top = 5.0
+offset_right = -7.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_reroll")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Count" type="Label" parent="BagPanel/BagScroll/BagGrid/BagSlot1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.45
+anchor_top = 0.52
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_colors/font_color = Color(0.22, 0.15, 0.1, 1)
+text = "12"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="BagSlot2" type="Panel" parent="BagPanel/BagScroll/BagGrid" unique_id=1750569230]
 custom_minimum_size = Vector2(43, 43)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
 
-[node name="BagSlot3" type="Panel" parent="BagPanel/BagGrid" unique_id=687616533]
+[node name="Icon" type="TextureRect" parent="BagPanel/BagScroll/BagGrid/BagSlot2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 7.0
+offset_top = 5.0
+offset_right = -7.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_detail")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Count" type="Label" parent="BagPanel/BagScroll/BagGrid/BagSlot2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.45
+anchor_top = 0.52
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_colors/font_color = Color(0.22, 0.15, 0.1, 1)
+text = "1"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="BagSlot3" type="Panel" parent="BagPanel/BagScroll/BagGrid" unique_id=687616533]
 custom_minimum_size = Vector2(43, 43)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
 
-[node name="BagSlot4" type="Panel" parent="BagPanel/BagGrid" unique_id=249930937]
+[node name="Icon" type="TextureRect" parent="BagPanel/BagScroll/BagGrid/BagSlot3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 7.0
+offset_top = 5.0
+offset_right = -7.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_settings")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Count" type="Label" parent="BagPanel/BagScroll/BagGrid/BagSlot3"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.45
+anchor_top = 0.52
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_colors/font_color = Color(0.22, 0.15, 0.1, 1)
+text = "3"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="BagSlot4" type="Panel" parent="BagPanel/BagScroll/BagGrid" unique_id=249930937]
 custom_minimum_size = Vector2(43, 43)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
 
-[node name="BagSlot5" type="Panel" parent="BagPanel/BagGrid" unique_id=566278139]
+[node name="Icon" type="TextureRect" parent="BagPanel/BagScroll/BagGrid/BagSlot4"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 7.0
+offset_top = 5.0
+offset_right = -7.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_pet")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Count" type="Label" parent="BagPanel/BagScroll/BagGrid/BagSlot4"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.45
+anchor_top = 0.52
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_colors/font_color = Color(0.22, 0.15, 0.1, 1)
+text = "6"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="BagSlot5" type="Panel" parent="BagPanel/BagScroll/BagGrid" unique_id=566278139]
 custom_minimum_size = Vector2(43, 43)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
 
-[node name="BagSlot6" type="Panel" parent="BagPanel/BagGrid" unique_id=6734962]
+[node name="Icon" type="TextureRect" parent="BagPanel/BagScroll/BagGrid/BagSlot5"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 7.0
+offset_top = 5.0
+offset_right = -7.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_map")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Count" type="Label" parent="BagPanel/BagScroll/BagGrid/BagSlot5"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.45
+anchor_top = 0.52
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_colors/font_color = Color(0.22, 0.15, 0.1, 1)
+text = "9"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="BagSlot6" type="Panel" parent="BagPanel/BagScroll/BagGrid" unique_id=6734962]
 custom_minimum_size = Vector2(43, 43)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
 
-[node name="BagSlot7" type="Panel" parent="BagPanel/BagGrid" unique_id=632188282]
+[node name="Icon" type="TextureRect" parent="BagPanel/BagScroll/BagGrid/BagSlot6"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 7.0
+offset_top = 5.0
+offset_right = -7.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_warehouse")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Count" type="Label" parent="BagPanel/BagScroll/BagGrid/BagSlot6"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.45
+anchor_top = 0.52
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_colors/font_color = Color(0.22, 0.15, 0.1, 1)
+text = "2"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="BagSlot7" type="Panel" parent="BagPanel/BagScroll/BagGrid" unique_id=632188282]
 custom_minimum_size = Vector2(43, 43)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
 
-[node name="BagSlot8" type="Panel" parent="BagPanel/BagGrid" unique_id=1575641857]
+[node name="BagSlot8" type="Panel" parent="BagPanel/BagScroll/BagGrid" unique_id=1575641857]
 custom_minimum_size = Vector2(43, 43)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
 
-[node name="BagSlot9" type="Panel" parent="BagPanel/BagGrid" unique_id=1249394240]
+[node name="BagSlot9" type="Panel" parent="BagPanel/BagScroll/BagGrid" unique_id=1249394240]
 custom_minimum_size = Vector2(43, 43)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
 
-[node name="BagSlot10" type="Panel" parent="BagPanel/BagGrid" unique_id=456071309]
+[node name="BagSlot10" type="Panel" parent="BagPanel/BagScroll/BagGrid" unique_id=456071309]
 custom_minimum_size = Vector2(43, 43)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
 
-[node name="BagSlot11" type="Panel" parent="BagPanel/BagGrid" unique_id=1973313700]
+[node name="BagSlot11" type="Panel" parent="BagPanel/BagScroll/BagGrid" unique_id=1973313700]
 custom_minimum_size = Vector2(43, 43)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
 
-[node name="BagSlot12" type="Panel" parent="BagPanel/BagGrid" unique_id=1391568504]
+[node name="BagSlot12" type="Panel" parent="BagPanel/BagScroll/BagGrid" unique_id=1391568504]
 custom_minimum_size = Vector2(43, 43)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
 
-[node name="BagSlot13" type="Panel" parent="BagPanel/BagGrid" unique_id=158811849]
+[node name="BagSlot13" type="Panel" parent="BagPanel/BagScroll/BagGrid" unique_id=158811849]
 custom_minimum_size = Vector2(43, 43)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
 
-[node name="BagSlot14" type="Panel" parent="BagPanel/BagGrid" unique_id=1677220885]
+[node name="BagSlot14" type="Panel" parent="BagPanel/BagScroll/BagGrid" unique_id=1677220885]
 custom_minimum_size = Vector2(43, 43)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
 
-[node name="BagSlot15" type="Panel" parent="BagPanel/BagGrid" unique_id=533470938]
+[node name="BagSlot15" type="Panel" parent="BagPanel/BagScroll/BagGrid" unique_id=533470938]
 custom_minimum_size = Vector2(43, 43)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
 
-[node name="BagSlot16" type="Panel" parent="BagPanel/BagGrid" unique_id=935993096]
+[node name="BagSlot16" type="Panel" parent="BagPanel/BagScroll/BagGrid" unique_id=935993096]
 custom_minimum_size = Vector2(43, 43)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
 
-[node name="BagSlot17" type="Panel" parent="BagPanel/BagGrid" unique_id=355720234]
+[node name="BagSlot17" type="Panel" parent="BagPanel/BagScroll/BagGrid" unique_id=355720234]
 custom_minimum_size = Vector2(43, 43)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
 
-[node name="BagSlot18" type="Panel" parent="BagPanel/BagGrid" unique_id=1320584442]
+[node name="BagSlot18" type="Panel" parent="BagPanel/BagScroll/BagGrid" unique_id=1320584442]
 custom_minimum_size = Vector2(43, 43)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
 
-[node name="BagSlot19" type="Panel" parent="BagPanel/BagGrid" unique_id=1178499654]
+[node name="BagSlot19" type="Panel" parent="BagPanel/BagScroll/BagGrid" unique_id=1178499654]
 custom_minimum_size = Vector2(43, 43)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
 
-[node name="BagSlot20" type="Panel" parent="BagPanel/BagGrid" unique_id=1578327873]
+[node name="BagSlot20" type="Panel" parent="BagPanel/BagScroll/BagGrid" unique_id=1578327873]
 custom_minimum_size = Vector2(43, 43)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
 
-[node name="BagSlot21" type="Panel" parent="BagPanel/BagGrid" unique_id=1594098913]
+[node name="BagSlot21" type="Panel" parent="BagPanel/BagScroll/BagGrid" unique_id=1594098913]
 custom_minimum_size = Vector2(43, 43)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
 
-[node name="BagSlot22" type="Panel" parent="BagPanel/BagGrid" unique_id=1942199935]
+[node name="BagSlot22" type="Panel" parent="BagPanel/BagScroll/BagGrid" unique_id=1942199935]
 custom_minimum_size = Vector2(43, 43)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
 
-[node name="BagSlot23" type="Panel" parent="BagPanel/BagGrid" unique_id=641592351]
+[node name="BagSlot23" type="Panel" parent="BagPanel/BagScroll/BagGrid" unique_id=641592351]
 custom_minimum_size = Vector2(43, 43)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
 
-[node name="BagSlot24" type="Panel" parent="BagPanel/BagGrid" unique_id=1980896702]
+[node name="BagSlot24" type="Panel" parent="BagPanel/BagScroll/BagGrid" unique_id=1980896702]
 custom_minimum_size = Vector2(43, 43)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
 
-[node name="BagSlot25" type="Panel" parent="BagPanel/BagGrid" unique_id=171449677]
+[node name="BagSlot25" type="Panel" parent="BagPanel/BagScroll/BagGrid" unique_id=171449677]
 custom_minimum_size = Vector2(43, 43)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_slot")

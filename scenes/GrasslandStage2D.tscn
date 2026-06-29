@@ -1,25 +1,13 @@
 [gd_scene format=3 uid="uid://bk7g3g0kc7g7e"]
 
 [ext_resource type="Texture2D" uid="uid://xy4bw7tfodki" path="res://assets/grassland/grassland_stage.png" id="1_stage"]
-
-[ext_resource type="Texture2D" path="res://assets/grassland/segment_sources/sky_source.png" id="2_sky_source"]
-[ext_resource type="Texture2D" path="res://assets/grassland/segment_sources/mountain_source.png" id="3_mountain_source"]
-[ext_resource type="Texture2D" path="res://assets/grassland/segment_sources/village_source.png" id="4_village_source"]
-[ext_resource type="Texture2D" path="res://assets/grassland/segment_sources/ground_source.png" id="5_ground_source"]
-[ext_resource type="Texture2D" path="res://assets/grassland/segment_sources/grass_source.png" id="6_grass_source"]
-[ext_resource type="Texture2D" path="res://assets/grassland/segment_sources/tree_source.png" id="7_tree_source"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
-bg_color = Color(1, 0.957, 0.867, 0.92)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.94, 0.64, 0.25, 1)
-corner_radius_top_left = 18
-corner_radius_top_right = 18
-corner_radius_bottom_right = 18
-corner_radius_bottom_left = 18
+[ext_resource type="Texture2D" uid="uid://cscym2t10cfmq" path="res://assets/grassland/segment_sources/sky_source.png" id="2_sky_source"]
+[ext_resource type="Texture2D" uid="uid://fdq18v622jwk" path="res://assets/grassland/segment_sources/mountain_source.png" id="3_mountain_source"]
+[ext_resource type="Texture2D" uid="uid://d0jveclaymhoy" path="res://assets/grassland/segment_sources/village_source.png" id="4_village_source"]
+[ext_resource type="Texture2D" uid="uid://dtff53gncv1bd" path="res://assets/grassland/segment_sources/ground_source.png" id="5_ground_source"]
+[ext_resource type="Texture2D" uid="uid://vpsq5y7knekr" path="res://assets/grassland/segment_sources/grass_source.png" id="6_grass_source"]
+[ext_resource type="Texture2D" uid="uid://vb7t13a3q48q" path="res://assets/grassland/segment_sources/tree_source.png" id="7_tree_source"]
+[ext_resource type="Script" uid="uid://cm6ipnrxiocaw" path="res://scripts/grassland_stage_2d.gd" id="8_stage_script"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_badge"]
 bg_color = Color(0.24, 0.47, 0.82, 0.92)
@@ -34,39 +22,35 @@ anchors_preset = 0
 offset_right = 720.0
 offset_bottom = 180.0
 mouse_filter = 2
+script = ExtResource("8_stage_script")
 
-[node name="Frame" type="Panel" parent="." unique_id=658485529]
+[node name="Frame" type="Control" parent="." unique_id=658485529]
 clip_contents = true
-layout_mode = 0
+anchors_preset = 0
 offset_right = 720.0
 offset_bottom = 180.0
 mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 
-[node name="world_root" type="Control" parent="Frame"]
-layout_mode = 0
-offset_left = 0.0
-offset_top = 0.0
+[node name="world_root" type="Control" parent="Frame" unique_id=1720945950]
+anchors_preset = 0
 offset_right = 3600.0
 offset_bottom = 180.0
 mouse_filter = 2
 
 [node name="StageImage" type="TextureRect" parent="Frame/world_root" unique_id=1711065883]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 12.0
-offset_top = 8.0
-offset_right = -12.0
-offset_bottom = -7.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("1_stage")
 expand_mode = 1
 
-[node name="ground_line" type="ColorRect" parent="Frame/world_root"]
+[node name="ground_line" type="ColorRect" parent="Frame/world_root" unique_id=1122610388]
+visible = false
 layout_mode = 0
 offset_left = 12.0
 offset_top = 140.0
@@ -75,112 +59,182 @@ offset_bottom = 142.0
 mouse_filter = 2
 color = Color(0.3, 0.8, 0.3, 0.5)
 
-[node name="segment_0_preview" type="Control" parent="Frame/world_root"]
-layout_mode = 0
+[node name="segment_0_preview" type="Control" parent="Frame/world_root" unique_id=666507944]
+anchors_preset = 0
 offset_right = 720.0
 offset_bottom = 180.0
 mouse_filter = 2
 
-[node name="sky_source_layer" type="TextureRect" parent="Frame/world_root/segment_0_preview"]
+[node name="sky_source_layer" type="TextureRect" parent="Frame/world_root/segment_0_preview" unique_id=1668110400]
 layout_mode = 0
+offset_top = 21.0
+offset_right = 720.0
+offset_bottom = 90.0
 mouse_filter = 2
 texture = ExtResource("2_sky_source")
 expand_mode = 1
-visible = true
 
-[node name="mountain_source_layer" type="TextureRect" parent="Frame/world_root/segment_0_preview"]
+[node name="mountain_source_layer" type="TextureRect" parent="Frame/world_root/segment_0_preview" unique_id=1566486146]
 layout_mode = 0
+offset_top = 62.0
+offset_right = 720.0
+offset_bottom = 128.0
 mouse_filter = 2
 texture = ExtResource("3_mountain_source")
 expand_mode = 1
-visible = true
 
-[node name="village_source_layer" type="TextureRect" parent="Frame/world_root/segment_0_preview"]
+[node name="village_source_layer" type="TextureRect" parent="Frame/world_root/segment_0_preview" unique_id=1321275005]
 layout_mode = 0
+offset_top = 41.0
+offset_right = 720.0
+offset_bottom = 133.0
 mouse_filter = 2
 texture = ExtResource("4_village_source")
 expand_mode = 1
-visible = true
 
-[node name="ground_source_layer" type="TextureRect" parent="Frame/world_root/segment_0_preview"]
+[node name="tree_source_layer" type="TextureRect" parent="Frame/world_root/segment_0_preview" unique_id=1198181658]
 layout_mode = 0
-mouse_filter = 2
-texture = ExtResource("5_ground_source")
-expand_mode = 1
-visible = true
-
-[node name="grass_source_layer" type="TextureRect" parent="Frame/world_root/segment_0_preview"]
-layout_mode = 0
-mouse_filter = 2
-texture = ExtResource("6_grass_source")
-expand_mode = 1
-visible = false
-
-[node name="tree_source_layer" type="TextureRect" parent="Frame/world_root/segment_0_preview"]
-layout_mode = 0
+offset_left = 2.0
+offset_top = 14.0
+offset_right = 709.0
+offset_bottom = 140.0
 mouse_filter = 2
 texture = ExtResource("7_tree_source")
 expand_mode = 1
-visible = false
 
-[node name="actor_layer" type="Control" parent="Frame/world_root"]
+[node name="ground_source_layer" type="TextureRect" parent="Frame/world_root/segment_0_preview" unique_id=1632398319]
 layout_mode = 0
+offset_top = 128.0
+offset_right = 720.0
+offset_bottom = 180.0
+mouse_filter = 2
+texture = ExtResource("5_ground_source")
+expand_mode = 1
+
+[node name="grass_source_layer" type="TextureRect" parent="Frame/world_root/segment_0_preview" unique_id=1686635354]
+layout_mode = 0
+offset_top = 128.0
+offset_right = 720.0
+offset_bottom = 183.0
+mouse_filter = 2
+texture = ExtResource("6_grass_source")
+expand_mode = 1
+
+[node name="actor_layer" type="Control" parent="Frame/world_root" unique_id=643186612]
+anchors_preset = 0
 offset_right = 3600.0
 offset_bottom = 180.0
 mouse_filter = 2
 
-[node name="player_anchor" type="Control" parent="Frame/world_root/actor_layer"]
-layout_mode = 0
+[node name="player_anchor" type="Control" parent="Frame/world_root/actor_layer" unique_id=1195712725]
+anchors_preset = 0
 offset_left = 180.0
 offset_top = 140.0
 offset_right = 181.0
 offset_bottom = 141.0
 mouse_filter = 2
 
-[node name="player_placeholder" type="ColorRect" parent="Frame/world_root/actor_layer/player_anchor"]
-layout_mode = 0
-offset_left = -16.0
-offset_top = -48.0
-offset_right = 16.0
-offset_bottom = 0.0
+[node name="PlayerVisual" type="Control" parent="Frame/world_root/actor_layer/player_anchor" unique_id=821476277]
+anchors_preset = 0
+offset_right = 1.0
+offset_bottom = 1.0
 mouse_filter = 2
-color = Color(0.267, 0.533, 1, 1)
 
-[node name="enemy_anchor" type="Control" parent="Frame/world_root/actor_layer"]
+[node name="PlayerSprite" type="TextureRect" parent="Frame/world_root/actor_layer/player_anchor/PlayerVisual" unique_id=1035016829]
 layout_mode = 0
+offset_left = -32.0
+offset_top = -72.0
+offset_right = 32.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="player_placeholder" type="ColorRect" parent="Frame/world_root/actor_layer/player_anchor/PlayerVisual" unique_id=969352563]
+layout_mode = 0
+offset_left = -14.0
+offset_top = -40.0
+offset_right = 14.0
+mouse_filter = 2
+color = Color(0.21, 0.44, 0.95, 1)
+
+[node name="player_head" type="ColorRect" parent="Frame/world_root/actor_layer/player_anchor/PlayerVisual" unique_id=355792525]
+layout_mode = 0
+offset_left = -10.0
+offset_top = -58.0
+offset_right = 10.0
+offset_bottom = -38.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.62, 1)
+
+[node name="player_name" type="Label" parent="Frame/world_root/actor_layer/player_anchor" unique_id=150827039]
+layout_mode = 0
+offset_left = -34.0
+offset_top = -78.0
+offset_right = 34.0
+offset_bottom = -58.0
+theme_override_colors/font_color = Color(0.1, 0.24, 0.58, 1)
+text = "冒险者"
+horizontal_alignment = 1
+
+[node name="enemy_anchor" type="Control" parent="Frame/world_root/actor_layer" unique_id=1333949401]
+anchors_preset = 0
 offset_left = 480.0
 offset_top = 140.0
 offset_right = 481.0
 offset_bottom = 141.0
 mouse_filter = 2
 
-[node name="enemy_placeholder" type="ColorRect" parent="Frame/world_root/actor_layer/enemy_anchor"]
+[node name="EnemyVisual" type="Control" parent="Frame/world_root/actor_layer/enemy_anchor" unique_id=1018374502]
+anchors_preset = 0
+offset_right = 1.0
+offset_bottom = 1.0
+mouse_filter = 2
+
+[node name="EnemySprite" type="TextureRect" parent="Frame/world_root/actor_layer/enemy_anchor/EnemyVisual" unique_id=1501294454]
 layout_mode = 0
-offset_left = -16.0
-offset_top = -48.0
-offset_right = 16.0
-offset_bottom = 0.0
+offset_left = -34.0
+offset_top = -58.0
+offset_right = 34.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="enemy_placeholder" type="ColorRect" parent="Frame/world_root/actor_layer/enemy_anchor/EnemyVisual" unique_id=1165237471]
+layout_mode = 0
+offset_left = -18.0
+offset_top = -34.0
+offset_right = 18.0
 mouse_filter = 2
 color = Color(1, 0.267, 0.267, 1)
 
-[node name="drop_layer" type="Control" parent="Frame/world_root"]
+[node name="enemy_name" type="Label" parent="Frame/world_root/actor_layer/enemy_anchor" unique_id=499390763]
 layout_mode = 0
+offset_left = -34.0
+offset_top = -58.0
+offset_right = 34.0
+offset_bottom = -38.0
+theme_override_colors/font_color = Color(0.6, 0.08, 0.06, 1)
+text = "史莱姆"
+horizontal_alignment = 1
+
+[node name="drop_layer" type="Control" parent="Frame/world_root" unique_id=1506824477]
+anchors_preset = 0
 offset_right = 3600.0
 offset_bottom = 180.0
 mouse_filter = 2
 
-[node name="effect_layer" type="Control" parent="Frame/world_root"]
-layout_mode = 0
+[node name="effect_layer" type="Control" parent="Frame/world_root" unique_id=1052414837]
+anchors_preset = 0
 offset_right = 3600.0
 offset_bottom = 180.0
 mouse_filter = 2
 
 [node name="StatusBadge" type="Panel" parent="Frame" unique_id=161342612]
 layout_mode = 0
-offset_left = 604.0
-offset_top = 92.0
-offset_right = 702.0
-offset_bottom = 117.0
+offset_left = 598.0
+offset_top = 153.0
+offset_right = 648.0
+offset_bottom = 177.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_badge")
 
@@ -193,6 +247,7 @@ offset_top = -1.0
 offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_font_sizes/font_size = 9
 text = "自动战斗中"
 horizontal_alignment = 1
 vertical_alignment = 1
