@@ -1,43 +1,28 @@
 extends Control
 
-const BAG_EQUIP_PANEL := preload("res://ui/panels/bag_equip_panel.tscn")
-const PLAYER_ATTR_PANEL := preload("res://ui/panels/player_attr_panel.tscn")
-
-@onready var popup_parent: Control = $popup_parent
-
-var _current_popup: Control = null
-
-
-func _ready() -> void:
-	pass
+@onready var power_label: Label = $HeroCard/PowerPanel/PowerLabel
+@onready var atk_label: Label = $HeroCard/StatList/AtkLabel
+@onready var def_label: Label = $HeroCard/StatList/DefLabel
+@onready var hp_label: Label = $HeroCard/StatList/HpLabel
+@onready var level_label: Label = $HeroCard/LevelLabel
 
 
-func show_bag_equip_panel() -> void:
-	_clear_popup()
-	_current_popup = BAG_EQUIP_PANEL.instantiate()
-	_current_popup.layout_mode = 1
-	_current_popup.anchors_preset = Control.PRESET_FULL_RECT
-	popup_parent.add_child(_current_popup)
-	popup_parent.visible = true
+func refresh_from_game_data(data: Node) -> void:
+	var power := int(data.attack) * 80 + int(data.defense) * 60 + int(data.max_hp) * 2
+	level_label.text = "Lv." + str(data.level)
+	power_label.text = "战力 " + _format_number(power)
+	atk_label.text = "攻击 " + str(data.attack)
+	def_label.text = "防御 " + str(data.defense)
+	hp_label.text = "生命 " + str(data.hp) + " / " + str(data.max_hp)
 
 
-func show_player_attr_panel() -> void:
-	_clear_popup()
-	_current_popup = PLAYER_ATTR_PANEL.instantiate()
-	_current_popup.layout_mode = 1
-	_current_popup.anchors_preset = Control.PRESET_FULL_RECT
-	popup_parent.add_child(_current_popup)
-	popup_parent.visible = true
-
-
-func hide_popup() -> void:
-	_clear_popup()
-	popup_parent.visible = false
-
-
-func _clear_popup() -> void:
-	if _current_popup:
-		_current_popup.queue_free()
-		_current_popup = null
-	for child in popup_parent.get_children():
-		child.queue_free()
+func _format_number(value: int) -> String:
+	var text := str(value)
+	var result := ""
+	var count := 0
+	for index in range(text.length() - 1, -1, -1):
+		if count > 0 and count % 3 == 0:
+			result = "," + result
+		result = text[index] + result
+		count += 1
+	return result

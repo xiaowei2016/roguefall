@@ -48,6 +48,7 @@ var _shift_log_frame: int = 0
 @onready var left_panel := $PanelRoot/LeftPanel
 @onready var center_panel := $PanelRoot/CenterPanel
 @onready var right_panel := $PanelRoot/RightPanel
+@onready var center_main_panel := $PanelRoot/CenterPanel/CenterLayoutRoot/CenterMainPanel
 
 # ---- 内容 host ----
 @onready var host_warehouse := $PanelRoot/LeftPanel/host_warehouse
@@ -268,7 +269,7 @@ func _do_layout() -> void:
 
 # ===== 穿透 =====
 func _update_passthrough() -> void:
-	pass  # 穿透暂时废除，等 BattleBar / 三栏布局稳定后再接入
+	pass  # 像素级穿透由 DesktopPixelPassthrough.cs 逐像素处理。
 
 
 # ===== 拖拽：屏幕坐标 + 每帧 _do_layout =====
@@ -370,3 +371,17 @@ func _refresh_battle_bar() -> void:
 	$PanelRoot/BattleBar/Panel/HpLabel.text = "HP: " + str(GameData.hp) + "/" + str(GameData.max_hp)
 	$PanelRoot/BattleBar/Panel/ExpLabel.text = "EXP: " + str(GameData.exp) + "/" + str(GameData.next_exp)
 	$PanelRoot/BattleBar/Panel/GoldLabel.text = "Gold: " + str(GameData.gold)
+	$PanelRoot/BattleBar/Panel/HpBar.max_value = max(1, GameData.max_hp)
+	$PanelRoot/BattleBar/Panel/HpBar.value = clamp(GameData.hp, 0, GameData.max_hp)
+	$PanelRoot/BattleBar/Panel/ExpBar.max_value = max(1, GameData.next_exp)
+	$PanelRoot/BattleBar/Panel/ExpBar.value = clamp(GameData.exp, 0, GameData.next_exp)
+	center_main_panel.refresh_from_game_data(GameData)
+	_refresh_detail_panel()
+
+
+func _refresh_detail_panel() -> void:
+	$PanelRoot/RightPanel/host_detail/Card/Stats/Stat1.text = "等级：" + str(GameData.level)
+	$PanelRoot/RightPanel/host_detail/Card/Stats/Stat2.text = "攻击：" + str(GameData.attack)
+	$PanelRoot/RightPanel/host_detail/Card/Stats/Stat3.text = "防御：" + str(GameData.defense)
+	$PanelRoot/RightPanel/host_detail/Card/Stats/Stat4.text = "生命：" + str(GameData.hp) + " / " + str(GameData.max_hp)
+	$PanelRoot/RightPanel/host_detail/Card/Stats/Stat5.text = "金币：" + str(GameData.gold)

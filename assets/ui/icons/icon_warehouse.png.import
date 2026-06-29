@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cd3gclcyodyw4"
-path="res://.godot/imported/center_panel_back.png-8e8b7d6f078e264ee8487edda29a3151.ctex"
+uid="uid://b0gg0jl4iya2h"
+path="res://.godot/imported/icon_warehouse.png-1a8feb51aaa4326b9882528aff22a7c5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ui/_incoming/center_panel_back.png"
-dest_files=["res://.godot/imported/center_panel_back.png-8e8b7d6f078e264ee8487edda29a3151.ctex"]
+source_file="res://assets/ui/icons/icon_warehouse.png"
+dest_files=["res://.godot/imported/icon_warehouse.png-1a8feb51aaa4326b9882528aff22a7c5.ctex"]
 
 [params]
 

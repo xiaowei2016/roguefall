@@ -1,127 +1,70 @@
 [gd_scene format=3 uid="uid://bk7g3g0kc7g7e"]
 
-[ext_resource type="Texture2D" uid="uid://cqcldlahke1vh" path="res://assets/grassland/ChatGPT Image 2026年6月26日 16_13_41 (1).png" id="1_sky"]
-[ext_resource type="Texture2D" uid="uid://boe74657bw7xj" path="res://assets/grassland/ChatGPT Image 2026年6月26日 16_13_42 (2).png" id="2_cloud"]
-[ext_resource type="Texture2D" uid="uid://id8ko1s7px43" path="res://assets/grassland/ChatGPT Image 2026年6月26日 16_13_43 (3).png" id="3_hill"]
-[ext_resource type="Texture2D" uid="uid://c275fulu4cgsv" path="res://assets/grassland/ChatGPT Image 2026年6月26日 16_13_43 (4).png" id="4_village"]
-[ext_resource type="Texture2D" uid="uid://dr5ka6eovndrf" path="res://assets/grassland/ChatGPT Image 2026年6月26日 16_13_43 (5).png" id="5_tree"]
-[ext_resource type="Texture2D" uid="uid://djmbujknc0ypd" path="res://assets/grassland/ChatGPT Image 2026年6月26日 16_13_43 (6).png" id="6_grass"]
-[ext_resource type="Texture2D" uid="uid://c5g0wwydtqr3" path="res://assets/grassland/ChatGPT Image 2026年6月26日 16_13_44 (7).png" id="7_ground"]
-[ext_resource type="PackedScene" uid="uid://bdybdd0qfhybk" path="res://scenes/characters/PlayerActor.tscn" id="8_player_actor"]
-[ext_resource type="PackedScene" path="res://scenes/characters/DummyEnemy.tscn" id="9_dummy_enemy"]
+[ext_resource type="Texture2D" uid="uid://xy4bw7tfodki" path="res://assets/grassland/grassland_stage.png" id="1_stage"]
 
-[node name="GrasslandStage2D" type="Control" unique_id=1494099990]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(1, 0.957, 0.867, 0.92)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.94, 0.64, 0.25, 1)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_badge"]
+bg_color = Color(0.24, 0.47, 0.82, 0.92)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="GrasslandStage2D" type="Control" unique_id=1071726464]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 720.0
 offset_bottom = 180.0
 mouse_filter = 2
 
-[node name="GrasslandViewportContainer" type="SubViewportContainer" parent="." unique_id=1416517180]
+[node name="Frame" type="Panel" parent="." unique_id=658485529]
+clip_contents = true
 layout_mode = 0
 offset_right = 720.0
 offset_bottom = 180.0
 mouse_filter = 2
-stretch = true
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 
-[node name="GrasslandViewport" type="SubViewport" parent="GrasslandViewportContainer" unique_id=563538512]
-transparent_bg = true
-handle_input_locally = false
-size = Vector2i(720, 180)
-render_target_update_mode = 4
+[node name="StageImage" type="TextureRect" parent="Frame" unique_id=1711065883]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("1_stage")
+expand_mode = 1
 
-[node name="WorldRoot" type="Node2D" parent="GrasslandViewportContainer/GrasslandViewport" unique_id=68167155]
+[node name="StatusBadge" type="Panel" parent="Frame" unique_id=161342612]
+layout_mode = 0
+offset_left = 604.0
+offset_top = 92.0
+offset_right = 702.0
+offset_bottom = 117.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_badge")
 
-[node name="SkyParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=431529241]
-visible = false
-scroll_scale = Vector2(0.08, 1)
-repeat_size = Vector2(718, 0)
-
-[node name="SkySprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/SkyParallax" unique_id=1087083892]
-position = Vector2(0, 1)
-scale = Vector2(0.331492, 0.2140887)
-texture = ExtResource("1_sky")
-centered = false
-
-[node name="CloudParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=457854483]
-visible = false
-scroll_scale = Vector2(0.15, 1)
-repeat_size = Vector2(720, 0)
-
-[node name="CloudSprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/CloudParallax" unique_id=408636976]
-position = Vector2(-1, 2)
-scale = Vector2(0.7828447, 0.8807339)
-texture = ExtResource("2_cloud")
-centered = false
-
-[node name="HillParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=885054048]
-scroll_scale = Vector2(0.25, 1)
-repeat_size = Vector2(720, 0)
-
-[node name="HillSprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/HillParallax" unique_id=618396008]
-position = Vector2(0, 66.00001)
-scale = Vector2(0.7817589, 1.2317072)
-texture = ExtResource("3_hill")
-centered = false
-
-[node name="VillageParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=306800399]
-scroll_scale = Vector2(0.35, 1)
-repeat_size = Vector2(720, 0)
-
-[node name="VillageSprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/VillageParallax" unique_id=466964404]
-position = Vector2(-1, 70)
-scale = Vector2(0.7861022, 0.90149206)
-texture = ExtResource("4_village")
-centered = false
-
-[node name="TreeParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=1703287456]
-repeat_size = Vector2(550, 0)
-
-[node name="TreeSprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/TreeParallax" unique_id=1809913243]
-position = Vector2(122, 57)
-scale = Vector2(0.40086833, 0.41416916)
-texture = ExtResource("5_tree")
-centered = false
-
-[node name="GroundParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=207362820]
-repeat_size = Vector2(720, 0)
-
-[node name="GroundSprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/GroundParallax" unique_id=1925209693]
-position = Vector2(-4.7683716e-07, 155)
-scale = Vector2(0.78175896, 0.7490234)
-texture = ExtResource("7_ground")
-centered = false
-
-[node name="GrassParallax" type="Parallax2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=2083546484]
-repeat_size = Vector2(720.66, 0)
-
-[node name="GrassSprite" type="Sprite2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/GrassParallax" unique_id=1395796407]
-position = Vector2(3.5527137e-15, 148.99998)
-scale = Vector2(0.7824724, 0.4981587)
-texture = ExtResource("6_grass")
-centered = false
-
-[node name="BattleBaseline" type="Node2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=1664908160]
-position = Vector2(0, 160)
-
-[node name="BaselineLine" type="Line2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/BattleBaseline" unique_id=878822119]
-points = PackedVector2Array(0, 0, 3600, 0)
-width = 2.0
-default_color = Color(1, 0, 0, 1)
-
-[node name="ActorLayer" type="Node2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/BattleBaseline" unique_id=1950641600]
-position = Vector2(0, 0)
-
-[node name="PlayerActor" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/BattleBaseline/ActorLayer" unique_id=497183763 instance=ExtResource("8_player_actor")]
-position = Vector2(180, 0)
-
-[node name="StageCamera2D" type="Camera2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/BattleBaseline/ActorLayer/PlayerActor" unique_id=209602788]
-limit_left = 0
-limit_top = 0
-limit_right = 3600
-limit_bottom = 180
-
-[node name="DummyEnemy" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot/BattleBaseline/ActorLayer" unique_id=1163137642 instance=ExtResource("9_dummy_enemy")]
-position = Vector2(2000, 0)
-
-[node name="EffectLayer" type="Node2D" parent="GrasslandViewportContainer/GrasslandViewport/WorldRoot" unique_id=1491436542]
+[node name="StatusLabel" type="Label" parent="Frame/StatusBadge" unique_id=1694711340]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "自动战斗中"
+horizontal_alignment = 1
+vertical_alignment = 1

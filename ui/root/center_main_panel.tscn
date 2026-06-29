@@ -1,42 +1,594 @@
-[gd_scene load_steps=3 format=3 uid="uid://dcenter_main_panel_001"]
+[gd_scene format=3 uid="uid://bp8xiwq4fb88k"]
 
-[ext_resource type="Theme" path="res://assets/ui/theme/roguefall_theme.tres" id="1_theme"]
-[ext_resource type="Script" path="res://ui/root/center_main_panel.gd" id="2_script"]
+[ext_resource type="Texture2D" uid="uid://b0gg0jl4iya2h" path="res://assets/ui/icons/icon_warehouse.png" id="1_warehouse"]
+[ext_resource type="Texture2D" uid="uid://nlwymdjvdy7k" path="res://assets/ui/icons/icon_pet.png" id="2_pet"]
+[ext_resource type="Texture2D" uid="uid://c24u7mmeqdgtc" path="res://assets/ui/icons/icon_codex.png" id="3_codex"]
+[ext_resource type="Texture2D" uid="uid://cxgkwaui0d01" path="res://assets/ui/icons/icon_map.png" id="4_map"]
+[ext_resource type="Texture2D" uid="uid://exm0rbxxd0e7" path="res://assets/ui/icons/icon_settings.png" id="5_settings"]
+[ext_resource type="Texture2D" uid="uid://4akcslf0rq60" path="res://assets/ui/icons/icon_reroll.png" id="6_reroll"]
+[ext_resource type="Texture2D" uid="uid://b7fr22c1xna8" path="res://assets/ui/icons/icon_detail.png" id="7_detail"]
+[ext_resource type="Script" uid="uid://c6nc3468vs5r3" path="res://ui/root/center_main_panel.gd" id="8_script"]
 
-[node name="CenterMainPanel" type="Control"]
-theme = ExtResource("1_theme")
-layout_mode = 0
-offset_right = 720.0
-offset_bottom = 530.0
-script = ExtResource("2_script")
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(1, 0.967, 0.895, 0.64)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.92, 0.67, 0.35, 0.9)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
 
-[node name="panel_bounds_guide" type="ColorRect" parent="."]
-layout_mode = 0
-offset_right = 720.0
-offset_bottom = 530.0
-color = Color(1, 1, 1, 0.03)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_slot_active"]
+bg_color = Color(0.93, 0.95, 1, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.5, 0.7, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_slot"]
+bg_color = Color(0.965, 0.91, 0.81, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.67, 0.74, 0.86, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_power"]
+bg_color = Color(1, 0.93, 0.72, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.94, 0.62, 0.2, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tab"]
+bg_color = Color(0.86, 0.95, 1, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.55, 0.75, 0.95, 1)
+corner_radius_top_left = 11
+corner_radius_top_right = 11
+corner_radius_bottom_right = 11
+corner_radius_bottom_left = 11
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_blue_button"]
+bg_color = Color(0.72, 0.89, 1, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.5, 0.72, 0.9, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gold_button"]
+bg_color = Color(1, 0.78, 0.35, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8, 0.49, 0.14, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[node name="CenterMainPanel" type="Control" unique_id=862275748]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 652.0
+offset_bottom = 390.0
 mouse_filter = 2
+script = ExtResource("8_script")
 
-[node name="hero_area" type="Control" parent="."]
+[node name="HeroCard" type="Panel" parent="." unique_id=196097004]
 layout_mode = 0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 300.0
-offset_bottom = 206.0
+offset_top = 18.0
+offset_right = 316.0
+offset_bottom = 408.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 
-[node name="hero_bg" type="TextureRect" parent="hero_area"]
+[node name="HeroName" type="Label" parent="HeroCard" unique_id=19835350]
 layout_mode = 0
-offset_left = 42.0
+offset_left = 116.0
 offset_top = 14.0
-offset_right = 258.0
-offset_bottom = 220.0
-self_modulate = Color(0.15, 0.15, 0.15, 1)
-expand_mode = 1
+offset_right = 206.0
+offset_bottom = 40.0
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+text = "冒险者"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="popup_parent" type="Control" parent="."]
+[node name="LevelLabel" type="Label" parent="HeroCard" unique_id=1115108571]
 layout_mode = 0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 720.0
-offset_bottom = 530.0
-visible = false
+offset_left = 120.0
+offset_top = 38.0
+offset_right = 204.0
+offset_bottom = 64.0
+theme_override_colors/font_color = Color(0.84, 0.33, 0.08, 1)
+text = "Lv.1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HeroIcon" type="TextureRect" parent="HeroCard" unique_id=754514512]
+modulate = Color(1, 1, 1, 0.78)
+layout_mode = 0
+offset_left = 91.0
+offset_top = 66.0
+offset_right = 225.0
+offset_bottom = 200.0
+mouse_filter = 2
+texture = ExtResource("2_pet")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SlotLeft1" type="Panel" parent="HeroCard" unique_id=1241708449]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 48.0
+offset_right = 74.0
+offset_bottom = 100.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot_active")
+
+[node name="Icon" type="TextureRect" parent="HeroCard/SlotLeft1" unique_id=570649987]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_detail")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SlotLeft2" type="Panel" parent="HeroCard" unique_id=699382940]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 111.0
+offset_right = 74.0
+offset_bottom = 163.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="Icon" type="TextureRect" parent="HeroCard/SlotLeft2" unique_id=1546340504]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_settings")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SlotLeft3" type="Panel" parent="HeroCard" unique_id=541317990]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 174.0
+offset_right = 74.0
+offset_bottom = 226.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="Icon" type="TextureRect" parent="HeroCard/SlotLeft3" unique_id=789027275]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_map")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SlotRight1" type="Panel" parent="HeroCard" unique_id=1458404115]
+layout_mode = 0
+offset_left = 242.0
+offset_top = 48.0
+offset_right = 294.0
+offset_bottom = 100.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="Icon" type="TextureRect" parent="HeroCard/SlotRight1" unique_id=323484935]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_codex")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SlotRight2" type="Panel" parent="HeroCard" unique_id=1142519391]
+layout_mode = 0
+offset_left = 242.0
+offset_top = 111.0
+offset_right = 294.0
+offset_bottom = 163.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="Icon" type="TextureRect" parent="HeroCard/SlotRight2" unique_id=1901076417]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_reroll")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SlotRight3" type="Panel" parent="HeroCard" unique_id=143741147]
+layout_mode = 0
+offset_left = 242.0
+offset_top = 174.0
+offset_right = 294.0
+offset_bottom = 226.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="Icon" type="TextureRect" parent="HeroCard/SlotRight3" unique_id=1987635411]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_warehouse")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SlotBottom1" type="Panel" parent="HeroCard" unique_id=145117366]
+layout_mode = 0
+offset_left = 79.0
+offset_top = 206.0
+offset_right = 131.0
+offset_bottom = 258.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="SlotBottom2" type="Panel" parent="HeroCard" unique_id=669271122]
+layout_mode = 0
+offset_left = 132.0
+offset_top = 206.0
+offset_right = 184.0
+offset_bottom = 258.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="SlotBottom3" type="Panel" parent="HeroCard" unique_id=1296518474]
+layout_mode = 0
+offset_left = 185.0
+offset_top = 206.0
+offset_right = 237.0
+offset_bottom = 258.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="PowerPanel" type="Panel" parent="HeroCard" unique_id=1492420440]
+layout_mode = 0
+offset_left = 92.0
+offset_top = 263.0
+offset_right = 224.0
+offset_bottom = 294.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_power")
+
+[node name="PowerLabel" type="Label" parent="HeroCard/PowerPanel" unique_id=304389085]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.62, 0.25, 0.04, 1)
+text = "战力 1,300"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StatList" type="GridContainer" parent="HeroCard" unique_id=38452306]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 306.0
+offset_right = 292.0
+offset_bottom = 383.0
+theme_override_constants/h_separation = 18
+theme_override_constants/v_separation = 4
+columns = 2
+
+[node name="AtkLabel" type="Label" parent="HeroCard/StatList" unique_id=1886971657]
+custom_minimum_size = Vector2(122, 18)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+text = "攻击 10"
+
+[node name="DefLabel" type="Label" parent="HeroCard/StatList" unique_id=1303180858]
+custom_minimum_size = Vector2(122, 18)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+text = "防御 5"
+
+[node name="HpLabel" type="Label" parent="HeroCard/StatList" unique_id=715458823]
+custom_minimum_size = Vector2(122, 18)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+text = "生命 100 / 100"
+
+[node name="LuckLabel" type="Label" parent="HeroCard/StatList" unique_id=343014091]
+custom_minimum_size = Vector2(122, 18)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+text = "暴击 0%"
+
+[node name="BagPanel" type="Panel" parent="." unique_id=2125614390]
+layout_mode = 0
+offset_left = 336.0
+offset_top = 18.0
+offset_right = 652.0
+offset_bottom = 408.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="BagTitle" type="Label" parent="BagPanel" unique_id=243282375]
+layout_mode = 0
+offset_left = 112.0
+offset_top = 12.0
+offset_right = 204.0
+offset_bottom = 38.0
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+text = "背包"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Tabs" type="HBoxContainer" parent="BagPanel" unique_id=1413414354]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 48.0
+offset_right = 298.0
+offset_bottom = 76.0
+theme_override_constants/separation = 8
+
+[node name="AllTab" type="Panel" parent="BagPanel/Tabs" unique_id=1272613915]
+custom_minimum_size = Vector2(56, 28)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_tab")
+
+[node name="Label" type="Label" parent="BagPanel/Tabs/AllTab" unique_id=1681324115]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.1, 0.34, 0.55, 1)
+text = "全部"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WeaponIcon" type="TextureRect" parent="BagPanel/Tabs" unique_id=1611056917]
+custom_minimum_size = Vector2(30, 28)
+layout_mode = 2
+texture = ExtResource("7_detail")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ArmorIcon" type="TextureRect" parent="BagPanel/Tabs" unique_id=954414843]
+custom_minimum_size = Vector2(30, 28)
+layout_mode = 2
+texture = ExtResource("5_settings")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="GemIcon" type="TextureRect" parent="BagPanel/Tabs" unique_id=1452895922]
+custom_minimum_size = Vector2(30, 28)
+layout_mode = 2
+texture = ExtResource("6_reroll")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BagGrid" type="GridContainer" parent="BagPanel" unique_id=1464491975]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 86.0
+offset_right = 280.0
+offset_bottom = 329.0
+theme_override_constants/h_separation = 6
+theme_override_constants/v_separation = 6
+columns = 5
+
+[node name="BagSlot1" type="Panel" parent="BagPanel/BagGrid" unique_id=1763061415]
+custom_minimum_size = Vector2(43, 43)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="BagSlot2" type="Panel" parent="BagPanel/BagGrid" unique_id=1750569230]
+custom_minimum_size = Vector2(43, 43)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="BagSlot3" type="Panel" parent="BagPanel/BagGrid" unique_id=687616533]
+custom_minimum_size = Vector2(43, 43)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="BagSlot4" type="Panel" parent="BagPanel/BagGrid" unique_id=249930937]
+custom_minimum_size = Vector2(43, 43)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="BagSlot5" type="Panel" parent="BagPanel/BagGrid" unique_id=566278139]
+custom_minimum_size = Vector2(43, 43)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="BagSlot6" type="Panel" parent="BagPanel/BagGrid" unique_id=6734962]
+custom_minimum_size = Vector2(43, 43)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="BagSlot7" type="Panel" parent="BagPanel/BagGrid" unique_id=632188282]
+custom_minimum_size = Vector2(43, 43)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="BagSlot8" type="Panel" parent="BagPanel/BagGrid" unique_id=1575641857]
+custom_minimum_size = Vector2(43, 43)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="BagSlot9" type="Panel" parent="BagPanel/BagGrid" unique_id=1249394240]
+custom_minimum_size = Vector2(43, 43)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="BagSlot10" type="Panel" parent="BagPanel/BagGrid" unique_id=456071309]
+custom_minimum_size = Vector2(43, 43)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="BagSlot11" type="Panel" parent="BagPanel/BagGrid" unique_id=1973313700]
+custom_minimum_size = Vector2(43, 43)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="BagSlot12" type="Panel" parent="BagPanel/BagGrid" unique_id=1391568504]
+custom_minimum_size = Vector2(43, 43)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="BagSlot13" type="Panel" parent="BagPanel/BagGrid" unique_id=158811849]
+custom_minimum_size = Vector2(43, 43)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="BagSlot14" type="Panel" parent="BagPanel/BagGrid" unique_id=1677220885]
+custom_minimum_size = Vector2(43, 43)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="BagSlot15" type="Panel" parent="BagPanel/BagGrid" unique_id=533470938]
+custom_minimum_size = Vector2(43, 43)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="BagSlot16" type="Panel" parent="BagPanel/BagGrid" unique_id=935993096]
+custom_minimum_size = Vector2(43, 43)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="BagSlot17" type="Panel" parent="BagPanel/BagGrid" unique_id=355720234]
+custom_minimum_size = Vector2(43, 43)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="BagSlot18" type="Panel" parent="BagPanel/BagGrid" unique_id=1320584442]
+custom_minimum_size = Vector2(43, 43)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="BagSlot19" type="Panel" parent="BagPanel/BagGrid" unique_id=1178499654]
+custom_minimum_size = Vector2(43, 43)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="BagSlot20" type="Panel" parent="BagPanel/BagGrid" unique_id=1578327873]
+custom_minimum_size = Vector2(43, 43)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="BagSlot21" type="Panel" parent="BagPanel/BagGrid" unique_id=1594098913]
+custom_minimum_size = Vector2(43, 43)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="BagSlot22" type="Panel" parent="BagPanel/BagGrid" unique_id=1942199935]
+custom_minimum_size = Vector2(43, 43)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="BagSlot23" type="Panel" parent="BagPanel/BagGrid" unique_id=641592351]
+custom_minimum_size = Vector2(43, 43)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="BagSlot24" type="Panel" parent="BagPanel/BagGrid" unique_id=1980896702]
+custom_minimum_size = Vector2(43, 43)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="BagSlot25" type="Panel" parent="BagPanel/BagGrid" unique_id=171449677]
+custom_minimum_size = Vector2(43, 43)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="CapacityLabel" type="Label" parent="BagPanel" unique_id=349804480]
+layout_mode = 0
+offset_left = 198.0
+offset_top = 325.0
+offset_right = 276.0
+offset_bottom = 351.0
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+text = "20/80"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SortButton" type="Button" parent="BagPanel" unique_id=1814493937]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 353.0
+offset_right = 132.0
+offset_bottom = 385.0
+theme_override_colors/font_color = Color(0.1, 0.34, 0.55, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_blue_button")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_blue_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_blue_button")
+text = "整理"
+
+[node name="UseButton" type="Button" parent="BagPanel" unique_id=1652414393]
+layout_mode = 0
+offset_left = 164.0
+offset_top = 353.0
+offset_right = 272.0
+offset_bottom = 385.0
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_gold_button")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_gold_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_gold_button")
+text = "快速使用"

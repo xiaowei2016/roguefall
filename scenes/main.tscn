@@ -1,14 +1,140 @@
 [gd_scene format=3 uid="uid://co1gy1xt0te7v"]
+
 [ext_resource type="Script" uid="uid://dtadxwnca83tu" path="res://scripts/main.gd" id="1_main"]
 [ext_resource type="Script" uid="uid://5csn50l1ptiv" path="res://scripts/native_drag_zone.gd" id="2_dragzone"]
 [ext_resource type="Script" uid="uid://cpwj27yudk003" path="res://scripts/DesktopPixelPassthrough.cs" id="3_pixel"]
 [ext_resource type="PackedScene" uid="uid://bk7g3g0kc7g7e" path="res://scenes/GrasslandStage2D.tscn" id="5_grassland_stage"]
-[ext_resource type="Texture2D" uid="uid://dyuu0iay6mfdc" path="res://assets/ui/_incoming/center_panel_back.png" id="6_center_panel_back"]
-[ext_resource type="PackedScene" uid="uid://dcenter_main_panel_001" path="res://ui/root/center_main_panel.tscn" id="7_center_main"]
+[ext_resource type="Texture2D" uid="uid://cd3gclcyodyw4" path="res://assets/ui/_incoming/center_panel_back.png" id="6_center_panel_back"]
+[ext_resource type="PackedScene" uid="uid://bp8xiwq4fb88k" path="res://ui/root/center_main_panel.tscn" id="7_center_main"]
+[ext_resource type="Texture2D" uid="uid://b0gg0jl4iya2h" path="res://assets/ui/icons/icon_warehouse.png" id="8_icon_warehouse"]
+[ext_resource type="Texture2D" uid="uid://nlwymdjvdy7k" path="res://assets/ui/icons/icon_pet.png" id="9_icon_pet"]
+[ext_resource type="Texture2D" uid="uid://c24u7mmeqdgtc" path="res://assets/ui/icons/icon_codex.png" id="10_icon_codex"]
+[ext_resource type="Texture2D" uid="uid://cxgkwaui0d01" path="res://assets/ui/icons/icon_map.png" id="11_icon_map"]
+[ext_resource type="Texture2D" uid="uid://exm0rbxxd0e7" path="res://assets/ui/icons/icon_settings.png" id="12_icon_settings"]
+[ext_resource type="Texture2D" uid="uid://4akcslf0rq60" path="res://assets/ui/icons/icon_reroll.png" id="13_icon_reroll"]
+[ext_resource type="Texture2D" uid="uid://b7fr22c1xna8" path="res://assets/ui/icons/icon_detail.png" id="14_icon_detail"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_side_panel"]
+bg_color = Color(1, 0.957, 0.875, 0.94)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.88, 0.58, 0.24, 1)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_side_header"]
+bg_color = Color(0.27, 0.5, 0.86, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.98, 0.76, 0.36, 1)
+corner_radius_top_left = 13
+corner_radius_top_right = 13
+corner_radius_bottom_right = 13
+corner_radius_bottom_left = 13
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_side_card"]
+bg_color = Color(1, 0.972, 0.9, 0.92)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.9, 0.67, 0.36, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_side_slot"]
+bg_color = Color(0.98, 0.92, 0.78, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.58, 0.72, 0.95, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_side_chip"]
+bg_color = Color(0.83, 0.91, 1, 0.9)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.38, 0.57, 0.88, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8svgy"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button_normal"]
+bg_color = Color(0.96, 0.75, 0.34, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.62, 0.35, 0.12, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button_pressed"]
+bg_color = Color(0.78, 0.55, 0.22, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.42, 0.23, 0.08, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button_hover"]
+bg_color = Color(1, 0.84, 0.43, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.62, 0.35, 0.12, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hp_bg"]
+bg_color = Color(0.21, 0.16, 0.16, 0.9)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hp_fill"]
+bg_color = Color(0.86, 0.18, 0.18, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_exp_fill"]
+bg_color = Color(0.22, 0.57, 0.92, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [node name="MainRoot" type="Control" unique_id=740616609]
 layout_mode = 3
@@ -39,9 +165,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_side_panel")
 script = ExtResource("2_dragzone")
 
-[node name="host_warehouse" type="Control" parent="PanelRoot/LeftPanel"]
+[node name="host_warehouse" type="Control" parent="PanelRoot/LeftPanel" unique_id=798571922]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -51,7 +178,133 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="host_pet" type="Control" parent="PanelRoot/LeftPanel"]
+[node name="Header" type="Panel" parent="PanelRoot/LeftPanel/host_warehouse" unique_id=417682523]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 332.0
+offset_bottom = 70.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_side_header")
+
+[node name="Icon" type="TextureRect" parent="PanelRoot/LeftPanel/host_warehouse/Header" unique_id=1882168018]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 9.0
+offset_right = 46.0
+offset_bottom = 41.0
+texture = ExtResource("8_icon_warehouse")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="PanelRoot/LeftPanel/host_warehouse/Header" unique_id=1938505701]
+layout_mode = 0
+offset_left = 58.0
+offset_top = 6.0
+offset_right = 180.0
+offset_bottom = 44.0
+theme_override_colors/font_color = Color(1, 0.96, 0.84, 1)
+text = "仓库"
+vertical_alignment = 1
+
+[node name="Card" type="Panel" parent="PanelRoot/LeftPanel/host_warehouse" unique_id=1382329194]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 86.0
+offset_right = 332.0
+offset_bottom = 506.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_side_card")
+
+[node name="Hint" type="Label" parent="PanelRoot/LeftPanel/host_warehouse/Card" unique_id=1013510511]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 14.0
+offset_right = 286.0
+offset_bottom = 40.0
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+text = "材料与备用装备"
+
+[node name="Grid" type="GridContainer" parent="PanelRoot/LeftPanel/host_warehouse/Card" unique_id=1335348042]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 54.0
+offset_right = 294.0
+offset_bottom = 328.0
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+columns = 4
+
+[node name="Slot1" type="Panel" parent="PanelRoot/LeftPanel/host_warehouse/Card/Grid" unique_id=1116057202]
+custom_minimum_size = Vector2(62, 62)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_side_slot")
+
+[node name="Slot2" type="Panel" parent="PanelRoot/LeftPanel/host_warehouse/Card/Grid" unique_id=1632682958]
+custom_minimum_size = Vector2(62, 62)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_side_slot")
+
+[node name="Slot3" type="Panel" parent="PanelRoot/LeftPanel/host_warehouse/Card/Grid" unique_id=1722531813]
+custom_minimum_size = Vector2(62, 62)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_side_slot")
+
+[node name="Slot4" type="Panel" parent="PanelRoot/LeftPanel/host_warehouse/Card/Grid" unique_id=1987590605]
+custom_minimum_size = Vector2(62, 62)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_side_slot")
+
+[node name="Slot5" type="Panel" parent="PanelRoot/LeftPanel/host_warehouse/Card/Grid" unique_id=1353301591]
+custom_minimum_size = Vector2(62, 62)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_side_slot")
+
+[node name="Slot6" type="Panel" parent="PanelRoot/LeftPanel/host_warehouse/Card/Grid" unique_id=1649655124]
+custom_minimum_size = Vector2(62, 62)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_side_slot")
+
+[node name="Slot7" type="Panel" parent="PanelRoot/LeftPanel/host_warehouse/Card/Grid" unique_id=1528042850]
+custom_minimum_size = Vector2(62, 62)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_side_slot")
+
+[node name="Slot8" type="Panel" parent="PanelRoot/LeftPanel/host_warehouse/Card/Grid" unique_id=150716815]
+custom_minimum_size = Vector2(62, 62)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_side_slot")
+
+[node name="Slot9" type="Panel" parent="PanelRoot/LeftPanel/host_warehouse/Card/Grid" unique_id=340356803]
+custom_minimum_size = Vector2(62, 62)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_side_slot")
+
+[node name="Slot10" type="Panel" parent="PanelRoot/LeftPanel/host_warehouse/Card/Grid" unique_id=1547675194]
+custom_minimum_size = Vector2(62, 62)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_side_slot")
+
+[node name="Slot11" type="Panel" parent="PanelRoot/LeftPanel/host_warehouse/Card/Grid" unique_id=741296886]
+custom_minimum_size = Vector2(62, 62)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_side_slot")
+
+[node name="Slot12" type="Panel" parent="PanelRoot/LeftPanel/host_warehouse/Card/Grid" unique_id=337323807]
+custom_minimum_size = Vector2(62, 62)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_side_slot")
+
+[node name="Capacity" type="Label" parent="PanelRoot/LeftPanel/host_warehouse/Card" unique_id=898395186]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 350.0
+offset_right = 290.0
+offset_bottom = 382.0
+theme_override_colors/font_color = Color(0.56, 0.28, 0.06, 1)
+text = "容量 12 / 40"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="host_pet" type="Control" parent="PanelRoot/LeftPanel" unique_id=473130305]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -61,7 +314,115 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="host_codex" type="Control" parent="PanelRoot/LeftPanel"]
+[node name="Header" type="Panel" parent="PanelRoot/LeftPanel/host_pet" unique_id=1386694469]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 332.0
+offset_bottom = 70.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_side_header")
+
+[node name="Icon" type="TextureRect" parent="PanelRoot/LeftPanel/host_pet/Header" unique_id=907747998]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 9.0
+offset_right = 46.0
+offset_bottom = 41.0
+texture = ExtResource("9_icon_pet")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="PanelRoot/LeftPanel/host_pet/Header" unique_id=1787251504]
+layout_mode = 0
+offset_left = 58.0
+offset_top = 6.0
+offset_right = 180.0
+offset_bottom = 44.0
+theme_override_colors/font_color = Color(1, 0.96, 0.84, 1)
+text = "宠物"
+vertical_alignment = 1
+
+[node name="Card" type="Panel" parent="PanelRoot/LeftPanel/host_pet" unique_id=1361045303]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 86.0
+offset_right = 332.0
+offset_bottom = 506.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_side_card")
+
+[node name="PetIcon" type="TextureRect" parent="PanelRoot/LeftPanel/host_pet/Card" unique_id=728006171]
+layout_mode = 0
+offset_left = 106.0
+offset_top = 28.0
+offset_right = 206.0
+offset_bottom = 128.0
+texture = ExtResource("9_icon_pet")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="PanelRoot/LeftPanel/host_pet/Card" unique_id=265213994]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 144.0
+offset_right = 280.0
+offset_bottom = 174.0
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+text = "小蓝灵 Lv.1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SkillA" type="Panel" parent="PanelRoot/LeftPanel/host_pet/Card" unique_id=922525785]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 198.0
+offset_right = 284.0
+offset_bottom = 244.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_side_chip")
+
+[node name="SkillAText" type="Label" parent="PanelRoot/LeftPanel/host_pet/Card/SkillA" unique_id=1753004670]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.25, 0.24, 0.18, 1)
+text = "陪伴：战斗金币 +5%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SkillB" type="Panel" parent="PanelRoot/LeftPanel/host_pet/Card" unique_id=1977833439]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 258.0
+offset_right = 284.0
+offset_bottom = 304.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_side_chip")
+
+[node name="SkillBText" type="Label" parent="PanelRoot/LeftPanel/host_pet/Card/SkillB" unique_id=508713418]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.25, 0.24, 0.18, 1)
+text = "守护：生命上限 +20"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Footer" type="Label" parent="PanelRoot/LeftPanel/host_pet/Card" unique_id=1444109805]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 350.0
+offset_right = 284.0
+offset_bottom = 382.0
+theme_override_colors/font_color = Color(0.56, 0.28, 0.06, 1)
+text = "亲密度 0 / 100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="host_codex" type="Control" parent="PanelRoot/LeftPanel" unique_id=84687484]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -71,7 +432,83 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="host_map" type="Control" parent="PanelRoot/LeftPanel"]
+[node name="Header" type="Panel" parent="PanelRoot/LeftPanel/host_codex" unique_id=280029784]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 332.0
+offset_bottom = 70.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_side_header")
+
+[node name="Icon" type="TextureRect" parent="PanelRoot/LeftPanel/host_codex/Header" unique_id=276600019]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 9.0
+offset_right = 46.0
+offset_bottom = 41.0
+texture = ExtResource("10_icon_codex")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="PanelRoot/LeftPanel/host_codex/Header" unique_id=279428038]
+layout_mode = 0
+offset_left = 58.0
+offset_top = 6.0
+offset_right = 180.0
+offset_bottom = 44.0
+theme_override_colors/font_color = Color(1, 0.96, 0.84, 1)
+text = "图鉴"
+vertical_alignment = 1
+
+[node name="Card" type="Panel" parent="PanelRoot/LeftPanel/host_codex" unique_id=1916308982]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 86.0
+offset_right = 332.0
+offset_bottom = 506.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_side_card")
+
+[node name="List" type="VBoxContainer" parent="PanelRoot/LeftPanel/host_codex/Card" unique_id=1284815748]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 24.0
+offset_right = 292.0
+offset_bottom = 320.0
+theme_override_constants/separation = 10
+
+[node name="Entry1" type="Label" parent="PanelRoot/LeftPanel/host_codex/Card/List" unique_id=1159801259]
+custom_minimum_size = Vector2(272, 42)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+text = "彩虹草原  1 / 8"
+vertical_alignment = 1
+
+[node name="Entry2" type="Label" parent="PanelRoot/LeftPanel/host_codex/Card/List" unique_id=1769521228]
+custom_minimum_size = Vector2(272, 42)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+text = "史莱姆    0 / 3"
+vertical_alignment = 1
+
+[node name="Entry3" type="Label" parent="PanelRoot/LeftPanel/host_codex/Card/List" unique_id=1198252977]
+custom_minimum_size = Vector2(272, 42)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+text = "新手装备  2 / 6"
+vertical_alignment = 1
+
+[node name="Progress" type="Label" parent="PanelRoot/LeftPanel/host_codex/Card" unique_id=895570050]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 350.0
+offset_right = 292.0
+offset_bottom = 382.0
+theme_override_colors/font_color = Color(0.56, 0.28, 0.06, 1)
+text = "收集进度 12%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="host_map" type="Control" parent="PanelRoot/LeftPanel" unique_id=1710503986]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -80,6 +517,124 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="Header" type="Panel" parent="PanelRoot/LeftPanel/host_map" unique_id=718881461]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 332.0
+offset_bottom = 70.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_side_header")
+
+[node name="Icon" type="TextureRect" parent="PanelRoot/LeftPanel/host_map/Header" unique_id=990648183]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 9.0
+offset_right = 46.0
+offset_bottom = 41.0
+texture = ExtResource("11_icon_map")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="PanelRoot/LeftPanel/host_map/Header" unique_id=968678073]
+layout_mode = 0
+offset_left = 58.0
+offset_top = 6.0
+offset_right = 180.0
+offset_bottom = 44.0
+theme_override_colors/font_color = Color(1, 0.96, 0.84, 1)
+text = "地图"
+vertical_alignment = 1
+
+[node name="Card" type="Panel" parent="PanelRoot/LeftPanel/host_map" unique_id=862944120]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 86.0
+offset_right = 332.0
+offset_bottom = 506.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_side_card")
+
+[node name="RouteTitle" type="Label" parent="PanelRoot/LeftPanel/host_map/Card" unique_id=958889322]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 22.0
+offset_right = 288.0
+offset_bottom = 54.0
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+text = "当前区域：彩虹草原"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NodeA" type="Panel" parent="PanelRoot/LeftPanel/host_map/Card" unique_id=1687110728]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 100.0
+offset_right = 136.0
+offset_bottom = 146.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_side_chip")
+
+[node name="NodeAText" type="Label" parent="PanelRoot/LeftPanel/host_map/Card/NodeA" unique_id=777592838]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.25, 0.24, 0.18, 1)
+text = "营地"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NodeB" type="Panel" parent="PanelRoot/LeftPanel/host_map/Card" unique_id=1339858606]
+layout_mode = 0
+offset_left = 176.0
+offset_top = 174.0
+offset_right = 272.0
+offset_bottom = 220.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_side_chip")
+
+[node name="NodeBText" type="Label" parent="PanelRoot/LeftPanel/host_map/Card/NodeB" unique_id=1783189884]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.25, 0.24, 0.18, 1)
+text = "草原"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NodeC" type="Panel" parent="PanelRoot/LeftPanel/host_map/Card" unique_id=1878763230]
+layout_mode = 0
+offset_left = 78.0
+offset_top = 260.0
+offset_right = 206.0
+offset_bottom = 306.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_side_chip")
+
+[node name="NodeCText" type="Label" parent="PanelRoot/LeftPanel/host_map/Card/NodeC" unique_id=895135968]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.25, 0.24, 0.18, 1)
+text = "未解锁"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Footer" type="Label" parent="PanelRoot/LeftPanel/host_map/Card" unique_id=111615659]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 350.0
+offset_right = 292.0
+offset_bottom = 382.0
+theme_override_colors/font_color = Color(0.56, 0.28, 0.06, 1)
+text = "探索 1 / 5"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="CenterPanel" type="Control" parent="PanelRoot" unique_id=2097642298]
 anchors_preset = 0
@@ -132,19 +687,31 @@ grow_vertical = 2
 
 [node name="WarehouseBtn" type="Button" parent="PanelRoot/CenterPanel/CenterLayoutRoot/BottomArea/LeftButtons" unique_id=1325609187]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_button_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_button_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button_hover")
 text = "仓库"
 
 [node name="PetBtn" type="Button" parent="PanelRoot/CenterPanel/CenterLayoutRoot/BottomArea/LeftButtons" unique_id=1657072550]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_button_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_button_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button_hover")
 text = "宠物"
 
 [node name="CodexBtn" type="Button" parent="PanelRoot/CenterPanel/CenterLayoutRoot/BottomArea/LeftButtons" unique_id=1388103180]
 layout_mode = 2
 theme_override_constants/icon_max_width = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_button_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_button_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button_hover")
 text = "图鉴"
 
 [node name="MapBtn" type="Button" parent="PanelRoot/CenterPanel/CenterLayoutRoot/BottomArea/LeftButtons" unique_id=160158629]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_button_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_button_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button_hover")
 text = "地图"
 
 [node name="RightButtons" type="HBoxContainer" parent="PanelRoot/CenterPanel/CenterLayoutRoot/BottomArea" unique_id=575522656]
@@ -159,24 +726,33 @@ grow_vertical = 2
 [node name="SettingsBtn" type="Button" parent="PanelRoot/CenterPanel/CenterLayoutRoot/BottomArea/RightButtons" unique_id=1117242987]
 layout_mode = 2
 theme_override_constants/icon_max_width = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_button_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_button_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button_hover")
 text = "设置"
 
 [node name="RerollBtn" type="Button" parent="PanelRoot/CenterPanel/CenterLayoutRoot/BottomArea/RightButtons" unique_id=562891004]
 layout_mode = 2
 theme_override_constants/icon_max_width = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_button_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_button_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button_hover")
 text = "洗练"
 
 [node name="DetailBtn" type="Button" parent="PanelRoot/CenterPanel/CenterLayoutRoot/BottomArea/RightButtons" unique_id=332166269]
 layout_mode = 2
 theme_override_constants/icon_max_width = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_button_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_button_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button_hover")
 text = "详情"
 
-[node name="CenterMainPanel" parent="PanelRoot/CenterPanel/CenterLayoutRoot" instance=ExtResource("7_center_main")]
-anchors_preset = 0
-offset_left = 28.0
-offset_top = 28.0
-offset_right = 680.0
-offset_bottom = 418.0
+[node name="CenterMainPanel" parent="PanelRoot/CenterPanel/CenterLayoutRoot" unique_id=1924833337 instance=ExtResource("7_center_main")]
+layout_mode = 0
+offset_left = 35.0
+offset_top = 29.0
+offset_right = 688.0
+offset_bottom = 449.0
 
 [node name="RightPanel" type="Control" parent="PanelRoot" unique_id=279125319]
 anchors_preset = 0
@@ -192,9 +768,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_side_panel")
 script = ExtResource("2_dragzone")
 
-[node name="host_settings" type="Control" parent="PanelRoot/RightPanel"]
+[node name="host_settings" type="Control" parent="PanelRoot/RightPanel" unique_id=1772662491]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -204,7 +781,86 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="host_reroll" type="Control" parent="PanelRoot/RightPanel"]
+[node name="Header" type="Panel" parent="PanelRoot/RightPanel/host_settings" unique_id=548943474]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 332.0
+offset_bottom = 70.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_side_header")
+
+[node name="Icon" type="TextureRect" parent="PanelRoot/RightPanel/host_settings/Header" unique_id=237160078]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 9.0
+offset_right = 46.0
+offset_bottom = 41.0
+texture = ExtResource("12_icon_settings")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="PanelRoot/RightPanel/host_settings/Header" unique_id=1933042066]
+layout_mode = 0
+offset_left = 58.0
+offset_top = 6.0
+offset_right = 180.0
+offset_bottom = 44.0
+theme_override_colors/font_color = Color(1, 0.96, 0.84, 1)
+text = "设置"
+vertical_alignment = 1
+
+[node name="Card" type="Panel" parent="PanelRoot/RightPanel/host_settings" unique_id=1011994777]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 86.0
+offset_right = 332.0
+offset_bottom = 506.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_side_card")
+
+[node name="Options" type="VBoxContainer" parent="PanelRoot/RightPanel/host_settings/Card" unique_id=1498438121]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 28.0
+offset_right = 286.0
+offset_bottom = 236.0
+theme_override_constants/separation = 16
+
+[node name="AlwaysTop" type="CheckBox" parent="PanelRoot/RightPanel/host_settings/Card/Options" unique_id=468233119]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+theme_override_colors/font_pressed_color = Color(0.42, 0.22, 0.08, 1)
+theme_override_colors/font_hover_color = Color(0.56, 0.28, 0.06, 1)
+button_pressed = true
+text = "窗口置顶"
+
+[node name="TransparentClick" type="CheckBox" parent="PanelRoot/RightPanel/host_settings/Card/Options" unique_id=1256708424]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+theme_override_colors/font_pressed_color = Color(0.42, 0.22, 0.08, 1)
+theme_override_colors/font_hover_color = Color(0.56, 0.28, 0.06, 1)
+button_pressed = true
+text = "透明区域穿透"
+
+[node name="AutoBattle" type="CheckBox" parent="PanelRoot/RightPanel/host_settings/Card/Options" unique_id=1090032038]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+theme_override_colors/font_pressed_color = Color(0.42, 0.22, 0.08, 1)
+theme_override_colors/font_hover_color = Color(0.56, 0.28, 0.06, 1)
+button_pressed = true
+text = "自动战斗"
+
+[node name="ScaleText" type="Label" parent="PanelRoot/RightPanel/host_settings/Card" unique_id=1396823316]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 276.0
+offset_right = 286.0
+offset_bottom = 308.0
+theme_override_colors/font_color = Color(0.56, 0.28, 0.06, 1)
+text = "界面缩放 100%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="host_reroll" type="Control" parent="PanelRoot/RightPanel" unique_id=1645372352]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -214,7 +870,105 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="host_detail" type="Control" parent="PanelRoot/RightPanel"]
+[node name="Header" type="Panel" parent="PanelRoot/RightPanel/host_reroll" unique_id=847396532]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 332.0
+offset_bottom = 70.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_side_header")
+
+[node name="Icon" type="TextureRect" parent="PanelRoot/RightPanel/host_reroll/Header" unique_id=147041702]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 9.0
+offset_right = 46.0
+offset_bottom = 41.0
+texture = ExtResource("13_icon_reroll")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="PanelRoot/RightPanel/host_reroll/Header" unique_id=1915104645]
+layout_mode = 0
+offset_left = 58.0
+offset_top = 6.0
+offset_right = 180.0
+offset_bottom = 44.0
+theme_override_colors/font_color = Color(1, 0.96, 0.84, 1)
+text = "洗练"
+vertical_alignment = 1
+
+[node name="Card" type="Panel" parent="PanelRoot/RightPanel/host_reroll" unique_id=1685313880]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 86.0
+offset_right = 332.0
+offset_bottom = 506.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_side_card")
+
+[node name="Title" type="Label" parent="PanelRoot/RightPanel/host_reroll/Card" unique_id=1682122297]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 22.0
+offset_right = 288.0
+offset_bottom = 52.0
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+text = "新手长剑"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AttrList" type="VBoxContainer" parent="PanelRoot/RightPanel/host_reroll/Card" unique_id=2087517936]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 78.0
+offset_right = 288.0
+offset_bottom = 250.0
+theme_override_constants/separation = 10
+
+[node name="Attr1" type="Label" parent="PanelRoot/RightPanel/host_reroll/Card/AttrList" unique_id=1501029980]
+custom_minimum_size = Vector2(264, 34)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+text = "攻击 +4        未锁定"
+vertical_alignment = 1
+
+[node name="Attr2" type="Label" parent="PanelRoot/RightPanel/host_reroll/Card/AttrList" unique_id=39588017]
+custom_minimum_size = Vector2(264, 34)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+text = "暴击 +1%       未锁定"
+vertical_alignment = 1
+
+[node name="Attr3" type="Label" parent="PanelRoot/RightPanel/host_reroll/Card/AttrList" unique_id=874023111]
+custom_minimum_size = Vector2(264, 34)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+text = "金币 +2%       未锁定"
+vertical_alignment = 1
+
+[node name="Cost" type="Label" parent="PanelRoot/RightPanel/host_reroll/Card" unique_id=298689139]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 292.0
+offset_right = 288.0
+offset_bottom = 322.0
+theme_override_colors/font_color = Color(0.56, 0.28, 0.06, 1)
+text = "消耗 100 金币"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ActionButton" type="Button" parent="PanelRoot/RightPanel/host_reroll/Card" unique_id=59058521]
+layout_mode = 0
+offset_left = 82.0
+offset_top = 342.0
+offset_right = 230.0
+offset_bottom = 386.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_button_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_button_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button_hover")
+text = "开始洗练"
+
+[node name="host_detail" type="Control" parent="PanelRoot/RightPanel" unique_id=170783915]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -223,6 +977,106 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="Header" type="Panel" parent="PanelRoot/RightPanel/host_detail" unique_id=864946770]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 332.0
+offset_bottom = 70.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_side_header")
+
+[node name="Icon" type="TextureRect" parent="PanelRoot/RightPanel/host_detail/Header" unique_id=1062735881]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 9.0
+offset_right = 46.0
+offset_bottom = 41.0
+texture = ExtResource("14_icon_detail")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="PanelRoot/RightPanel/host_detail/Header" unique_id=2015787982]
+layout_mode = 0
+offset_left = 58.0
+offset_top = 6.0
+offset_right = 180.0
+offset_bottom = 44.0
+theme_override_colors/font_color = Color(1, 0.96, 0.84, 1)
+text = "详情"
+vertical_alignment = 1
+
+[node name="Card" type="Panel" parent="PanelRoot/RightPanel/host_detail" unique_id=856929313]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 86.0
+offset_right = 332.0
+offset_bottom = 506.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_side_card")
+
+[node name="Name" type="Label" parent="PanelRoot/RightPanel/host_detail/Card" unique_id=1043060425]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 22.0
+offset_right = 288.0
+offset_bottom = 54.0
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+text = "冒险者属性"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Stats" type="VBoxContainer" parent="PanelRoot/RightPanel/host_detail/Card" unique_id=566073654]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 82.0
+offset_right = 272.0
+offset_bottom = 262.0
+theme_override_constants/separation = 8
+
+[node name="Stat1" type="Label" parent="PanelRoot/RightPanel/host_detail/Card/Stats" unique_id=1118819069]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+text = "等级：1"
+
+[node name="Stat2" type="Label" parent="PanelRoot/RightPanel/host_detail/Card/Stats" unique_id=653299297]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+text = "攻击：10"
+
+[node name="Stat3" type="Label" parent="PanelRoot/RightPanel/host_detail/Card/Stats" unique_id=187418933]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+text = "防御：5"
+
+[node name="Stat4" type="Label" parent="PanelRoot/RightPanel/host_detail/Card/Stats" unique_id=331933231]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+text = "生命：100 / 100"
+
+[node name="Stat5" type="Label" parent="PanelRoot/RightPanel/host_detail/Card/Stats" unique_id=760575545]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+text = "金币：0"
+
+[node name="Summary" type="Panel" parent="PanelRoot/RightPanel/host_detail/Card" unique_id=1686409761]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 300.0
+offset_right = 284.0
+offset_bottom = 354.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_side_chip")
+
+[node name="SummaryText" type="Label" parent="PanelRoot/RightPanel/host_detail/Card/Summary" unique_id=38188514]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.25, 0.24, 0.18, 1)
+text = "基础面板已接入"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="BattleBar" type="Control" parent="PanelRoot" unique_id=535304019]
 anchors_preset = 0
@@ -245,42 +1099,69 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_1")
 script = ExtResource("2_dragzone")
 
+[node name="HpBar" type="ProgressBar" parent="PanelRoot/BattleBar/Panel" unique_id=377060652]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 160.0
+offset_right = 169.0
+offset_bottom = 178.0
+theme_override_styles/background = SubResource("StyleBoxFlat_hp_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_hp_fill")
+value = 100.0
+show_percentage = false
+
+[node name="ExpBar" type="ProgressBar" parent="PanelRoot/BattleBar/Panel" unique_id=668501372]
+layout_mode = 0
+offset_left = 176.0
+offset_top = 160.0
+offset_right = 340.0
+offset_bottom = 178.0
+theme_override_styles/background = SubResource("StyleBoxFlat_hp_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_exp_fill")
+show_percentage = false
+
 [node name="LvLabel" type="Label" parent="PanelRoot/BattleBar/Panel" unique_id=363035291]
 layout_mode = 0
-offset_left = 607.0
-offset_top = 153.0
-offset_right = 653.0
-offset_bottom = 176.0
+offset_left = 5.0
+offset_top = 129.0
+offset_right = 65.0
+offset_bottom = 157.0
 text = "Lv 1"
+horizontal_alignment = 1
 
 [node name="HpLabel" type="Label" parent="PanelRoot/BattleBar/Panel" unique_id=764084625]
 layout_mode = 0
-offset_left = 10.0
-offset_top = 153.0
-offset_right = 160.0
-offset_bottom = 176.0
+offset_left = 5.0
+offset_top = 157.0
+offset_right = 169.0
+offset_bottom = 180.0
 text = "HP: 100/100"
+horizontal_alignment = 1
 
 [node name="ExpLabel" type="Label" parent="PanelRoot/BattleBar/Panel" unique_id=1093886838]
 layout_mode = 0
-offset_left = 168.0
-offset_top = 153.0
-offset_right = 318.0
-offset_bottom = 176.0
+offset_left = 176.0
+offset_top = 157.0
+offset_right = 340.0
+offset_bottom = 180.0
 text = "EXP: 0/100"
+horizontal_alignment = 1
 
 [node name="GoldLabel" type="Label" parent="PanelRoot/BattleBar/Panel" unique_id=923887163]
 layout_mode = 0
-offset_left = 325.0
-offset_top = 153.0
-offset_right = 475.0
-offset_bottom = 176.0
+offset_left = 351.0
+offset_top = 156.0
+offset_right = 491.0
+offset_bottom = 180.0
 text = "Gold: 0"
 
 [node name="Button" type="Button" parent="PanelRoot/BattleBar" unique_id=2068708050]
 layout_mode = 0
-offset_left = 655.0
-offset_top = 145.0
-offset_right = 715.0
-offset_bottom = 176.0
+offset_left = 604.0
+offset_top = 121.0
+offset_right = 704.0
+offset_bottom = 175.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_button_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_button_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button_hover")
 text = "背包"

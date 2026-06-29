@@ -4,6 +4,9 @@ using System.Runtime.InteropServices;
 
 public partial class DesktopPixelPassthrough : Node
 {
+	[Export]
+	public bool Enabled { get; set; } = true;
+
 	[DllImport("user32.dll", SetLastError = true)]
 	private static extern IntPtr GetWindowLongPtr(IntPtr hWnd, int nIndex);
 
@@ -48,6 +51,15 @@ public partial class DesktopPixelPassthrough : Node
 	{
 		if (_hWnd == IntPtr.Zero)
 			return;
+
+		if (!Enabled)
+		{
+			if (_lastState != 1)
+			{
+				ApplyPassthroughState(false, 1f, new Vector2I(-1, -1));
+			}
+			return;
+		}
 
 		_frameCount++;
 
