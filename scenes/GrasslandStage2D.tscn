@@ -2,6 +2,13 @@
 
 [ext_resource type="Texture2D" uid="uid://xy4bw7tfodki" path="res://assets/grassland/grassland_stage.png" id="1_stage"]
 
+[ext_resource type="Texture2D" path="res://assets/grassland/layers/sky_layer.png" id="2_sky_layer"]
+[ext_resource type="Texture2D" path="res://assets/grassland/layers/far_mountain_layer.png" id="3_far_mountain_layer"]
+[ext_resource type="Texture2D" path="res://assets/grassland/layers/far_tree_layer.png" id="4_far_tree_layer"]
+[ext_resource type="Texture2D" path="res://assets/grassland/layers/mid_tree_layer.png" id="5_mid_tree_layer"]
+[ext_resource type="Texture2D" path="res://assets/grassland/layers/ground_layer.png" id="6_ground_layer"]
+[ext_resource type="Texture2D" path="res://assets/grassland/layers/front_grass_layer.png" id="7_front_grass_layer"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
 bg_color = Color(1, 0.957, 0.867, 0.92)
 border_width_left = 2
@@ -68,6 +75,51 @@ offset_bottom = 142.0
 mouse_filter = 2
 color = Color(0.3, 0.8, 0.3, 0.5)
 
+[node name="sky_layer" type="TextureRect" parent="Frame/world_root"]
+layout_mode = 0
+offset_right = 3600.0
+offset_bottom = 180.0
+mouse_filter = 2
+texture = ExtResource("2_sky_layer")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="far_mountain_layer" type="TextureRect" parent="Frame/world_root"]
+layout_mode = 0
+offset_right = 3600.0
+offset_bottom = 180.0
+mouse_filter = 2
+texture = ExtResource("3_far_mountain_layer")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="far_tree_layer" type="TextureRect" parent="Frame/world_root"]
+layout_mode = 0
+offset_right = 3600.0
+offset_bottom = 180.0
+mouse_filter = 2
+texture = ExtResource("4_far_tree_layer")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="mid_tree_layer" type="TextureRect" parent="Frame/world_root"]
+layout_mode = 0
+offset_right = 3600.0
+offset_bottom = 180.0
+mouse_filter = 2
+texture = ExtResource("5_mid_tree_layer")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="ground_layer" type="TextureRect" parent="Frame/world_root"]
+layout_mode = 0
+offset_right = 3600.0
+offset_bottom = 180.0
+mouse_filter = 2
+texture = ExtResource("6_ground_layer")
+expand_mode = 1
+stretch_mode = 0
+
 [node name="actor_layer" type="Control" parent="Frame/world_root"]
 layout_mode = 0
 offset_right = 3600.0
@@ -119,6 +171,16 @@ layout_mode = 0
 offset_right = 3600.0
 offset_bottom = 180.0
 mouse_filter = 2
+
+[node name="front_grass_layer" type="TextureRect" parent="Frame/world_root"]
+visible = false
+layout_mode = 0
+offset_right = 3600.0
+offset_bottom = 180.0
+mouse_filter = 2
+texture = ExtResource("7_front_grass_layer")
+expand_mode = 1
+stretch_mode = 0
 
 [node name="StatusBadge" type="Panel" parent="Frame" unique_id=161342612]
 layout_mode = 0
