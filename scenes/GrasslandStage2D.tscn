@@ -143,8 +143,9 @@ offset_bottom = 1.0
 mouse_filter = 2
 
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="Frame/world_root/actor_layer/player_anchor/PlayerVisual"]
-position = Vector2(0, -40)
+position = Vector2(-34, -68)
 scale = Vector2(0.094, 0.094)
+centered = false
 sprite_frames = ExtResource("9_hero_frames")
 animation = &"idle"
 
