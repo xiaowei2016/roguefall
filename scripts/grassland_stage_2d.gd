@@ -93,7 +93,7 @@ func _apply_actor_positions() -> void:
 	var camera_x := clampf(player_x - camera_lead, 0.0, active_world_width - view_width)
 	world_root.position.x = -camera_x
 
-	player_visual.scale.x = -direction
+	player_visual.scale.x = direction
 	enemy_visual.scale = Vector2.ONE * (1.18 if hit_flash > 0.0 else 1.0)
 	enemy_visual.modulate = Color(1, 0.9, 0.9, 1) if hit_flash > 0.0 else Color.WHITE
 
