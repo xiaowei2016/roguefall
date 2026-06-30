@@ -1,6 +1,5 @@
 [gd_scene format=3 uid="uid://bk7g3g0kc7g7e"]
 
-[ext_resource type="Texture2D" uid="uid://xy4bw7tfodki" path="res://assets/grassland/grassland_stage.png" id="1_stage"]
 [ext_resource type="Texture2D" uid="uid://cscym2t10cfmq" path="res://assets/grassland/segment_sources/sky_source.png" id="2_sky_source"]
 [ext_resource type="Texture2D" uid="uid://fdq18v622jwk" path="res://assets/grassland/segment_sources/mountain_source.png" id="3_mountain_source"]
 [ext_resource type="Texture2D" uid="uid://d0jveclaymhoy" path="res://assets/grassland/segment_sources/village_source.png" id="4_village_source"]
@@ -88,18 +87,6 @@ anchors_preset = 0
 offset_right = 3600.0
 offset_bottom = 180.0
 mouse_filter = 2
-
-[node name="StageImage" type="TextureRect" parent="Frame/world_root" unique_id=1711065883]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-texture = ExtResource("1_stage")
-expand_mode = 1
 
 [node name="ground_line" type="ColorRect" parent="Frame/world_root" unique_id=1122610388]
 visible = false

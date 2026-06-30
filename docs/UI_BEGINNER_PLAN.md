@@ -148,6 +148,45 @@
 
 这些页面外层都有 `ScrollContainer`，内容变多时会滚动，不需要把面板强行拉大。
 
+宠物页常改节点：
+
+- `Card/PetScroll/PetList/Status`：当前出战状态。
+- `Card/PetScroll/PetList/PetIcon`：宠物头像。
+- `Card/PetScroll/PetList/SkillA`、`SkillB`：宠物技能卡。
+- `Card/PetScroll/PetList/AffinityBar`：亲密度进度条。
+- `Card/PetScroll/PetList/ActionRow/FeedButton`、`DeployButton`：喂养和出战入口。
+- `ui/pages/pet_panel.gd`：当前只做 UI 演示反馈。点击喂养会增加亲密度条，点击出战会把按钮变成已出战。
+
+图鉴页常改节点：
+
+- `Card/CodexScroll/List/Entry1` 到 `Entry6`：图鉴条目。
+- `Card/Progress`：总收集进度文字。
+- `Card/ProgressBar`：总收集进度条。
+- `Card/RewardButton`：领取图鉴奖励入口。
+- `ui/pages/codex_panel.gd`：当前只做 UI 演示反馈。点击领取后按钮会变成已领取。
+
+地图页常改节点：
+
+- `Card/MapScroll/MapContent/RouteTitle`：当前区域文字。
+- `NodeA`、`NodeB`、`NodeC`：地图节点。当前节点用金色，普通节点用蓝色，未解锁节点用灰色。
+- `RouteLineAB`、`RouteLineBC`：节点之间的路线线条。
+- `Card/EnterButton`：进入当前区域按钮。
+- `ui/pages/map_panel.gd`：当前只做 UI 演示反馈。点击进入后会显示巡逻中。
+
+洗练页常改节点：
+
+- `Card/Title`：当前选择的装备名。
+- `Card/EquipPanel/EquipInfo`：装备品质、等级、洗练槽摘要。
+- `Card/AttrScroll/AttrList/Attr1` 到 `Attr6`：词条行。
+- 每个词条行里的 `Label`：词条文字。
+- 每个词条行里的 `Lock`：锁定勾选框。
+- `Card/Cost`：本次洗练消耗。
+- `Card/Preview`：锁定数量和操作提示。
+- `Card/ActionButton`：开始洗练按钮。
+- `ui/pages/reroll_panel.gd`：当前只做 UI 演示反馈。点击开始洗练会保留已勾选锁定的词条，并替换未锁定词条文字。
+
+注意：当前洗练页先做 UI 架构和入口。正式随机洗练逻辑要等装备词条库和装备生成稳定后再接入，避免临时生成文档外的词条。
+
 设置页音量节点：
 
 - `MasterVolumeLabel` / `MasterVolumeSlider`：主音量。
@@ -197,7 +236,6 @@
 - `GrasslandStage2D`：整个 720 x 180 战斗条。
 - `Frame`：透明裁剪窗口，只负责把可见区域限制在 720 x 180；它不是背景板。
 - `Frame/world_root`：运行时横向世界，当前按 720 x 5 得到 3600 宽。
-- `StageImage`：旧的整张合成预览图，默认隐藏；它只适合对照，不适合做分层底图。
 - `Frame/world_root/segment_0_preview`：你自己调的 720 x 180 单屏多层场景模板。
 - `sky_source_layer`、`mountain_source_layer`、`village_source_layer`、`ground_source_layer`、`grass_source_layer`、`tree_source_layer`：场景分层素材。
 - `actor_layer`：人物、怪物、掉落、特效所在层。
@@ -214,7 +252,7 @@
 
 挂机逻辑是 3600 宽世界内左右折返找怪，不是打完一轮后重开。人物走到世界边缘会转身，怪物死亡后会刷在当前巡逻方向的前方；如果前方快到边缘，会自动换方向继续刷怪。
 
-如果你在画面里看到一张完整草原图压住其它层，检查 `StageImage.visible` 是否被打开了。正常状态下它应该是关闭的。
+旧的整张草原合成预览图已经从场景里去除，避免误打开后压住分层。现在画面来源只看 `segment_0_preview` 里的分层节点。
 
 `GrasslandStage2D` 根节点 Inspector 里可以调这些脚本参数：
 
@@ -249,6 +287,15 @@
 
 临时色块只是占位，等正式图放进去以后可以隐藏或删除 `player_placeholder`、`player_head`、`enemy_placeholder`。
 
+外部素材目录是 `D:\Projects\素材\图片`，当前项目已经接入的素材放在这些位置：
+
+- `assets/grassland/segment_sources/`：战斗条一屏分层素材，按 720 x 180 画面调位置。
+- `assets/ui/icons/`：底部和侧栏功能按钮图标。
+- `assets/ui/sheets/`：后续可切按钮、边框、面板贴图的大图。
+- `assets/ui/_incoming/`：临时导入或等待整理的 UI 贴图。
+
+建议流程：先在 PS 里把素材处理成透明 PNG，再复制到项目 `assets/` 下面，最后在 Godot 的对应 `TextureRect` 或 `TextureButton` 里替换。不要直接从 `D:\Projects\素材\图片` 引用，否则项目以后换电脑或移动目录时容易丢贴图。
+
 ## 穿透测试流程
 
 平时保持穿透开启。
@@ -263,9 +310,28 @@
 
 最终提交前要确认 `PixelPassthrough.Enabled` 是开启状态，`scenes/main.tscn` 里不能留下 `Enabled = false`。
 
+## 按钮状态
+
+常用按钮已经补了 Godot 原生三态样式：
+
+- `normal`：平时状态。
+- `hover`：鼠标移上去的状态。
+- `pressed`：按下时的状态。
+- `disabled`：不可点击状态。分类按钮当前选中时会进入 disabled，用来表示“当前页签”。
+
+常改位置：
+
+- 主界面底部和功能入口按钮：`scenes/main.tscn -> StyleBoxFlat_button_normal / hover / pressed / disabled`。
+- 中心背包分类页签：`ui/root/center_main_panel.tscn -> StyleBoxFlat_tab / tab_hover / tab_pressed / tab_disabled`。
+- 中心背包整理按钮：`StyleBoxFlat_blue_button / blue_button_hover / blue_button_pressed`。
+- 中心背包快速使用和物品弹窗操作按钮：`StyleBoxFlat_gold_button / gold_button_hover / gold_button_pressed / button_disabled`。
+- 仓库分类页签和整理、取出、装备按钮：`ui/pages/warehouse_panel.tscn` 里同名 StyleBox。
+
+如果以后换正式按钮贴图，可以把这些 `Button` 换成 `TextureButton`；在现在的新手阶段，先用 StyleBoxFlat 更容易看懂和调颜色。
+
 ## 下一步建议
 
 1. 你先继续在 `segment_0_preview` 里调天空、远山、村庄、地面等一屏分层位置。
 2. 把 PS 处理好的玩家和怪物图替换到 `PlayerSprite`、`EnemySprite`。
 3. 逐页打开 `ui/pages/` 里的功能页，按你的视觉稿微调位置和素材。
-4. 最后给按钮补 hover、pressed、disabled 三种正式贴图状态。
+4. 后续如果有正式按钮图，再把当前 StyleBox 按钮替换为 TextureButton 多状态贴图。

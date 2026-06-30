@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=12 format=3]
 
 [ext_resource type="Texture2D" path="res://assets/ui/icons/icon_codex.png" id="1_icon"]
+[ext_resource type="Script" path="res://ui/pages/codex_panel.gd" id="2_script"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_header"]
 bg_color = Color(0.27, 0.5, 0.86, 0.95)
@@ -26,6 +27,73 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_entry"]
+bg_color = Color(1, 0.95, 0.82, 0.9)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.9, 0.67, 0.36, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_entry_focus"]
+bg_color = Color(0.86, 0.95, 1, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.48, 0.7, 0.95, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_progress_fill"]
+bg_color = Color(0.35, 0.62, 0.95, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gold_button"]
+bg_color = Color(1, 0.78, 0.35, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8, 0.49, 0.14, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gold_button_hover"]
+bg_color = Color(1, 0.87, 0.48, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8, 0.49, 0.14, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gold_button_pressed"]
+bg_color = Color(0.86, 0.58, 0.18, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.58, 0.32, 0.09, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
 [node name="host_codex" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -34,6 +102,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+script = ExtResource("2_script")
 
 [node name="Header" type="Panel" parent="."]
 layout_mode = 0
@@ -76,7 +145,7 @@ layout_mode = 0
 offset_left = 20.0
 offset_top = 24.0
 offset_right = 292.0
-offset_bottom = 320.0
+offset_bottom = 308.0
 horizontal_scroll_mode = 0
 
 [node name="List" type="VBoxContainer" parent="Card/CodexScroll"]
@@ -87,51 +156,86 @@ theme_override_constants/separation = 10
 custom_minimum_size = Vector2(272, 42)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_entry_focus")
 text = "彩虹草原  1 / 8"
+horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Entry2" type="Label" parent="Card/CodexScroll/List"]
 custom_minimum_size = Vector2(272, 42)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_entry")
 text = "史莱姆    0 / 3"
+horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Entry3" type="Label" parent="Card/CodexScroll/List"]
 custom_minimum_size = Vector2(272, 42)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_entry")
 text = "新手装备  2 / 6"
+horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Entry4" type="Label" parent="Card/CodexScroll/List"]
 custom_minimum_size = Vector2(272, 42)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_entry")
 text = "精英怪物  0 / 5"
+horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Entry5" type="Label" parent="Card/CodexScroll/List"]
 custom_minimum_size = Vector2(272, 42)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_entry")
 text = "草原掉落  3 / 12"
+horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Entry6" type="Label" parent="Card/CodexScroll/List"]
 custom_minimum_size = Vector2(272, 42)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_entry")
 text = "隐藏收集  0 / 4"
+horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Progress" type="Label" parent="Card"]
 layout_mode = 0
 offset_left = 20.0
-offset_top = 350.0
+offset_top = 322.0
 offset_right = 292.0
-offset_bottom = 382.0
+offset_bottom = 348.0
 theme_override_colors/font_color = Color(0.56, 0.28, 0.06, 1)
 text = "收集进度 12%"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="Card"]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 352.0
+offset_right = 278.0
+offset_bottom = 368.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_progress_fill")
+value = 12.0
+show_percentage = false
+
+[node name="RewardButton" type="Button" parent="Card"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 382.0
+offset_right = 210.0
+offset_bottom = 412.0
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+theme_override_colors/font_disabled_color = Color(0.56, 0.44, 0.28, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_gold_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_gold_button_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_gold_button_pressed")
+text = "领取奖励"

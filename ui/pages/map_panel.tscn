@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=12 format=3]
 
 [ext_resource type="Texture2D" path="res://assets/ui/icons/icon_map.png" id="1_icon"]
+[ext_resource type="Script" path="res://ui/pages/map_panel.gd" id="2_script"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_header"]
 bg_color = Color(0.27, 0.5, 0.86, 0.95)
@@ -38,6 +39,73 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_current_node"]
+bg_color = Color(1, 0.9, 0.54, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.86, 0.55, 0.16, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_locked_node"]
+bg_color = Color(0.76, 0.72, 0.66, 0.74)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.5, 0.45, 0.36, 0.8)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_route_line"]
+bg_color = Color(0.86, 0.65, 0.34, 0.72)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gold_button"]
+bg_color = Color(1, 0.78, 0.35, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8, 0.49, 0.14, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gold_button_hover"]
+bg_color = Color(1, 0.87, 0.48, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8, 0.49, 0.14, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gold_button_pressed"]
+bg_color = Color(0.86, 0.58, 0.18, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.58, 0.32, 0.09, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
 [node name="host_map" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -46,6 +114,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+script = ExtResource("2_script")
 
 [node name="Header" type="Panel" parent="."]
 layout_mode = 0
@@ -112,7 +181,7 @@ offset_left = 22.0
 offset_top = 82.0
 offset_right = 118.0
 offset_bottom = 128.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_chip")
+theme_override_styles/panel = SubResource("StyleBoxFlat_current_node")
 
 [node name="NodeAText" type="Label" parent="Card/MapScroll/MapContent/NodeA"]
 layout_mode = 1
@@ -125,6 +194,15 @@ theme_override_colors/font_color = Color(0.25, 0.24, 0.18, 1)
 text = "营地"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="RouteLineAB" type="Panel" parent="Card/MapScroll/MapContent"]
+layout_mode = 0
+offset_left = 106.0
+offset_top = 126.0
+offset_right = 174.0
+offset_bottom = 132.0
+rotation = 0.52
+theme_override_styles/panel = SubResource("StyleBoxFlat_route_line")
 
 [node name="NodeB" type="Panel" parent="Card/MapScroll/MapContent"]
 layout_mode = 0
@@ -146,13 +224,22 @@ text = "草原"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="RouteLineBC" type="Panel" parent="Card/MapScroll/MapContent"]
+layout_mode = 0
+offset_left = 106.0
+offset_top = 218.0
+offset_right = 174.0
+offset_bottom = 224.0
+rotation = -0.46
+theme_override_styles/panel = SubResource("StyleBoxFlat_route_line")
+
 [node name="NodeC" type="Panel" parent="Card/MapScroll/MapContent"]
 layout_mode = 0
 offset_left = 60.0
 offset_top = 242.0
 offset_right = 188.0
 offset_bottom = 288.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_chip")
+theme_override_styles/panel = SubResource("StyleBoxFlat_locked_node")
 
 [node name="NodeCText" type="Label" parent="Card/MapScroll/MapContent/NodeC"]
 layout_mode = 1
@@ -176,3 +263,16 @@ theme_override_colors/font_color = Color(0.56, 0.28, 0.06, 1)
 text = "探索 1 / 5"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="EnterButton" type="Button" parent="Card"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 384.0
+offset_right = 210.0
+offset_bottom = 414.0
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+theme_override_colors/font_disabled_color = Color(0.56, 0.44, 0.28, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_gold_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_gold_button_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_gold_button_pressed")
+text = "进入区域"

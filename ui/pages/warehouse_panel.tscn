@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3]
+[gd_scene load_steps=20 format=3]
 
 [ext_resource type="Texture2D" path="res://assets/ui/icons/icon_warehouse.png" id="1_icon"]
 [ext_resource type="Script" path="res://ui/pages/warehouse_panel.gd" id="2_script"]
@@ -66,6 +66,102 @@ corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tab"]
+bg_color = Color(0.86, 0.95, 1, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.55, 0.75, 0.95, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tab_hover"]
+bg_color = Color(0.93, 0.98, 1, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.42, 0.68, 0.95, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tab_pressed"]
+bg_color = Color(0.72, 0.88, 1, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.3, 0.56, 0.86, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tab_disabled"]
+bg_color = Color(0.26, 0.52, 0.86, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.98, 0.76, 0.36, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gold_button"]
+bg_color = Color(1, 0.78, 0.35, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8, 0.49, 0.14, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gold_button_hover"]
+bg_color = Color(1, 0.87, 0.48, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8, 0.49, 0.14, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gold_button_pressed"]
+bg_color = Color(0.86, 0.58, 0.18, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.58, 0.32, 0.09, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button_disabled"]
+bg_color = Color(0.72, 0.68, 0.6, 0.78)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.5, 0.45, 0.36, 0.85)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
 [node name="host_warehouse" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -132,21 +228,53 @@ theme_override_constants/separation = 6
 [node name="AllTab" type="Button" parent="Card/FilterTabs"]
 custom_minimum_size = Vector2(62, 28)
 layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+theme_override_colors/font_hover_color = Color(0.1, 0.34, 0.55, 1)
+theme_override_colors/font_pressed_color = Color(1, 0.97, 0.86, 1)
+theme_override_colors/font_disabled_color = Color(1, 0.97, 0.86, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_tab")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_tab_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_tab_hover")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_tab_disabled")
 text = "全部"
 
 [node name="EquipTab" type="Button" parent="Card/FilterTabs"]
 custom_minimum_size = Vector2(62, 28)
 layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+theme_override_colors/font_hover_color = Color(0.1, 0.34, 0.55, 1)
+theme_override_colors/font_pressed_color = Color(1, 0.97, 0.86, 1)
+theme_override_colors/font_disabled_color = Color(1, 0.97, 0.86, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_tab")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_tab_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_tab_hover")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_tab_disabled")
 text = "装备"
 
 [node name="ConsumableTab" type="Button" parent="Card/FilterTabs"]
 custom_minimum_size = Vector2(62, 28)
 layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+theme_override_colors/font_hover_color = Color(0.1, 0.34, 0.55, 1)
+theme_override_colors/font_pressed_color = Color(1, 0.97, 0.86, 1)
+theme_override_colors/font_disabled_color = Color(1, 0.97, 0.86, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_tab")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_tab_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_tab_hover")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_tab_disabled")
 text = "消耗"
 
 [node name="OtherTab" type="Button" parent="Card/FilterTabs"]
 custom_minimum_size = Vector2(62, 28)
 layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+theme_override_colors/font_hover_color = Color(0.1, 0.34, 0.55, 1)
+theme_override_colors/font_pressed_color = Color(1, 0.97, 0.86, 1)
+theme_override_colors/font_disabled_color = Color(1, 0.97, 0.86, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_tab")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_tab_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_tab_hover")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_tab_disabled")
 text = "其他"
 
 [node name="WarehouseScroll" type="ScrollContainer" parent="Card"]
@@ -330,6 +458,10 @@ offset_left = 100.0
 offset_top = 384.0
 offset_right = 210.0
 offset_bottom = 414.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_gold_button")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_gold_button_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_gold_button_hover")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_button_disabled")
 text = "整理"
 
 [node name="ItemTooltip" type="Panel" parent="."]
@@ -460,6 +592,10 @@ offset_left = 48.0
 offset_top = 260.0
 offset_right = 180.0
 offset_bottom = 290.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_gold_button")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_gold_button_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_gold_button_hover")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_button_disabled")
 text = "装备"
 
 [node name="EquippedTooltip" type="Panel" parent="."]
