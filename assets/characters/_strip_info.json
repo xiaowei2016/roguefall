@@ -1,0 +1,72 @@
+{
+  "hero_idle_strip.png": {
+    "new_w": 635,
+    "new_h": 671,
+    "old_fw": 720,
+    "avg_center_x": 379.75,
+    "content_widths": [
+      513,
+      635,
+      624,
+      612,
+      582,
+      581
+    ]
+  },
+  "hero_walk_strip.png": {
+    "new_w": 619,
+    "new_h": 658,
+    "old_fw": 720,
+    "avg_center_x": 383.25,
+    "content_widths": [
+      493,
+      619,
+      595,
+      593,
+      601,
+      586
+    ]
+  },
+  "hero_attack_strip.png": {
+    "new_w": 540,
+    "new_h": 658,
+    "old_fw": 720,
+    "avg_center_x": 338.3333333333333,
+    "content_widths": [
+      492,
+      493,
+      525,
+      530,
+      540,
+      516
+    ]
+  },
+  "hero_hurt_strip.png": {
+    "new_w": 678,
+    "new_h": 658,
+    "old_fw": 720,
+    "avg_center_x": 378.25,
+    "content_widths": [
+      485,
+      670,
+      603,
+      585,
+      596,
+      678
+    ]
+  },
+  "hero_death_strip.png": {
+    "new_w": 502,
+    "new_h": 664,
+    "old_fw": 720,
+    "avg_center_x": 394.6666666666667,
+    "content_widths": [
+      494,
+      471,
+      476,
+      486,
+      502,
+      491
+    ]
+  }
+}
