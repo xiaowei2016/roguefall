@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://4akcslf0rq60" path="res://assets/ui/icons/icon_reroll.png" id="6_reroll"]
 [ext_resource type="Texture2D" uid="uid://b7fr22c1xna8" path="res://assets/ui/icons/icon_detail.png" id="7_detail"]
 [ext_resource type="Script" uid="uid://c6nc3468vs5r3" path="res://ui/root/center_main_panel.gd" id="8_script"]
+[ext_resource type="Texture2D" path="res://assets/characters/hero_adventurer.png" id="9_hero"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
 bg_color = Color(1, 0.967, 0.895, 0.64)
@@ -93,12 +94,34 @@ corner_radius_top_right = 9
 corner_radius_bottom_right = 9
 corner_radius_bottom_left = 9
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tooltip"]
+bg_color = Color(1, 0.965, 0.86, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.82, 0.48, 0.16, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0.25, 0.16, 0.08, 0.28)
+shadow_size = 8
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tooltip_line"]
+bg_color = Color(0.86, 0.65, 0.34, 0.55)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
 [node name="CenterMainPanel" type="Control" unique_id=862275748]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 652.0
 offset_bottom = 390.0
-mouse_filter = 2
+mouse_filter = 0
 script = ExtResource("8_script")
 
 [node name="HeroCard" type="Panel" parent="." unique_id=196097004]
@@ -131,14 +154,13 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="HeroIcon" type="TextureRect" parent="HeroCard" unique_id=754514512]
-modulate = Color(1, 1, 1, 0.78)
 layout_mode = 0
 offset_left = 91.0
-offset_top = 66.0
+offset_top = 62.0
 offset_right = 225.0
-offset_bottom = 200.0
+offset_bottom = 202.0
 mouse_filter = 2
-texture = ExtResource("2_pet")
+texture = ExtResource("9_hero")
 expand_mode = 1
 stretch_mode = 5
 
@@ -288,6 +310,21 @@ offset_right = 131.0
 offset_bottom = 258.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
 
+[node name="Icon" type="TextureRect" parent="HeroCard/SlotBottom1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_map")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="SlotBottom2" type="Panel" parent="HeroCard" unique_id=669271122]
 layout_mode = 0
 offset_left = 132.0
@@ -296,6 +333,21 @@ offset_right = 184.0
 offset_bottom = 258.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
 
+[node name="Icon" type="TextureRect" parent="HeroCard/SlotBottom2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_pet")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="SlotBottom3" type="Panel" parent="HeroCard" unique_id=1296518474]
 layout_mode = 0
 offset_left = 185.0
@@ -303,6 +355,21 @@ offset_top = 206.0
 offset_right = 237.0
 offset_bottom = 258.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="Icon" type="TextureRect" parent="HeroCard/SlotBottom3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_warehouse")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="PowerPanel" type="Panel" parent="HeroCard" unique_id=1492420440]
 layout_mode = 0
@@ -413,43 +480,41 @@ offset_right = 298.0
 offset_bottom = 76.0
 theme_override_constants/separation = 8
 
-[node name="AllTab" type="Panel" parent="BagPanel/Tabs" unique_id=1272613915]
+[node name="AllTab" type="Button" parent="BagPanel/Tabs" unique_id=1272613915]
 custom_minimum_size = Vector2(56, 28)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_tab")
-
-[node name="Label" type="Label" parent="BagPanel/Tabs/AllTab" unique_id=1681324115]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 theme_override_colors/font_color = Color(0.1, 0.34, 0.55, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_tab")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_tab")
+theme_override_styles/hover = SubResource("StyleBoxFlat_tab")
 text = "全部"
-horizontal_alignment = 1
-vertical_alignment = 1
 
-[node name="WeaponIcon" type="TextureRect" parent="BagPanel/Tabs" unique_id=1611056917]
-custom_minimum_size = Vector2(30, 28)
+[node name="EquipTab" type="Button" parent="BagPanel/Tabs"]
+custom_minimum_size = Vector2(56, 28)
 layout_mode = 2
-texture = ExtResource("7_detail")
-expand_mode = 1
-stretch_mode = 5
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_tab")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_tab")
+theme_override_styles/hover = SubResource("StyleBoxFlat_tab")
+text = "装备"
 
-[node name="ArmorIcon" type="TextureRect" parent="BagPanel/Tabs" unique_id=954414843]
-custom_minimum_size = Vector2(30, 28)
+[node name="ConsumableTab" type="Button" parent="BagPanel/Tabs"]
+custom_minimum_size = Vector2(56, 28)
 layout_mode = 2
-texture = ExtResource("5_settings")
-expand_mode = 1
-stretch_mode = 5
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_tab")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_tab")
+theme_override_styles/hover = SubResource("StyleBoxFlat_tab")
+text = "消耗"
 
-[node name="GemIcon" type="TextureRect" parent="BagPanel/Tabs" unique_id=1452895922]
-custom_minimum_size = Vector2(30, 28)
+[node name="OtherTab" type="Button" parent="BagPanel/Tabs"]
+custom_minimum_size = Vector2(56, 28)
 layout_mode = 2
-texture = ExtResource("6_reroll")
-expand_mode = 1
-stretch_mode = 5
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_tab")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_tab")
+theme_override_styles/hover = SubResource("StyleBoxFlat_tab")
+text = "其他"
 
 [node name="BagScroll" type="ScrollContainer" parent="BagPanel"]
 layout_mode = 0
@@ -787,3 +852,209 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_gold_button")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_gold_button")
 theme_override_styles/hover = SubResource("StyleBoxFlat_gold_button")
 text = "快速使用"
+
+[node name="ItemTooltip" type="Panel" parent="."]
+visible = false
+z_index = 30
+layout_mode = 0
+offset_left = 410.0
+offset_top = 112.0
+offset_right = 638.0
+offset_bottom = 412.0
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_tooltip")
+
+[node name="TitleLabel" type="Label" parent="ItemTooltip"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 10.0
+offset_right = 214.0
+offset_bottom = 34.0
+theme_override_colors/font_color = Color(0.62, 0.25, 0.04, 1)
+text = "新手长剑"
+vertical_alignment = 1
+
+[node name="TypeLabel" type="Label" parent="ItemTooltip"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 35.0
+offset_right = 112.0
+offset_bottom = 56.0
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+text = "武器"
+
+[node name="RarityLabel" type="Label" parent="ItemTooltip"]
+layout_mode = 0
+offset_left = 112.0
+offset_top = 35.0
+offset_right = 214.0
+offset_bottom = 56.0
+theme_override_colors/font_color = Color(0.1, 0.34, 0.55, 1)
+text = "稀有"
+horizontal_alignment = 2
+
+[node name="DividerA" type="Panel" parent="ItemTooltip"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 60.0
+offset_right = 216.0
+offset_bottom = 62.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_tooltip_line")
+
+[node name="PowerLabel" type="Label" parent="ItemTooltip"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 68.0
+offset_right = 214.0
+offset_bottom = 90.0
+theme_override_colors/font_color = Color(0.72, 0.26, 0.05, 1)
+text = "战力 +120"
+
+[node name="BaseLabel" type="Label" parent="ItemTooltip"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 94.0
+offset_right = 214.0
+offset_bottom = 116.0
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+text = "基础：攻击 +10"
+
+[node name="DividerB" type="Panel" parent="ItemTooltip"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 121.0
+offset_right = 216.0
+offset_bottom = 123.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_tooltip_line")
+
+[node name="Affix1" type="Label" parent="ItemTooltip"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 130.0
+offset_right = 214.0
+offset_bottom = 149.0
+theme_override_colors/font_color = Color(0.28, 0.38, 0.13, 1)
+text = "词条：暴击 +1%"
+
+[node name="Affix2" type="Label" parent="ItemTooltip"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 150.0
+offset_right = 214.0
+offset_bottom = 169.0
+theme_override_colors/font_color = Color(0.28, 0.38, 0.13, 1)
+text = "词条：金币 +2%"
+
+[node name="Affix3" type="Label" parent="ItemTooltip"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 170.0
+offset_right = 214.0
+offset_bottom = 189.0
+theme_override_colors/font_color = Color(0.28, 0.38, 0.13, 1)
+
+[node name="DescLabel" type="Label" parent="ItemTooltip"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 192.0
+offset_right = 214.0
+offset_bottom = 224.0
+theme_override_colors/font_color = Color(0.56, 0.28, 0.06, 1)
+theme_override_font_sizes/font_size = 11
+text = "点击格子可锁定详情"
+autowrap_mode = 2
+
+[node name="CompareLabel" type="Label" parent="ItemTooltip"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 228.0
+offset_right = 214.0
+offset_bottom = 252.0
+theme_override_colors/font_color = Color(0.1, 0.34, 0.55, 1)
+theme_override_font_sizes/font_size = 11
+text = "已装备：新手长剑"
+autowrap_mode = 2
+
+[node name="ActionButton" type="Button" parent="ItemTooltip"]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 260.0
+offset_right = 180.0
+offset_bottom = 290.0
+text = "装备"
+
+[node name="EquippedTooltip" type="Panel" parent="."]
+visible = false
+z_index = 29
+layout_mode = 0
+offset_left = 176.0
+offset_top = 112.0
+offset_right = 394.0
+offset_bottom = 332.0
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_tooltip")
+
+[node name="TitleLabel" type="Label" parent="EquippedTooltip"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 10.0
+offset_right = 204.0
+offset_bottom = 34.0
+theme_override_colors/font_color = Color(0.62, 0.25, 0.04, 1)
+text = "已装备"
+vertical_alignment = 1
+
+[node name="NameLabel" type="Label" parent="EquippedTooltip"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 38.0
+offset_right = 204.0
+offset_bottom = 62.0
+theme_override_colors/font_color = Color(0.1, 0.34, 0.55, 1)
+text = "新手长剑"
+
+[node name="KindLabel" type="Label" parent="EquippedTooltip"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 66.0
+offset_right = 204.0
+offset_bottom = 88.0
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+text = "武器"
+
+[node name="DividerA" type="Panel" parent="EquippedTooltip"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 94.0
+offset_right = 206.0
+offset_bottom = 96.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_tooltip_line")
+
+[node name="PowerLabel" type="Label" parent="EquippedTooltip"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 102.0
+offset_right = 204.0
+offset_bottom = 124.0
+theme_override_colors/font_color = Color(0.72, 0.26, 0.05, 1)
+text = "战力 +120"
+
+[node name="BaseLabel" type="Label" parent="EquippedTooltip"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 128.0
+offset_right = 204.0
+offset_bottom = 150.0
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+text = "基础：攻击 +10"
+
+[node name="AffixLabel" type="Label" parent="EquippedTooltip"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 156.0
+offset_right = 204.0
+offset_bottom = 210.0
+theme_override_colors/font_color = Color(0.28, 0.38, 0.13, 1)
+theme_override_font_sizes/font_size = 11
+text = "词条：暴击 +1%"
+autowrap_mode = 2

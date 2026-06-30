@@ -59,10 +59,18 @@ func _process(delta: float) -> void:
 	attack_timer = maxf(0.0, attack_timer - delta)
 	hit_flash = maxf(0.0, hit_flash - delta)
 
-	var distance := _signed_distance_to_enemy()
+	var distance := enemy_x - player_x
 	if absf(distance) > attack_range:
-		direction = signf(distance)
-		player_x = _wrap_world_x(player_x + direction * player_speed * delta)
+		direction = signf(distance) if distance != 0.0 else direction
+		player_x += direction * player_speed * delta
+		if player_x <= _world_min_x():
+			player_x = _world_min_x()
+			direction = 1.0
+			_spawn_enemy(_next_enemy_x())
+		elif player_x >= _world_max_x():
+			player_x = _world_max_x()
+			direction = -1.0
+			_spawn_enemy(_next_enemy_x())
 		status_label.text = "巡逻找怪中"
 	else:
 		status_label.text = "自动战斗中"
@@ -90,22 +98,16 @@ func _apply_actor_positions() -> void:
 	enemy_visual.modulate = Color(1, 0.9, 0.9, 1) if hit_flash > 0.0 else Color.WHITE
 
 
-func _signed_distance_to_enemy() -> float:
-	var direct := enemy_x - player_x
-	if absf(direct) <= active_world_width * 0.5:
-		return direct
-	if direct > 0.0:
-		return direct - active_world_width
-	return direct + active_world_width
-
-
 func _next_enemy_x() -> float:
 	var forward := player_x + direction * randf_range(260.0, 560.0)
-	return _wrap_world_x(forward)
+	if forward < _world_min_x() or forward > _world_max_x():
+		direction *= -1.0
+		forward = player_x + direction * randf_range(260.0, 560.0)
+	return clampf(forward, _world_min_x(), _world_max_x())
 
 
 func _spawn_enemy(x: float) -> void:
-	enemy_x = _wrap_world_x(x)
+	enemy_x = clampf(x, _world_min_x(), _world_max_x())
 	enemy_hp = 3
 
 
@@ -115,8 +117,9 @@ func _gain_reward() -> void:
 		GameData.exp = mini(GameData.next_exp, GameData.exp + 5)
 
 
-func _wrap_world_x(x: float) -> float:
-	var wrapped := fmod(x, active_world_width)
-	if wrapped < 0.0:
-		wrapped += active_world_width
-	return wrapped
+func _world_min_x() -> float:
+	return 90.0
+
+
+func _world_max_x() -> float:
+	return maxf(_world_min_x(), active_world_width - 90.0)

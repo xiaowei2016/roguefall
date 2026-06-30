@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://vpsq5y7knekr" path="res://assets/grassland/segment_sources/grass_source.png" id="6_grass_source"]
 [ext_resource type="Texture2D" uid="uid://vb7t13a3q48q" path="res://assets/grassland/segment_sources/tree_source.png" id="7_tree_source"]
 [ext_resource type="Script" uid="uid://cm6ipnrxiocaw" path="res://scripts/grassland_stage_2d.gd" id="8_stage_script"]
+[ext_resource type="Texture2D" path="res://assets/characters/hero_adventurer.png" id="9_hero"]
+[ext_resource type="Texture2D" path="res://assets/monsters/slime_blue.png" id="10_slime"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_badge"]
 bg_color = Color(0.24, 0.47, 0.82, 0.92)
@@ -142,14 +144,17 @@ mouse_filter = 2
 
 [node name="PlayerSprite" type="TextureRect" parent="Frame/world_root/actor_layer/player_anchor/PlayerVisual" unique_id=1035016829]
 layout_mode = 0
-offset_left = -32.0
-offset_top = -72.0
-offset_right = 32.0
+offset_left = -34.0
+offset_top = -76.0
+offset_right = 34.0
+offset_bottom = -6.0
 mouse_filter = 2
+texture = ExtResource("9_hero")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="player_placeholder" type="ColorRect" parent="Frame/world_root/actor_layer/player_anchor/PlayerVisual" unique_id=969352563]
+visible = false
 layout_mode = 0
 offset_left = -14.0
 offset_top = -40.0
@@ -158,6 +163,7 @@ mouse_filter = 2
 color = Color(0.21, 0.44, 0.95, 1)
 
 [node name="player_head" type="ColorRect" parent="Frame/world_root/actor_layer/player_anchor/PlayerVisual" unique_id=355792525]
+visible = false
 layout_mode = 0
 offset_left = -10.0
 offset_top = -58.0
@@ -192,14 +198,17 @@ mouse_filter = 2
 
 [node name="EnemySprite" type="TextureRect" parent="Frame/world_root/actor_layer/enemy_anchor/EnemyVisual" unique_id=1501294454]
 layout_mode = 0
-offset_left = -34.0
-offset_top = -58.0
-offset_right = 34.0
+offset_left = -32.0
+offset_top = -48.0
+offset_right = 32.0
+offset_bottom = -6.0
 mouse_filter = 2
+texture = ExtResource("10_slime")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="enemy_placeholder" type="ColorRect" parent="Frame/world_root/actor_layer/enemy_anchor/EnemyVisual" unique_id=1165237471]
+visible = false
 layout_mode = 0
 offset_left = -18.0
 offset_top = -34.0
@@ -210,9 +219,9 @@ color = Color(1, 0.267, 0.267, 1)
 [node name="enemy_name" type="Label" parent="Frame/world_root/actor_layer/enemy_anchor" unique_id=499390763]
 layout_mode = 0
 offset_left = -34.0
-offset_top = -58.0
+offset_top = -52.0
 offset_right = 34.0
-offset_bottom = -38.0
+offset_bottom = -32.0
 theme_override_colors/font_color = Color(0.6, 0.08, 0.06, 1)
 text = "史莱姆"
 horizontal_alignment = 1

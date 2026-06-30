@@ -1,0 +1,154 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/ui/icons/icon_pet.png" id="1_icon"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_header"]
+bg_color = Color(0.27, 0.5, 0.86, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.98, 0.76, 0.36, 1)
+corner_radius_top_left = 13
+corner_radius_top_right = 13
+corner_radius_bottom_right = 13
+corner_radius_bottom_left = 13
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_card"]
+bg_color = Color(1, 0.972, 0.9, 0.92)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.9, 0.67, 0.36, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_chip"]
+bg_color = Color(0.83, 0.91, 1, 0.9)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.38, 0.57, 0.88, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="host_pet" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Header" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 332.0
+offset_bottom = 70.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_header")
+
+[node name="Icon" type="TextureRect" parent="Header"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 9.0
+offset_right = 46.0
+offset_bottom = 41.0
+texture = ExtResource("1_icon")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="Header"]
+layout_mode = 0
+offset_left = 58.0
+offset_top = 6.0
+offset_right = 180.0
+offset_bottom = 44.0
+theme_override_colors/font_color = Color(1, 0.96, 0.84, 1)
+text = "宠物"
+vertical_alignment = 1
+
+[node name="Card" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 86.0
+offset_right = 332.0
+offset_bottom = 506.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_card")
+
+[node name="PetScroll" type="ScrollContainer" parent="Card"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 18.0
+offset_right = 294.0
+offset_bottom = 386.0
+horizontal_scroll_mode = 0
+
+[node name="PetList" type="VBoxContainer" parent="Card/PetScroll"]
+layout_mode = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="PetIcon" type="TextureRect" parent="Card/PetScroll/PetList"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture = ExtResource("1_icon")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="Card/PetScroll/PetList"]
+custom_minimum_size = Vector2(256, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+text = "小蓝灵 Lv.1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SkillA" type="Panel" parent="Card/PetScroll/PetList"]
+custom_minimum_size = Vector2(256, 46)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_chip")
+
+[node name="SkillAText" type="Label" parent="Card/PetScroll/PetList/SkillA"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.25, 0.24, 0.18, 1)
+text = "陪伴：战斗金币 +5%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SkillB" type="Panel" parent="Card/PetScroll/PetList"]
+custom_minimum_size = Vector2(256, 46)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_chip")
+
+[node name="SkillBText" type="Label" parent="Card/PetScroll/PetList/SkillB"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.25, 0.24, 0.18, 1)
+text = "守护：生命上限 +20"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Footer" type="Label" parent="Card/PetScroll/PetList"]
+custom_minimum_size = Vector2(256, 32)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.56, 0.28, 0.06, 1)
+text = "亲密度 0 / 100"
+horizontal_alignment = 1
+vertical_alignment = 1

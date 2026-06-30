@@ -1,0 +1,539 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/ui/icons/icon_warehouse.png" id="1_icon"]
+[ext_resource type="Script" path="res://ui/pages/warehouse_panel.gd" id="2_script"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/icon_detail.png" id="3_detail"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/icon_settings.png" id="4_settings"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/icon_reroll.png" id="5_reroll"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/icon_pet.png" id="6_pet"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/icon_map.png" id="7_map"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_header"]
+bg_color = Color(0.27, 0.5, 0.86, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.98, 0.76, 0.36, 1)
+corner_radius_top_left = 13
+corner_radius_top_right = 13
+corner_radius_bottom_right = 13
+corner_radius_bottom_left = 13
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_card"]
+bg_color = Color(1, 0.972, 0.9, 0.92)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.9, 0.67, 0.36, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_slot"]
+bg_color = Color(0.98, 0.92, 0.78, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.58, 0.72, 0.95, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tooltip"]
+bg_color = Color(1, 0.965, 0.86, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.82, 0.48, 0.16, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0.25, 0.16, 0.08, 0.28)
+shadow_size = 8
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tooltip_line"]
+bg_color = Color(0.86, 0.65, 0.34, 0.55)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[node name="host_warehouse" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+script = ExtResource("2_script")
+
+[node name="Header" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 332.0
+offset_bottom = 70.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_header")
+
+[node name="Icon" type="TextureRect" parent="Header"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 9.0
+offset_right = 46.0
+offset_bottom = 41.0
+texture = ExtResource("1_icon")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="Header"]
+layout_mode = 0
+offset_left = 58.0
+offset_top = 6.0
+offset_right = 180.0
+offset_bottom = 44.0
+theme_override_colors/font_color = Color(1, 0.96, 0.84, 1)
+text = "仓库"
+vertical_alignment = 1
+
+[node name="Card" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 86.0
+offset_right = 332.0
+offset_bottom = 506.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_card")
+
+[node name="Hint" type="Label" parent="Card"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 14.0
+offset_right = 286.0
+offset_bottom = 40.0
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+text = "材料与备用装备"
+
+[node name="FilterTabs" type="HBoxContainer" parent="Card"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 42.0
+offset_right = 294.0
+offset_bottom = 72.0
+theme_override_constants/separation = 6
+
+[node name="AllTab" type="Button" parent="Card/FilterTabs"]
+custom_minimum_size = Vector2(62, 28)
+layout_mode = 2
+text = "全部"
+
+[node name="EquipTab" type="Button" parent="Card/FilterTabs"]
+custom_minimum_size = Vector2(62, 28)
+layout_mode = 2
+text = "装备"
+
+[node name="ConsumableTab" type="Button" parent="Card/FilterTabs"]
+custom_minimum_size = Vector2(62, 28)
+layout_mode = 2
+text = "消耗"
+
+[node name="OtherTab" type="Button" parent="Card/FilterTabs"]
+custom_minimum_size = Vector2(62, 28)
+layout_mode = 2
+text = "其他"
+
+[node name="WarehouseScroll" type="ScrollContainer" parent="Card"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 84.0
+offset_right = 294.0
+offset_bottom = 328.0
+horizontal_scroll_mode = 0
+
+[node name="Grid" type="GridContainer" parent="Card/WarehouseScroll"]
+layout_mode = 2
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+columns = 4
+
+[node name="Slot1" type="Panel" parent="Card/WarehouseScroll/Grid"]
+custom_minimum_size = Vector2(62, 62)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="Icon" type="TextureRect" parent="Card/WarehouseScroll/Grid/Slot1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 9.0
+offset_top = 8.0
+offset_right = -9.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_detail")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Slot2" type="Panel" parent="Card/WarehouseScroll/Grid"]
+custom_minimum_size = Vector2(62, 62)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="Icon" type="TextureRect" parent="Card/WarehouseScroll/Grid/Slot2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 9.0
+offset_top = 8.0
+offset_right = -9.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_settings")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Slot3" type="Panel" parent="Card/WarehouseScroll/Grid"]
+custom_minimum_size = Vector2(62, 62)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="Icon" type="TextureRect" parent="Card/WarehouseScroll/Grid/Slot3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 9.0
+offset_top = 8.0
+offset_right = -9.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_reroll")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Slot4" type="Panel" parent="Card/WarehouseScroll/Grid"]
+custom_minimum_size = Vector2(62, 62)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="Icon" type="TextureRect" parent="Card/WarehouseScroll/Grid/Slot4"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 9.0
+offset_top = 8.0
+offset_right = -9.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_pet")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Slot5" type="Panel" parent="Card/WarehouseScroll/Grid"]
+custom_minimum_size = Vector2(62, 62)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="Icon" type="TextureRect" parent="Card/WarehouseScroll/Grid/Slot5"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 9.0
+offset_top = 8.0
+offset_right = -9.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_map")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Slot6" type="Panel" parent="Card/WarehouseScroll/Grid"]
+custom_minimum_size = Vector2(62, 62)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="Icon" type="TextureRect" parent="Card/WarehouseScroll/Grid/Slot6"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 9.0
+offset_top = 8.0
+offset_right = -9.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_reroll")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Slot7" type="Panel" parent="Card/WarehouseScroll/Grid"]
+custom_minimum_size = Vector2(62, 62)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="Slot8" type="Panel" parent="Card/WarehouseScroll/Grid"]
+custom_minimum_size = Vector2(62, 62)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="Slot9" type="Panel" parent="Card/WarehouseScroll/Grid"]
+custom_minimum_size = Vector2(62, 62)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="Slot10" type="Panel" parent="Card/WarehouseScroll/Grid"]
+custom_minimum_size = Vector2(62, 62)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="Slot11" type="Panel" parent="Card/WarehouseScroll/Grid"]
+custom_minimum_size = Vector2(62, 62)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="Slot12" type="Panel" parent="Card/WarehouseScroll/Grid"]
+custom_minimum_size = Vector2(62, 62)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="Capacity" type="Label" parent="Card"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 350.0
+offset_right = 290.0
+offset_bottom = 382.0
+theme_override_colors/font_color = Color(0.56, 0.28, 0.06, 1)
+text = "容量 12 / 40"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SortButton" type="Button" parent="Card"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 384.0
+offset_right = 210.0
+offset_bottom = 414.0
+text = "整理"
+
+[node name="ItemTooltip" type="Panel" parent="."]
+visible = false
+z_index = 30
+layout_mode = 0
+offset_left = 108.0
+offset_top = 134.0
+offset_right = 336.0
+offset_bottom = 434.0
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_tooltip")
+
+[node name="TitleLabel" type="Label" parent="ItemTooltip"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 10.0
+offset_right = 214.0
+offset_bottom = 34.0
+theme_override_colors/font_color = Color(0.62, 0.25, 0.04, 1)
+text = "备用长剑"
+vertical_alignment = 1
+
+[node name="TypeLabel" type="Label" parent="ItemTooltip"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 35.0
+offset_right = 112.0
+offset_bottom = 56.0
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+text = "武器"
+
+[node name="RarityLabel" type="Label" parent="ItemTooltip"]
+layout_mode = 0
+offset_left = 112.0
+offset_top = 35.0
+offset_right = 214.0
+offset_bottom = 56.0
+theme_override_colors/font_color = Color(0.1, 0.34, 0.55, 1)
+text = "普通"
+horizontal_alignment = 2
+
+[node name="DividerA" type="Panel" parent="ItemTooltip"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 60.0
+offset_right = 216.0
+offset_bottom = 62.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_tooltip_line")
+
+[node name="PowerLabel" type="Label" parent="ItemTooltip"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 68.0
+offset_right = 214.0
+offset_bottom = 90.0
+theme_override_colors/font_color = Color(0.72, 0.26, 0.05, 1)
+text = "战力 +80"
+
+[node name="BaseLabel" type="Label" parent="ItemTooltip"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 94.0
+offset_right = 214.0
+offset_bottom = 116.0
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+text = "基础：攻击 +7"
+
+[node name="DividerB" type="Panel" parent="ItemTooltip"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 121.0
+offset_right = 216.0
+offset_bottom = 123.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_tooltip_line")
+
+[node name="Affix1" type="Label" parent="ItemTooltip"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 130.0
+offset_right = 214.0
+offset_bottom = 149.0
+theme_override_colors/font_color = Color(0.28, 0.38, 0.13, 1)
+text = "词条：暴击 +1%"
+
+[node name="Affix2" type="Label" parent="ItemTooltip"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 150.0
+offset_right = 214.0
+offset_bottom = 169.0
+theme_override_colors/font_color = Color(0.28, 0.38, 0.13, 1)
+text = "词条：洗练槽 1 / 4"
+
+[node name="Affix3" type="Label" parent="ItemTooltip"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 170.0
+offset_right = 214.0
+offset_bottom = 189.0
+theme_override_colors/font_color = Color(0.28, 0.38, 0.13, 1)
+
+[node name="DescLabel" type="Label" parent="ItemTooltip"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 192.0
+offset_right = 214.0
+offset_bottom = 224.0
+theme_override_colors/font_color = Color(0.56, 0.28, 0.06, 1)
+theme_override_font_sizes/font_size = 11
+text = "点击格子可锁定详情"
+autowrap_mode = 2
+
+[node name="CompareLabel" type="Label" parent="ItemTooltip"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 228.0
+offset_right = 214.0
+offset_bottom = 252.0
+theme_override_colors/font_color = Color(0.1, 0.34, 0.55, 1)
+theme_override_font_sizes/font_size = 11
+text = "已装备：新手长剑"
+autowrap_mode = 2
+
+[node name="ActionButton" type="Button" parent="ItemTooltip"]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 260.0
+offset_right = 180.0
+offset_bottom = 290.0
+text = "装备"
+
+[node name="EquippedTooltip" type="Panel" parent="."]
+visible = false
+z_index = 29
+layout_mode = 0
+offset_left = -118.0
+offset_top = 134.0
+offset_right = 100.0
+offset_bottom = 354.0
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_tooltip")
+
+[node name="TitleLabel" type="Label" parent="EquippedTooltip"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 10.0
+offset_right = 204.0
+offset_bottom = 34.0
+theme_override_colors/font_color = Color(0.62, 0.25, 0.04, 1)
+text = "已装备"
+vertical_alignment = 1
+
+[node name="NameLabel" type="Label" parent="EquippedTooltip"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 38.0
+offset_right = 204.0
+offset_bottom = 62.0
+theme_override_colors/font_color = Color(0.1, 0.34, 0.55, 1)
+text = "新手长剑"
+
+[node name="KindLabel" type="Label" parent="EquippedTooltip"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 66.0
+offset_right = 204.0
+offset_bottom = 88.0
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+text = "武器"
+
+[node name="DividerA" type="Panel" parent="EquippedTooltip"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 94.0
+offset_right = 206.0
+offset_bottom = 96.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_tooltip_line")
+
+[node name="PowerLabel" type="Label" parent="EquippedTooltip"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 102.0
+offset_right = 204.0
+offset_bottom = 124.0
+theme_override_colors/font_color = Color(0.72, 0.26, 0.05, 1)
+text = "战力 +120"
+
+[node name="BaseLabel" type="Label" parent="EquippedTooltip"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 128.0
+offset_right = 204.0
+offset_bottom = 150.0
+theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
+text = "基础：攻击 +10"
+
+[node name="AffixLabel" type="Label" parent="EquippedTooltip"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 156.0
+offset_right = 204.0
+offset_bottom = 210.0
+theme_override_colors/font_color = Color(0.28, 0.38, 0.13, 1)
+theme_override_font_sizes/font_size = 11
+text = "词条：暴击 +1%"
+autowrap_mode = 2

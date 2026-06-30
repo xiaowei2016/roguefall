@@ -15,7 +15,13 @@
 
 - `scenes/main.tscn`：总界面，负责窗口、三栏布局、按钮、功能页实例挂载。
 - `ui/root/center_main_panel.tscn`：中心角色、装备、背包面板。
-- `ui/pages/detail_panel.tscn`：右侧“详情”页，已经从主场景拆出来，适合单独打开调整。
+- `ui/pages/warehouse_panel.tscn`：左侧“仓库”页。
+- `ui/pages/pet_panel.tscn`：左侧“宠物”页。
+- `ui/pages/codex_panel.tscn`：左侧“图鉴”页。
+- `ui/pages/map_panel.tscn`：左侧“地图”页。
+- `ui/pages/settings_panel.tscn`：右侧“设置”页。
+- `ui/pages/reroll_panel.tscn`：右侧“洗练”页。
+- `ui/pages/detail_panel.tscn`：右侧“详情”页。
 - `scenes/GrasslandStage2D.tscn`：底部挂机战斗条里的草原场景。
 - `scripts/grassland_stage_2d.gd`：挂机条里的横向世界、循环、找怪、攻击基础逻辑。
 - `scripts/main.gd`：按钮切换、窗口位置、基础数据刷新。
@@ -46,14 +52,120 @@
 
 - `HeroCard/StatsScroll/StatList`：属性列表。属性多了就继续往 `StatList` 里加 `Label`。
 - `BagPanel/BagScroll/BagGrid`：背包格子。格子多了就继续往 `BagGrid` 里加 `Panel`。
-- `PanelRoot/LeftPanel/host_warehouse/Card/WarehouseScroll/Grid`：仓库格子。格子多了就继续往 `Grid` 里加 `Panel`。
-- `PanelRoot/LeftPanel/host_codex/Card/CodexScroll/List`：图鉴条目。图鉴多了就继续往 `List` 里加 `Label`。
-- `PanelRoot/RightPanel/host_reroll/Card/AttrScroll/AttrList`：洗练词条。词条多了就继续往 `AttrList` 里加 `Label`。
+- `ui/pages/warehouse_panel.tscn -> Card/WarehouseScroll/Grid`：仓库格子。格子多了就继续往 `Grid` 里加 `Panel`。
+- `ui/pages/pet_panel.tscn -> Card/PetScroll/PetList`：宠物信息和技能。技能多了就继续往 `PetList` 里加 `Panel`。
+- `ui/pages/codex_panel.tscn -> Card/CodexScroll/List`：图鉴条目。图鉴多了就继续往 `List` 里加 `Label`。
+- `ui/pages/map_panel.tscn -> Card/MapScroll/MapContent`：地图节点。节点多了就继续往 `MapContent` 里加 `Panel`。
+- `ui/pages/settings_panel.tscn -> Card/SettingsScroll/Options`：设置选项。选项多了就继续往 `Options` 里加 `CheckBox` 或 `Label`。
+- `ui/pages/reroll_panel.tscn -> Card/AttrScroll/AttrList`：洗练词条。词条多了就继续往 `AttrList` 里加 `Label`。
 - `ui/pages/detail_panel.tscn -> Card/StatsScroll/Stats`：详情属性。属性多了就继续往 `Stats` 里加 `Label`。
 
 外层 `ScrollContainer` 负责滑动，内层 `GridContainer` 或 `StatList` 负责排列。这样内容变多时不会挤坏面板。
 
-`main.tscn` 里的 `PanelRoot/RightPanel/host_detail` 现在是 `detail_panel.tscn` 的实例。你要调详情页外观时，优先打开 `ui/pages/detail_panel.tscn`，不要在主场景里一层层找。
+## 物品详情弹窗
+
+凡是有物品或装备的格子，都应该能看详情。现在已经做了两处：
+
+- 中心背包页：`ui/root/center_main_panel.tscn -> ItemTooltip`
+- 仓库页：`ui/pages/warehouse_panel.tscn -> ItemTooltip`
+- 中心背包页已装备对比：`ui/root/center_main_panel.tscn -> EquippedTooltip`
+- 仓库页已装备对比：`ui/pages/warehouse_panel.tscn -> EquippedTooltip`
+
+交互规则：
+
+1. 鼠标停在装备格、背包格、仓库格上 1 秒后，才显示详情弹窗，避免扫过格子时频繁弹出。
+2. 点击格子会立刻显示并锁定弹窗，再点同一个格子会关闭。
+3. 鼠标移开时，未锁定的弹窗会隐藏。
+4. 锁定后点击页面空白区域也会关闭弹窗；中心背包页和仓库页都按这个规则。
+5. 弹窗可以跨出当前小栏显示，但只允许在三栏面板高度内上下移动，不能遮挡底部战斗条。
+6. 弹窗结构固定为：名称、类型、品质、战力或数量、基础属性、词条、说明。
+7. 鼠标悬停格子时会变成亮金描边；点击锁定详情时会保持橙金描边，方便玩家知道当前正在查看哪个物品。
+8. 装备位里的装备会显示 `卸下` 按钮；背包和仓库里的装备会显示 `装备` 按钮。
+9. 背包或仓库里浏览装备时，会显示两个弹窗：一个是当前物品，一个是同类型已装备物品。这样不用把所有对比文字挤在同一个窗口里。
+10. 当前物品弹窗优先贴着触发格子的右侧显示；右侧空间不够时显示到左侧。已装备弹窗会贴在当前物品弹窗旁边，两个弹窗都限制在三栏高度内，避免遮挡战斗条。
+
+中心背包页的弹窗数据在 `ui/root/center_main_panel.gd` 的 `_slot_items` 里。
+仓库页的弹窗数据在 `ui/pages/warehouse_panel.gd` 的 `_slot_items` 里。
+
+中心背包页的 `装备` / `卸下` 已经接了最小可用的真实交换逻辑：
+
+- 背包里点装备的 `装备`：会替换身上同类型装备，原装备回到刚才的背包格。
+- 装备位点 `卸下`：会放到第一个空背包格。
+- 仓库里的 `装备` 按钮当前仍是 UI 入口，下一步接真实仓库数据时再做“从仓库取出/装备/回写仓库”的完整逻辑。
+
+背包和仓库都有分类按钮：
+
+- `全部`：显示所有有数据的物品格，也保留空格。
+- `装备`：显示武器、防具、饰品等装备。
+- `消耗`：显示消耗品、宝箱、宠物道具等可用物品。
+- `其他`：显示材料、任务、探索道具等其它物品。
+
+仓库页现在有 `整理` 按钮，节点是 `ui/pages/warehouse_panel.tscn -> Card/SortButton`。当前先作为 UI 入口，点击后会更新提示文字；下一步接真实仓库数据时再做真正排序。
+
+后面只要新增新的物品格子，就按这个规则补一条 `_slot_items` 数据，否则玩家看不到这个物品是什么。
+
+中心角色身上的 9 个装备位现在都应该同时具备两样东西：
+
+- 场景里有图标节点：例如 `HeroCard/SlotBottom1/Icon`。
+- 脚本里有详情数据：例如 `ui/root/center_main_panel.gd -> _slot_items -> "SlotBottom1"`。
+
+如果只加图标不加 `_slot_items`，玩家看不到装备详情；如果只加 `_slot_items` 不加图标，玩家会觉得格子是空的。
+
+`main.tscn` 里的左侧和右侧功能页现在都是 `ui/pages/` 下面的独立实例。你要调某个页面外观时，优先打开对应页面文件，不要在主场景里一层层找。
+
+页面对应关系：
+
+- 仓库：`ui/pages/warehouse_panel.tscn`
+- 宠物：`ui/pages/pet_panel.tscn`
+- 图鉴：`ui/pages/codex_panel.tscn`
+- 地图：`ui/pages/map_panel.tscn`
+- 设置：`ui/pages/settings_panel.tscn`
+- 洗练：`ui/pages/reroll_panel.tscn`
+- 详情：`ui/pages/detail_panel.tscn`
+
+侧边页现在也按“一个页面一个场景”的方式整理好了：
+
+- 仓库页：主要改 `Card/WarehouseScroll/Grid`，适合放仓库格子。
+- 宠物页：主要改 `Card/PetScroll/PetList`，适合放宠物头像、名字、技能、亲密度。
+- 图鉴页：主要改 `Card/CodexScroll/List`，适合放图鉴条目。
+- 地图片：主要改 `Card/MapScroll/MapContent`，适合放地图节点。
+- 设置页：主要改 `Card/SettingsScroll/Options`，适合放开关、音量滑条和设置文字。
+- 洗练页：主要改 `Card/AttrScroll/AttrList`，适合放装备词条。
+
+这些页面外层都有 `ScrollContainer`，内容变多时会滚动，不需要把面板强行拉大。
+
+设置页音量节点：
+
+- `MasterVolumeLabel` / `MasterVolumeSlider`：主音量。
+- `MusicVolumeLabel` / `MusicVolumeSlider`：背景音乐音量。
+- `SfxVolumeLabel` / `SfxVolumeSlider`：音效音量。
+- `ui/pages/settings_panel.gd`：运行时自动确保有 `Music` 和 `SFX` 音频总线，新手阶段不用先手动配置 Audio Bus。
+
+详情页常改节点：
+
+- `Header`：顶部蓝色标题条。
+- `Card/PowerPanel/PowerLabel`：战力摘要，运行时会自动刷新。
+- `Card/Tabs`：基础、战斗、收益三个分类标签，目前先作为视觉分区。
+- `Card/StatsScroll/Stats`：可滚动属性列表，里面已经按 `基础属性`、`战斗属性`、`收益属性` 分组。
+- `Card/GrowthPanel/GrowthLabel`：底部成长提示，运行时会自动刷新。
+- `ui/pages/detail_panel.gd`：只负责点击基础、战斗、收益时切换显示哪一组属性。
+
+详情页属性行命名规则：
+
+- `Stat1` 到 `Stat5`：基础属性。
+- `Stat6` 到 `Stat9`：战斗属性。
+- `Stat10` 到 `Stat12`：收益属性。
+
+如果要新增详情属性：
+
+1. 打开 `ui/pages/detail_panel.tscn`。
+2. 在 `Card/StatsScroll/Stats` 里复制一个同组的 `Label`。
+3. 如果是基础属性，把它放到 `Stat1` 到 `Stat5` 附近。
+4. 如果是战斗属性，把它放到 `Stat6` 到 `Stat9` 附近。
+5. 如果是收益属性，把它放到 `Stat10` 到 `Stat12` 附近。
+6. 之后再让我帮你把新属性接到数据刷新里。
+
+现在点击 `基础`、`战斗`、`收益` 会切换显示对应分组。这个交互由 `ui/pages/detail_panel.gd` 控制，正常调视觉时不需要改它。
 
 ## 挂机战斗条
 
@@ -79,7 +191,9 @@
 
 挂机条没有背景板。要做彩虹岛那种多层横向场景时，优先调 `segment_0_preview` 里面的分层节点。
 
-重要：素材按一屏 720 宽来做，不要把图片直接拉到 3600。运行时脚本会把 `segment_0_preview` 复制 5 段，形成 3600 宽循环场景。这样你的 PS 素材只需要按 720 x 180 的比例做，视觉比例不会被拉坏。
+重要：素材按一屏 720 宽来做，不要把图片直接拉到 3600。运行时脚本会把 `segment_0_preview` 复制 5 段，形成 3600 宽横向世界。这样你的 PS 素材只需要按 720 x 180 的比例做，视觉比例不会被拉坏。
+
+挂机逻辑是 3600 宽世界内左右折返找怪，不是打完一轮后重开。人物走到世界边缘会转身，怪物死亡后会刷在当前巡逻方向的前方；如果前方快到边缘，会自动换方向继续刷怪。
 
 如果你在画面里看到一张完整草原图压住其它层，检查 `StageImage.visible` 是否被打开了。正常状态下它应该是关闭的。
 
@@ -134,5 +248,5 @@
 
 1. 你先继续在 `segment_0_preview` 里调天空、远山、村庄、地面等一屏分层位置。
 2. 把 PS 处理好的玩家和怪物图替换到 `PlayerSprite`、`EnemySprite`。
-3. 再把仓库、宠物、图鉴、地图、设置、洗练、详情拆成独立 `.tscn`，这样更适合新手逐页调整。
+3. 逐页打开 `ui/pages/` 里的功能页，按你的视觉稿微调位置和素材。
 4. 最后给按钮补 hover、pressed、disabled 三种正式贴图状态。

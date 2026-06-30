@@ -340,6 +340,7 @@ func _center_on_screen() -> void:
 
 # ===== 按钮 =====
 func _on_bag() -> void:
+	_close_open_item_tips()
 	_center_open = not _center_open
 	if not _center_open:
 		# 关闭 CenterPanel 时同时关闭左右栏
@@ -350,6 +351,7 @@ func _on_bag() -> void:
 func _on_left_button(content: LeftContent) -> void:
 	if not _center_open:
 		return
+	_close_open_item_tips()
 	if _left_content == content:
 		_left_content = LeftContent.NONE
 	else:
@@ -359,11 +361,18 @@ func _on_left_button(content: LeftContent) -> void:
 func _on_right_button(content: RightContent) -> void:
 	if not _center_open:
 		return
+	_close_open_item_tips()
 	if _right_content == content:
 		_right_content = RightContent.NONE
 	else:
 		_right_content = content
 	_apply_state()
+
+
+func _close_open_item_tips() -> void:
+	for panel in [center_main_panel, host_warehouse]:
+		if panel != null and panel.has_method("close_item_tip"):
+			panel.call("close_item_tip")
 
 
 func _refresh_battle_bar() -> void:
@@ -380,8 +389,30 @@ func _refresh_battle_bar() -> void:
 
 
 func _refresh_detail_panel() -> void:
+	var power := int(GameData.attack) * 80 + int(GameData.defense) * 60 + int(GameData.max_hp) * 2
+	$PanelRoot/RightPanel/host_detail/Card/PowerPanel/PowerLabel.text = "战力 " + _format_number(power)
 	$PanelRoot/RightPanel/host_detail/Card/StatsScroll/Stats/Stat1.text = "等级：" + str(GameData.level)
 	$PanelRoot/RightPanel/host_detail/Card/StatsScroll/Stats/Stat2.text = "攻击：" + str(GameData.attack)
 	$PanelRoot/RightPanel/host_detail/Card/StatsScroll/Stats/Stat3.text = "防御：" + str(GameData.defense)
 	$PanelRoot/RightPanel/host_detail/Card/StatsScroll/Stats/Stat4.text = "生命：" + str(GameData.hp) + " / " + str(GameData.max_hp)
 	$PanelRoot/RightPanel/host_detail/Card/StatsScroll/Stats/Stat5.text = "金币：" + str(GameData.gold)
+	$PanelRoot/RightPanel/host_detail/Card/StatsScroll/Stats/Stat6.text = "暴击：0%"
+	$PanelRoot/RightPanel/host_detail/Card/StatsScroll/Stats/Stat7.text = "暴伤：150%"
+	$PanelRoot/RightPanel/host_detail/Card/StatsScroll/Stats/Stat8.text = "幸运：0"
+	$PanelRoot/RightPanel/host_detail/Card/StatsScroll/Stats/Stat9.text = "攻速：1.00"
+	$PanelRoot/RightPanel/host_detail/Card/StatsScroll/Stats/Stat10.text = "金币加成：0%"
+	$PanelRoot/RightPanel/host_detail/Card/StatsScroll/Stats/Stat11.text = "经验加成：0%"
+	$PanelRoot/RightPanel/host_detail/Card/StatsScroll/Stats/Stat12.text = "掉落加成：0%"
+	$PanelRoot/RightPanel/host_detail/Card/GrowthPanel/GrowthLabel.text = "成长：攻击 " + str(GameData.attack) + " / 生命 " + str(GameData.max_hp)
+
+
+func _format_number(value: int) -> String:
+	var text := str(value)
+	var result := ""
+	var count := 0
+	for index in range(text.length() - 1, -1, -1):
+		if count > 0 and count % 3 == 0:
+			result = "," + result
+		result = text[index] + result
+		count += 1
+	return result
