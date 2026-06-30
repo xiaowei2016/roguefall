@@ -389,21 +389,8 @@ func _refresh_battle_bar() -> void:
 
 
 func _refresh_detail_panel() -> void:
-	var power := int(GameData.attack) * 80 + int(GameData.defense) * 60 + int(GameData.max_hp) * 2
-	$PanelRoot/RightPanel/host_detail/Card/PowerPanel/PowerLabel.text = "战力 " + _format_number(power)
-	$PanelRoot/RightPanel/host_detail/Card/StatsScroll/Stats/Stat1.text = "等级：" + str(GameData.level)
-	$PanelRoot/RightPanel/host_detail/Card/StatsScroll/Stats/Stat2.text = "攻击：" + str(GameData.attack)
-	$PanelRoot/RightPanel/host_detail/Card/StatsScroll/Stats/Stat3.text = "防御：" + str(GameData.defense)
-	$PanelRoot/RightPanel/host_detail/Card/StatsScroll/Stats/Stat4.text = "生命：" + str(GameData.hp) + " / " + str(GameData.max_hp)
-	$PanelRoot/RightPanel/host_detail/Card/StatsScroll/Stats/Stat5.text = "金币：" + str(GameData.gold)
-	$PanelRoot/RightPanel/host_detail/Card/StatsScroll/Stats/Stat6.text = "暴击：0%"
-	$PanelRoot/RightPanel/host_detail/Card/StatsScroll/Stats/Stat7.text = "暴伤：150%"
-	$PanelRoot/RightPanel/host_detail/Card/StatsScroll/Stats/Stat8.text = "幸运：0"
-	$PanelRoot/RightPanel/host_detail/Card/StatsScroll/Stats/Stat9.text = "攻速：1.00"
-	$PanelRoot/RightPanel/host_detail/Card/StatsScroll/Stats/Stat10.text = "金币加成：0%"
-	$PanelRoot/RightPanel/host_detail/Card/StatsScroll/Stats/Stat11.text = "经验加成：0%"
-	$PanelRoot/RightPanel/host_detail/Card/StatsScroll/Stats/Stat12.text = "掉落加成：0%"
-	$PanelRoot/RightPanel/host_detail/Card/GrowthPanel/GrowthLabel.text = "成长：攻击 " + str(GameData.attack) + " / 生命 " + str(GameData.max_hp)
+	if host_detail != null and host_detail.has_method("refresh_from_game_data"):
+		host_detail.call("refresh_from_game_data", GameData)
 
 
 func _format_number(value: int) -> String:

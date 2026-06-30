@@ -230,25 +230,25 @@ text = "等级：1"
 custom_minimum_size = Vector2(232, 22)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
-text = "攻击：10"
+text = "经验：0 / 100"
 
 [node name="Stat3" type="Label" parent="Card/StatsScroll/Stats"]
 custom_minimum_size = Vector2(232, 22)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
-text = "防御：5"
+text = "生命：100 / 100"
 
 [node name="Stat4" type="Label" parent="Card/StatsScroll/Stats"]
 custom_minimum_size = Vector2(232, 22)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
-text = "生命：100 / 100"
+text = "攻击：10"
 
 [node name="Stat5" type="Label" parent="Card/StatsScroll/Stats"]
 custom_minimum_size = Vector2(232, 22)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
-text = "金币：0"
+text = "防御：5"
 
 [node name="BattleSectionTitle" type="Label" parent="Card/StatsScroll/Stats"]
 custom_minimum_size = Vector2(232, 20)
@@ -290,13 +290,13 @@ text = "收益属性"
 custom_minimum_size = Vector2(232, 22)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
-text = "金币加成：0%"
+text = "金币：0"
 
 [node name="Stat11" type="Label" parent="Card/StatsScroll/Stats"]
 custom_minimum_size = Vector2(232, 22)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.42, 0.22, 0.08, 1)
-text = "经验加成：0%"
+text = "金币加成：0%"
 
 [node name="Stat12" type="Label" parent="Card/StatsScroll/Stats"]
 custom_minimum_size = Vector2(232, 22)
@@ -322,7 +322,7 @@ offset_right = -10.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.25, 0.24, 0.18, 1)
-text = "成长：优先提升攻击和生命"
+text = "成长建议：当前适合继续刷草原装备和材料"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -333,6 +333,6 @@ offset_top = 390.0
 offset_right = 284.0
 offset_bottom = 414.0
 theme_override_colors/font_color = Color(0.56, 0.28, 0.06, 1)
-text = "详情页已拆成独立场景"
+text = "基础页用于查看等级、经验、生命和核心属性"
 horizontal_alignment = 1
 vertical_alignment = 1

@@ -8,8 +8,58 @@
 [ext_resource type="Texture2D" uid="uid://vpsq5y7knekr" path="res://assets/grassland/segment_sources/grass_source.png" id="6_grass_source"]
 [ext_resource type="Texture2D" uid="uid://vb7t13a3q48q" path="res://assets/grassland/segment_sources/tree_source.png" id="7_tree_source"]
 [ext_resource type="Script" uid="uid://cm6ipnrxiocaw" path="res://scripts/grassland_stage_2d.gd" id="8_stage_script"]
-[ext_resource type="SpriteFrames" path="res://assets/characters/hero_sprite_frames.tres" id="9_hero_frames"]
+[ext_resource type="Texture2D" uid="uid://def1s1u6p3cpf" path="res://assets/characters/_backup/hero_death_strip.png" id="9_jeoei"]
 [ext_resource type="Texture2D" uid="uid://dl8ujsjn5wtid" path="res://assets/monsters/slime_blue.png" id="10_slime"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nr4wd"]
+atlas = ExtResource("9_jeoei")
+region = Rect2(0, 0, 720, 700)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ahqc"]
+atlas = ExtResource("9_jeoei")
+region = Rect2(720, 0, 720, 700)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r68pm"]
+atlas = ExtResource("9_jeoei")
+region = Rect2(1440, 0, 720, 700)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t478n"]
+atlas = ExtResource("9_jeoei")
+region = Rect2(2160, 0, 720, 700)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sfohb"]
+atlas = ExtResource("9_jeoei")
+region = Rect2(2880, 0, 720, 700)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ud50d"]
+atlas = ExtResource("9_jeoei")
+region = Rect2(3600, 0, 720, 700)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_y7fl0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nr4wd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ahqc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r68pm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t478n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sfohb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ud50d")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 8.0
+}]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_badge"]
 bg_color = Color(0.24, 0.47, 0.82, 0.92)
@@ -145,10 +195,9 @@ mouse_filter = 2
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="Frame/world_root/actor_layer/player_anchor/PlayerVisual" unique_id=837826542]
 position = Vector2(-26, -63)
 scale = Vector2(0.094, 0.094)
-sprite_frames = ExtResource("9_hero_frames")
+sprite_frames = SubResource("SpriteFrames_y7fl0")
 animation = &"idle"
-frame = 4
-frame_progress = 0.4638004
+autoplay = "idle"
 centered = false
 
 [node name="player_placeholder" type="ColorRect" parent="Frame/world_root/actor_layer/player_anchor/PlayerVisual" unique_id=969352563]

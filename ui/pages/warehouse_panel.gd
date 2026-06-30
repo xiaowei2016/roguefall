@@ -10,6 +10,7 @@ const SLOT_LOCKED_BG := Color(1.0, 0.9, 0.58, 1.0)
 const SLOT_LOCKED_BORDER := Color(0.95, 0.42, 0.08, 1.0)
 const EQUIPMENT_KINDS := ["武器", "头部", "身体", "项链", "戒指", "腰带", "脚部", "手部", "护符"]
 const CONSUMABLE_KINDS := ["消耗品", "宝箱", "宠物道具"]
+const WAREHOUSE_SLOT_PREFIX := "Slot"
 
 @onready var item_tooltip: Panel = $ItemTooltip
 @onready var tip_title: Label = $ItemTooltip/TitleLabel
@@ -35,6 +36,7 @@ const CONSUMABLE_KINDS := ["消耗品", "宝箱", "宠物道具"]
 @onready var filter_other: Button = $Card/FilterTabs/OtherTab
 @onready var sort_button: Button = $Card/SortButton
 @onready var hint_label: Label = $Card/Hint
+@onready var capacity_label: Label = $Card/Capacity
 
 var _tooltip_locked := false
 var _hovered_slot: Control
@@ -45,15 +47,15 @@ var _current_slot: Control
 var _warehouse_filter := "all"
 var _show_equipped_compare := false
 var _equipped_items := {
-	"武器": {"name": "新手长剑", "power": "战力 +120", "base": "基础：攻击 +10"},
-	"身体": {"name": "旅人胸甲", "power": "战力 +85", "base": "基础：防御 +5"},
-	"头部": {"name": "冒险头盔", "power": "战力 +60", "base": "基础：生命 +30"},
-	"项链": {"name": "星纹项链", "power": "战力 +95", "base": "基础：幸运 +2"},
-	"戒指": {"name": "紫晶戒指", "power": "战力 +110", "base": "基础：暴击 +2%"},
-	"腰带": {"name": "皮革腰带", "power": "战力 +55", "base": "基础：生命 +25"},
-	"脚部": {"name": "疾行靴", "power": "战力 +70", "base": "基础：敏捷 +3"},
-	"手部": {"name": "练习护手", "power": "战力 +50", "base": "基础：攻击 +3"},
-	"护符": {"name": "木制护符", "power": "战力 +100", "base": "基础：幸运 +4"},
+	"武器": {"name": "新手长剑", "power": "战力 +120", "base": "基础：攻击 +10", "affixes": ["暴击 +1%", "金币 +2%", "洗练槽 2 / 4"]},
+	"身体": {"name": "旅人胸甲", "power": "战力 +85", "base": "基础：防御 +5", "affixes": ["生命 +20", "减伤 +1%"]},
+	"头部": {"name": "冒险头盔", "power": "战力 +60", "base": "基础：生命 +30", "affixes": ["防御 +2", "生命恢复 +1"]},
+	"项链": {"name": "星纹项链", "power": "战力 +95", "base": "基础：幸运 +2", "affixes": ["掉落 +2%", "经验 +1%"]},
+	"戒指": {"name": "紫晶戒指", "power": "战力 +110", "base": "基础：暴击 +2%", "affixes": ["攻击 +4", "暴伤 +8%"]},
+	"腰带": {"name": "皮革腰带", "power": "战力 +55", "base": "基础：生命 +25", "affixes": ["背包容量 +2"]},
+	"脚部": {"name": "疾行靴", "power": "战力 +70", "base": "基础：敏捷 +3", "affixes": ["攻速 +1%", "移动 +2%"]},
+	"手部": {"name": "练习护手", "power": "战力 +50", "base": "基础：攻击 +3", "affixes": ["命中 +1%"]},
+	"护符": {"name": "木制护符", "power": "战力 +100", "base": "基础：幸运 +4", "affixes": ["金币 +3%", "掉落 +1%"]},
 }
 var _slot_items := {
 	"Slot1": {
@@ -117,6 +119,9 @@ func _ready() -> void:
 	_setup_blank_close_zones()
 	_setup_item_slots()
 	_setup_filter_tabs()
+	_capture_initial_slot_visuals()
+	_refresh_all_slot_visuals()
+	_update_capacity()
 	sort_button.pressed.connect(_on_sort_pressed)
 	tip_action_button.pressed.connect(_on_tip_action_pressed)
 	item_tooltip.visible = false
@@ -137,10 +142,10 @@ func _setup_blank_close_zones() -> void:
 
 
 func _setup_item_slots() -> void:
-	for slot_name in _slot_items.keys():
-		var slot := get_node_or_null("Card/WarehouseScroll/Grid/" + slot_name) as Control
-		if slot == null:
+	for child in $Card/WarehouseScroll/Grid.get_children():
+		if not child is Control:
 			continue
+		var slot := child as Control
 		slot.mouse_filter = Control.MOUSE_FILTER_STOP
 		_remember_slot_style(slot)
 		slot.mouse_entered.connect(func() -> void: _on_slot_mouse_entered(slot))
@@ -160,12 +165,17 @@ func _setup_filter_tabs() -> void:
 func _set_warehouse_filter(filter_name: String) -> void:
 	_warehouse_filter = filter_name
 	_close_item_tip()
+	_apply_warehouse_filter_visibility()
+	_update_filter_buttons()
+	_refresh_all_slot_visuals()
+
+
+func _apply_warehouse_filter_visibility() -> void:
 	for child in $Card/WarehouseScroll/Grid.get_children():
 		if child is Control:
 			var slot := child as Control
 			var item: Dictionary = _slot_items.get(slot.name, {})
-			slot.visible = item.is_empty() or _item_matches_filter(item, filter_name)
-	_update_filter_buttons()
+			slot.visible = item.is_empty() or _item_matches_filter(item, _warehouse_filter)
 
 
 func _item_matches_filter(item: Dictionary, filter_name: String) -> bool:
@@ -195,7 +205,172 @@ func _update_filter_buttons() -> void:
 
 func _on_sort_pressed() -> void:
 	_close_item_tip()
+	_sort_warehouse_items()
+	_apply_warehouse_filter_visibility()
+	_update_filter_buttons()
+	_refresh_all_slot_visuals()
+	_update_capacity()
 	hint_label.text = "已按类型整理"
+
+
+func _sort_warehouse_items() -> void:
+	var slot_names := _get_warehouse_slot_names()
+	var items := []
+	for slot_name in slot_names:
+		var item: Dictionary = _slot_items.get(slot_name, {})
+		if not item.is_empty():
+			items.append(item.duplicate(true))
+	items.sort_custom(_is_item_before)
+	_slot_items.clear()
+	for index in items.size():
+		if index < slot_names.size():
+			_slot_items[slot_names[index]] = items[index]
+
+
+func _get_warehouse_slot_names() -> Array:
+	var names := []
+	for child in $Card/WarehouseScroll/Grid.get_children():
+		if child is Control:
+			names.append(child.name)
+	names.sort_custom(_is_slot_name_before)
+	return names
+
+
+func _is_slot_name_before(a, b) -> bool:
+	return _slot_index(str(a)) < _slot_index(str(b))
+
+
+func _slot_index(slot_name: String) -> int:
+	if slot_name.begins_with(WAREHOUSE_SLOT_PREFIX):
+		return int(slot_name.substr(WAREHOUSE_SLOT_PREFIX.length()))
+	return 0
+
+
+func _is_item_before(a: Dictionary, b: Dictionary) -> bool:
+	var group_a := _item_sort_group(a)
+	var group_b := _item_sort_group(b)
+	if group_a != group_b:
+		return group_a < group_b
+	var kind_a := str(a.get("kind", ""))
+	var kind_b := str(b.get("kind", ""))
+	if kind_a != kind_b:
+		return kind_a < kind_b
+	var rarity_a := _rarity_rank(str(a.get("rarity", "")))
+	var rarity_b := _rarity_rank(str(b.get("rarity", "")))
+	if rarity_a != rarity_b:
+		return rarity_a > rarity_b
+	var power_a := _extract_power(a.get("power", ""))
+	var power_b := _extract_power(b.get("power", ""))
+	if power_a != power_b:
+		return power_a > power_b
+	return str(a.get("name", "")) < str(b.get("name", ""))
+
+
+func _item_sort_group(item: Dictionary) -> int:
+	var kind := str(item.get("kind", ""))
+	if EQUIPMENT_KINDS.has(kind):
+		return 0
+	if CONSUMABLE_KINDS.has(kind):
+		return 1
+	if kind == "材料":
+		return 2
+	return 3
+
+
+func _rarity_rank(rarity: String) -> int:
+	if rarity == "传说":
+		return 5
+	if rarity == "史诗":
+		return 4
+	if rarity == "稀有":
+		return 3
+	if rarity == "精良":
+		return 2
+	if rarity == "普通":
+		return 1
+	return 0
+
+
+func _capture_initial_slot_visuals() -> void:
+	for slot_name in _slot_items.keys():
+		var item: Dictionary = _slot_items[slot_name]
+		var slot := _find_slot(slot_name)
+		if slot == null:
+			continue
+		var icon := slot.get_node_or_null("Icon") as TextureRect
+		if icon != null and icon.texture != null:
+			item["icon_texture"] = icon.texture
+		var count_label := slot.get_node_or_null("Count") as Label
+		if count_label != null and count_label.text.strip_edges() != "":
+			item["count"] = count_label.text
+
+
+func _find_slot(slot_name: String) -> Control:
+	return get_node_or_null("Card/WarehouseScroll/Grid/" + slot_name) as Control
+
+
+func _refresh_all_slot_visuals() -> void:
+	for child in $Card/WarehouseScroll/Grid.get_children():
+		if not child is Control:
+			continue
+		var slot := child as Control
+		var item: Dictionary = _slot_items.get(slot.name, {})
+		_apply_slot_item_visual(slot, item)
+
+
+func _apply_slot_item_visual(slot: Control, item: Dictionary) -> void:
+	var icon := _get_or_create_icon(slot, not item.is_empty())
+	if icon != null:
+		icon.visible = not item.is_empty() and item.has("icon_texture")
+		if item.has("icon_texture"):
+			icon.texture = item["icon_texture"]
+	var count_label := _get_or_create_count_label(slot, item.has("count"))
+	if count_label != null:
+		var count_text := str(item.get("count", ""))
+		count_label.visible = count_text != "" and not EQUIPMENT_KINDS.has(str(item.get("kind", "")))
+		count_label.text = count_text
+
+
+func _get_or_create_icon(slot: Control, create_if_missing: bool) -> TextureRect:
+	var icon := slot.get_node_or_null("Icon") as TextureRect
+	if icon == null and create_if_missing:
+		icon = TextureRect.new()
+		icon.name = "Icon"
+		icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		icon.offset_left = 7.0
+		icon.offset_top = 5.0
+		icon.offset_right = -7.0
+		icon.offset_bottom = -8.0
+		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		slot.add_child(icon)
+		icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	return icon
+
+
+func _get_or_create_count_label(slot: Control, create_if_missing: bool) -> Label:
+	var count_label := slot.get_node_or_null("Count") as Label
+	if count_label == null and create_if_missing:
+		count_label = Label.new()
+		count_label.name = "Count"
+		count_label.anchor_left = 0.45
+		count_label.anchor_top = 0.52
+		count_label.anchor_right = 1.0
+		count_label.anchor_bottom = 1.0
+		count_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		count_label.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
+		count_label.add_theme_color_override("font_color", Color(0.22, 0.15, 0.1, 1))
+		slot.add_child(count_label)
+		count_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	return count_label
+
+
+func _update_capacity() -> void:
+	var used := 0
+	for item in _slot_items.values():
+		if item is Dictionary and not item.is_empty():
+			used += 1
+	capacity_label.text = str(used) + " / " + str($Card/WarehouseScroll/Grid.get_child_count())
 
 
 func _set_children_ignore_mouse(node: Node) -> void:
@@ -322,12 +497,14 @@ func _fill_equip_action(item: Dictionary) -> void:
 	_show_equipped_compare = false
 	tip_action_button.visible = true
 	if not is_equipment:
-		tip_action_button.text = "查看"
-		tip_action_button.disabled = true
+		tip_action_button.text = "取出"
+		tip_action_button.disabled = false
+		tip_compare.visible = true
+		tip_compare.text = "操作：点击下方按钮取出到背包"
 		return
 	tip_action_button.disabled = false
 	tip_action_button.text = "装备"
-	var equipped_item: Dictionary = _equipped_items.get(kind, {})
+	var equipped_item := _get_equipped_item(kind)
 	if equipped_item.is_empty():
 		tip_compare.visible = true
 		tip_compare.text = "已装备：无"
@@ -357,17 +534,117 @@ func _fill_equipped_tip(item: Dictionary, kind: String) -> void:
 	equipped_kind.text = kind
 	equipped_power.text = str(item.get("power", ""))
 	equipped_base.text = str(item.get("base", ""))
-	equipped_affix.text = "当前身上装备"
+	equipped_affix.visible = true
+	equipped_affix.text = _format_affix_lines(item.get("affixes", []))
+
+
+func _format_affix_lines(affixes: Array) -> String:
+	if affixes.is_empty():
+		return "词条：无"
+	var lines := []
+	for affix in affixes:
+		lines.append("词条：" + str(affix))
+	return "\n".join(lines)
+
+
+func _get_equipped_item(kind: String) -> Dictionary:
+	var center_panel := _get_center_panel()
+	if center_panel != null and center_panel.has_method("get_equipped_item_for_kind"):
+		var item = center_panel.call("get_equipped_item_for_kind", kind)
+		if item is Dictionary:
+			return item
+	return _equipped_items.get(kind, {})
+
+
+func _get_center_panel() -> Node:
+	var current_scene := get_tree().current_scene
+	if current_scene == null:
+		return null
+	return current_scene.get_node_or_null("PanelRoot/CenterPanel/CenterLayoutRoot/CenterMainPanel")
 
 
 func _on_tip_action_pressed() -> void:
-	if _current_item.is_empty():
+	if _current_slot == null or _current_item.is_empty():
 		return
 	var kind := str(_current_item.get("kind", ""))
 	if not EQUIPMENT_KINDS.has(kind):
+		_withdraw_current_item_to_bag()
 		return
+	var equipped_name := str(_current_item.get("name", "装备"))
+	var center_panel := _get_center_panel()
+	if center_panel == null or not center_panel.has_method("equip_external_item"):
+		tip_compare.visible = true
+		tip_compare.text = "未找到中心装备栏，无法装备"
+		return
+	var result = center_panel.call("equip_external_item", _current_item.duplicate(true))
+	if not (result is Dictionary) or not bool(result.get("ok", false)):
+		tip_compare.visible = true
+		tip_compare.text = str(result.get("reason", "装备失败"))
+		return
+	var old_item: Dictionary = result.get("old_item", {})
+	if old_item.is_empty():
+		_slot_items.erase(_current_slot.name)
+	else:
+		_slot_items[_current_slot.name] = old_item
+	_current_item = _slot_items.get(_current_slot.name, {})
+	_refresh_all_slot_visuals()
+	_update_capacity()
+	hint_label.text = "已装备：" + equipped_name
+	_apply_warehouse_filter_visibility()
+	_update_filter_buttons()
 	tip_compare.visible = true
-	tip_compare.text = "装备入口已就绪\n下一步接入从仓库取出并替换已装备"
+	if _current_item.is_empty():
+		_close_item_tip()
+	else:
+		_show_item_tip(_current_slot, true)
+
+
+func add_warehouse_item(item: Dictionary) -> Dictionary:
+	var target_slot_name := _find_first_empty_warehouse_slot()
+	if target_slot_name == "":
+		return {"ok": false, "reason": "仓库已满"}
+	_slot_items[target_slot_name] = item.duplicate(true)
+	_refresh_all_slot_visuals()
+	_update_capacity()
+	_apply_warehouse_filter_visibility()
+	_update_filter_buttons()
+	return {"ok": true, "slot_name": target_slot_name}
+
+
+func _withdraw_current_item_to_bag() -> void:
+	var center_panel := _get_center_panel()
+	if center_panel == null or not center_panel.has_method("add_bag_item"):
+		tip_compare.visible = true
+		tip_compare.text = "未找到背包，无法取出"
+		return
+	var source_slot_name := _current_slot.name
+	var source_item: Dictionary = _slot_items.get(source_slot_name, {})
+	if source_item.is_empty():
+		return
+	var result = center_panel.call("add_bag_item", source_item.duplicate(true))
+	if not (result is Dictionary) or not bool(result.get("ok", false)):
+		tip_compare.visible = true
+		tip_compare.text = str(result.get("reason", "取出失败"))
+		return
+	_slot_items.erase(source_slot_name)
+	_refresh_all_slot_visuals()
+	_update_capacity()
+	_apply_warehouse_filter_visibility()
+	_update_filter_buttons()
+	hint_label.text = "已取出：" + str(source_item.get("name", "物品"))
+	_current_item = {}
+	_current_slot = null
+	tip_action_button.text = "已取出"
+	tip_action_button.disabled = true
+	tip_compare.visible = true
+	tip_compare.text = "已取出到背包：" + str(source_item.get("name", "物品"))
+
+
+func _find_first_empty_warehouse_slot() -> String:
+	for slot_name in _get_warehouse_slot_names():
+		if not _slot_items.has(slot_name):
+			return slot_name
+	return ""
 
 
 func _position_item_tips(slot: Control) -> void:

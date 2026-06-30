@@ -9,7 +9,7 @@ const SLOT_HOVER_BORDER := Color(1.0, 0.72, 0.22, 1.0)
 const SLOT_LOCKED_BG := Color(1.0, 0.9, 0.58, 1.0)
 const SLOT_LOCKED_BORDER := Color(0.95, 0.42, 0.08, 1.0)
 const EQUIPMENT_KINDS := ["武器", "头部", "身体", "项链", "戒指", "腰带", "脚部", "手部", "护符"]
-const CONSUMABLE_KINDS := ["消耗品", "宝箱"]
+const CONSUMABLE_KINDS := ["消耗品", "宝箱", "宠物道具"]
 const EQUIPPED_SLOT_NAMES := [
 	"SlotLeft1",
 	"SlotLeft2",
@@ -62,6 +62,9 @@ const BAG_SLOT_COUNT := 25
 @onready var bag_filter_equip: Button = $BagPanel/Tabs/EquipTab
 @onready var bag_filter_consumable: Button = $BagPanel/Tabs/ConsumableTab
 @onready var bag_filter_other: Button = $BagPanel/Tabs/OtherTab
+@onready var bag_capacity_label: Label = $BagPanel/CapacityLabel
+@onready var bag_sort_button: Button = $BagPanel/SortButton
+@onready var bag_use_button: Button = $BagPanel/UseButton
 
 var _tooltip_locked := false
 var _hovered_slot: Control
@@ -215,6 +218,9 @@ func _ready() -> void:
 	_setup_filter_tabs()
 	_capture_initial_slot_visuals()
 	_refresh_all_slot_visuals()
+	_update_bag_capacity()
+	bag_sort_button.pressed.connect(_on_bag_sort_pressed)
+	bag_use_button.pressed.connect(_on_bag_use_pressed)
 	tip_action_button.pressed.connect(_on_tip_action_pressed)
 	item_tooltip.visible = false
 	equipped_tooltip.visible = false
@@ -287,13 +293,17 @@ func _setup_filter_tabs() -> void:
 func _set_bag_filter(filter_name: String) -> void:
 	_bag_filter = filter_name
 	_close_item_tip()
+	_apply_bag_filter_visibility()
+	_update_filter_buttons()
+	_refresh_all_slot_visuals()
+
+
+func _apply_bag_filter_visibility() -> void:
 	for child in $BagPanel/BagScroll/BagGrid.get_children():
 		if child is Control:
 			var slot := child as Control
 			var item: Dictionary = _slot_items.get(slot.name, {})
-			slot.visible = item.is_empty() or _item_matches_filter(item, filter_name)
-	_update_filter_buttons()
-	_refresh_all_slot_visuals()
+			slot.visible = item.is_empty() or _item_matches_filter(item, _bag_filter)
 
 
 func _item_matches_filter(item: Dictionary, filter_name: String) -> bool:
@@ -319,6 +329,156 @@ func _update_filter_buttons() -> void:
 	for key in buttons.keys():
 		var button: Button = buttons[key]
 		button.disabled = key == _bag_filter
+
+
+func _on_bag_sort_pressed() -> void:
+	_close_item_tip()
+	_sort_bag_items()
+	_apply_bag_filter_visibility()
+	_update_filter_buttons()
+	_refresh_all_slot_visuals()
+	_update_bag_capacity()
+
+
+func _on_bag_use_pressed() -> void:
+	var slot_name := _get_quick_use_slot_name()
+	if slot_name == "":
+		_close_item_tip()
+		return
+	var item: Dictionary = _slot_items.get(slot_name, {})
+	if item.is_empty():
+		return
+	_use_bag_item(slot_name, item)
+
+
+func _get_quick_use_slot_name() -> String:
+	if _current_slot != null:
+		var current_item: Dictionary = _slot_items.get(_current_slot.name, {})
+		if _is_usable_item(current_item):
+			return _current_slot.name
+	for slot_name in _get_bag_slot_names():
+		var item: Dictionary = _slot_items.get(slot_name, {})
+		if _is_usable_item(item):
+			return slot_name
+	return ""
+
+
+func _is_usable_item(item: Dictionary) -> bool:
+	if item.is_empty():
+		return false
+	return CONSUMABLE_KINDS.has(str(item.get("kind", "")))
+
+
+func _use_bag_item(slot_name: String, item: Dictionary) -> void:
+	var remaining := _item_count(item) - 1
+	var used_name := str(item.get("name", "物品"))
+	if remaining > 0:
+		item["count"] = str(remaining)
+		if str(item.get("power", "")).begins_with("堆叠"):
+			item["power"] = "堆叠 " + str(remaining)
+		_slot_items[slot_name] = item
+	else:
+		_slot_items.erase(slot_name)
+	_refresh_all_slot_visuals()
+	_update_bag_capacity()
+	_apply_bag_filter_visibility()
+	_update_filter_buttons()
+	if remaining > 0:
+		_close_item_tip()
+		var slot := _find_slot(slot_name)
+		if slot != null:
+			_show_item_tip(slot, true)
+			tip_compare.visible = true
+			tip_compare.text = "已使用：" + used_name + "\n剩余：" + str(remaining)
+	else:
+		_current_item = {}
+		_current_slot = null
+		tip_action_button.text = "已使用"
+		tip_action_button.disabled = true
+		tip_compare.visible = true
+		tip_compare.text = "已使用：" + used_name + "\n该格已清空"
+
+
+func _item_count(item: Dictionary) -> int:
+	var count_text := str(item.get("count", ""))
+	var value := int(count_text) if count_text != "" else _extract_power(item.get("power", ""))
+	return maxi(value, 1)
+
+
+func _sort_bag_items() -> void:
+	var slot_names := _get_bag_slot_names()
+	var items := []
+	for slot_name in slot_names:
+		var item: Dictionary = _slot_items.get(slot_name, {})
+		if not item.is_empty():
+			items.append(item.duplicate(true))
+	items.sort_custom(_is_bag_item_before)
+	for slot_name in slot_names:
+		_slot_items.erase(slot_name)
+	for index in items.size():
+		if index < slot_names.size():
+			_slot_items[slot_names[index]] = items[index]
+
+
+func _get_bag_slot_names() -> Array:
+	var names := []
+	for index in range(1, BAG_SLOT_COUNT + 1):
+		names.append(BAG_SLOT_PREFIX + str(index))
+	return names
+
+
+func _is_bag_item_before(a: Dictionary, b: Dictionary) -> bool:
+	var group_a := _item_sort_group(a)
+	var group_b := _item_sort_group(b)
+	if group_a != group_b:
+		return group_a < group_b
+	var kind_a := str(a.get("kind", ""))
+	var kind_b := str(b.get("kind", ""))
+	if kind_a != kind_b:
+		return kind_a < kind_b
+	var rarity_a := _rarity_rank(str(a.get("rarity", "")))
+	var rarity_b := _rarity_rank(str(b.get("rarity", "")))
+	if rarity_a != rarity_b:
+		return rarity_a > rarity_b
+	var power_a := _extract_power(a.get("power", ""))
+	var power_b := _extract_power(b.get("power", ""))
+	if power_a != power_b:
+		return power_a > power_b
+	return str(a.get("name", "")) < str(b.get("name", ""))
+
+
+func _item_sort_group(item: Dictionary) -> int:
+	var kind := str(item.get("kind", ""))
+	if EQUIPMENT_KINDS.has(kind):
+		return 0
+	if CONSUMABLE_KINDS.has(kind):
+		return 1
+	if kind == "材料":
+		return 2
+	return 3
+
+
+func _rarity_rank(rarity: String) -> int:
+	if rarity == "传说":
+		return 5
+	if rarity == "史诗":
+		return 4
+	if rarity == "稀有":
+		return 3
+	if rarity == "精良":
+		return 2
+	if rarity == "普通":
+		return 1
+	return 0
+
+
+func _update_bag_capacity() -> void:
+	var used := 0
+	for slot_name in _get_bag_slot_names():
+		var item: Dictionary = _slot_items.get(slot_name, {})
+		if not item.is_empty():
+			used += 1
+	bag_capacity_label.text = str(used) + "/" + str(BAG_SLOT_COUNT)
 
 
 func _find_slot(slot_name: String) -> Control:
@@ -448,8 +608,16 @@ func _fill_equip_action(item: Dictionary, slot: Control) -> void:
 	_show_equipped_compare = false
 	tip_action_button.visible = true
 	if not is_equipment:
-		tip_action_button.text = "查看"
-		tip_action_button.disabled = true
+		if _is_usable_item(item):
+			tip_action_button.text = "使用"
+			tip_action_button.disabled = false
+			tip_compare.visible = true
+			tip_compare.text = "操作：点击下方按钮使用"
+		else:
+			tip_action_button.text = "存入"
+			tip_action_button.disabled = not slot.name.begins_with(BAG_SLOT_PREFIX)
+			tip_compare.visible = true
+			tip_compare.text = "操作：点击下方按钮存入仓库"
 		return
 	var is_equipped_slot := EQUIPPED_SLOT_NAMES.has(slot.name)
 	tip_action_button.disabled = false
@@ -491,23 +659,103 @@ func _fill_equipped_tip(item: Dictionary) -> void:
 	equipped_kind.text = str(item.get("kind", "装备"))
 	equipped_power.text = str(item.get("power", ""))
 	equipped_base.text = str(item.get("base", ""))
-	var affixes: Array = item.get("affixes", [])
+	equipped_affix.visible = true
+	equipped_affix.text = _format_affix_lines(item.get("affixes", []))
+
+
+func _format_affix_lines(affixes: Array) -> String:
 	if affixes.is_empty():
-		equipped_affix.text = "词条：无"
-	else:
-		equipped_affix.text = "词条：" + str(affixes[0])
+		return "词条：无"
+	var lines := []
+	for affix in affixes:
+		lines.append("词条：" + str(affix))
+	return "\n".join(lines)
 
 
 func _on_tip_action_pressed() -> void:
 	if _current_slot == null or _current_item.is_empty():
 		return
 	var kind := str(_current_item.get("kind", ""))
+	if _is_usable_item(_current_item):
+		_use_bag_item(_current_slot.name, _current_item)
+		return
+	if not EQUIPMENT_KINDS.has(kind) and _current_slot.name.begins_with(BAG_SLOT_PREFIX):
+		_store_current_item_to_warehouse()
+		return
 	if not EQUIPMENT_KINDS.has(kind):
 		return
 	if EQUIPPED_SLOT_NAMES.has(_current_slot.name):
 		_unequip_current_item()
 	else:
 		_equip_current_item(kind)
+
+
+func equip_external_item(item: Dictionary) -> Dictionary:
+	var kind := str(item.get("kind", ""))
+	var target_slot_name := _get_equipped_slot_name(kind)
+	if target_slot_name == "":
+		return {"ok": false, "reason": "不是可装备类型"}
+	var incoming_item := item.duplicate(true)
+	var old_item: Dictionary = _slot_items.get(target_slot_name, {}).duplicate(true)
+	_slot_items[target_slot_name] = incoming_item
+	_refresh_all_slot_visuals()
+	_update_bag_capacity()
+	_close_item_tip()
+	var target_slot := _find_slot(target_slot_name)
+	if target_slot != null:
+		_show_item_tip(target_slot, true)
+	return {"ok": true, "old_item": old_item}
+
+
+func add_bag_item(item: Dictionary) -> Dictionary:
+	var target_slot_name := _find_first_empty_bag_slot()
+	if target_slot_name == "":
+		return {"ok": false, "reason": "背包已满"}
+	_slot_items[target_slot_name] = item.duplicate(true)
+	_refresh_all_slot_visuals()
+	_update_bag_capacity()
+	_apply_bag_filter_visibility()
+	_update_filter_buttons()
+	return {"ok": true, "slot_name": target_slot_name}
+
+
+func get_equipped_item_for_kind(kind: String) -> Dictionary:
+	return _get_equipped_item(kind).duplicate(true)
+
+
+func _store_current_item_to_warehouse() -> void:
+	var warehouse_panel := _get_warehouse_panel()
+	if warehouse_panel == null or not warehouse_panel.has_method("add_warehouse_item"):
+		tip_compare.visible = true
+		tip_compare.text = "未找到仓库，无法存入"
+		return
+	var source_slot_name := _current_slot.name
+	var source_item: Dictionary = _slot_items.get(source_slot_name, {})
+	if source_item.is_empty():
+		return
+	var result = warehouse_panel.call("add_warehouse_item", source_item.duplicate(true))
+	if not (result is Dictionary) or not bool(result.get("ok", false)):
+		tip_compare.visible = true
+		tip_compare.text = str(result.get("reason", "存入失败"))
+		return
+	_slot_items.erase(source_slot_name)
+	_refresh_all_slot_visuals()
+	_update_bag_capacity()
+	_apply_bag_filter_visibility()
+	_update_filter_buttons()
+	_current_item = {}
+	_current_slot = null
+	tip_action_button.text = "已存入"
+	tip_action_button.disabled = true
+	tip_compare.visible = true
+	tip_compare.text = "已存入仓库：" + str(source_item.get("name", "物品"))
+
+
+func _get_warehouse_panel() -> Node:
+	var current_scene := get_tree().current_scene
+	if current_scene == null:
+		return null
+	return current_scene.get_node_or_null("PanelRoot/LeftPanel/host_warehouse")
 
 
 func _equip_current_item(kind: String) -> void:
@@ -525,6 +773,7 @@ func _equip_current_item(kind: String) -> void:
 	else:
 		_slot_items[source_slot_name] = old_item
 	_refresh_all_slot_visuals()
+	_update_bag_capacity()
 	_close_item_tip()
 	var target_slot := _find_slot(target_slot_name)
 	if target_slot != null:
@@ -544,6 +793,7 @@ func _unequip_current_item() -> void:
 	_slot_items[target_slot_name] = source_item
 	_slot_items.erase(source_slot_name)
 	_refresh_all_slot_visuals()
+	_update_bag_capacity()
 	_close_item_tip()
 	var target_slot := _find_slot(target_slot_name)
 	if target_slot != null:
